@@ -2084,12 +2084,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5500966306482724415, guid: 24e53def254926c4da2e3607fc630585, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4532127643208680999, guid: 24e53def254926c4da2e3607fc630585, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 24e53def254926c4da2e3607fc630585, type: 3}
       propertyPath: m_Name
       value: Bild mir Rahmen
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: -8484753874272355542, guid: 24e53def254926c4da2e3607fc630585, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 24e53def254926c4da2e3607fc630585, type: 3}
       insertIndex: -1

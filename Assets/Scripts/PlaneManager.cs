@@ -134,8 +134,4 @@ public class PlaneManager : MonoBehaviour
         foreach (var p in arPlaneManager.trackables) p.gameObject.SetActive(false);
     }
 
-    // UI
-    public void Dance() => catController?.Dance();
-    public void Sleep() => catController?.Sleep();
-    public void Celebrate() => catController?.Celebrate();
 }
