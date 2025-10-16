@@ -1,0 +1,12 @@
+using UnityEngine;
+
+public class Rotar : MonoBehaviour
+{
+    public Vector3 velocidadRotacion = new Vector3(0f, 30f, 0f);
+
+    void Update()
+    {
+        transform.Rotate(velocidadRotacion * Time.deltaTime);
+    }
+
+}
