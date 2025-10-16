@@ -1,137 +1,88 @@
+Ôªøusing System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
 [RequireComponent(typeof(ARPlaneManager))]
-public class PlaneManager : MonoBehaviour
+public class PlaneManagerPines : MonoBehaviour
 {
     [Header("AR")]
     [SerializeField] private ARPlaneManager arPlaneManager;
 
-    [Header("Prefab del gato")]
-    [SerializeField] private GameObject model3DPrefab;
+    [Header("Prefabs principales")]
+    [SerializeField] private GameObject catPrefab;
+
+    [Tooltip("Prefabs de mapas (m√°x. 5)")]
+    [SerializeField] private List<GameObject> mapPrefabs = new List<GameObject>();
+
+    [Header("Posiciones fijas relativas al gato")]
+    [Tooltip("Coordenadas en metros desde el gato (x derecha, z adelante)")]
+    [SerializeField]
+    private List<Vector3> mapOffsets = new List<Vector3>()
+    {
+        new Vector3(0f, 0f, 0.5f),   // Mapa 1 (frente)
+        new Vector3(0.5f, 0f, 0f),   // Mapa 2 (derecha)
+        new Vector3(-0.5f, 0f, 0f),  // Mapa 3 (izquierda)
+        new Vector3(0f, 0f, -0.5f),  // Mapa 4 (atr√°s)
+        new Vector3(0.5f, 0f, 0.5f)  // Mapa 5 (diagonal)
+    };
 
     [Header("Opciones")]
-    [Tooltip("Oculta planos tras colocar el modelo")]
-    [SerializeField] private bool stopDetectionAfterPlace = true;
-
-    [Tooltip("SeparaciÛn mÌnima del plano para evitar z-fighting (m)")]
+    [SerializeField, Range(0f, 5f)] private float distanceFromCamera = 2f;
     [SerializeField, Range(0f, 0.02f)] private float lift = 0.003f;
-
-    [Header("Debug")]
     [SerializeField] private bool verbose = true;
 
-    private GameObject placed;
-    private CatController catController;
+    private GameObject catInstance;
 
     void Awake()
     {
         if (!arPlaneManager) arPlaneManager = GetComponent<ARPlaneManager>();
     }
 
-    void OnEnable() { arPlaneManager.planesChanged += OnPlanesChanged; }
-    void OnDisable() { arPlaneManager.planesChanged -= OnPlanesChanged; }
-
-    void OnPlanesChanged(ARPlanesChangedEventArgs args)
+    void Start()
     {
-        if (placed != null) return;
-
-        foreach (var p in args.added) { if (TryPlaceOnPlane(p)) return; }
-        foreach (var p in args.updated) { if (TryPlaceOnPlane(p)) return; }
-    }
-
-    bool TryPlaceOnPlane(ARPlane plane)
-    {
-        if (plane == null || plane.trackingState != TrackingState.Tracking) return false;
-        if (model3DPrefab == null) { Debug.LogWarning("[PlaneManager] Asigna model3DPrefab."); return false; }
-
-        // 1) Centro del plano en mundo y normal del plano
-        Vector3 centerWorld = plane.transform.TransformPoint(plane.center);
-        Vector3 planeNormal = plane.transform.up;
-
-        // 2) Instancia el modelo, orientado hacia la c·mara proyectado al plano
-        placed = Instantiate(model3DPrefab);
-        Vector3 camF = Camera.main ? Camera.main.transform.forward : Vector3.forward;
-        Vector3 forwardOnPlane = Vector3.ProjectOnPlane(camF, planeNormal).normalized;
-        if (forwardOnPlane.sqrMagnitude < 1e-4f)
-            forwardOnPlane = Vector3.ProjectOnPlane(Vector3.forward, planeNormal).normalized;
-        placed.transform.rotation = Quaternion.LookRotation(forwardOnPlane, planeNormal);
-
-        // PosiciÛn inicial aproximada (un poco sobre el centro del plano)
-        placed.transform.position = centerWorld + planeNormal * lift;
-
-        // 3) SNAP de "los pies" usando bounds.min y raycast al MeshCollider del ARPlane
-        SnapFeetToPlane(plane, planeNormal);
-
-        // 4) Cache para UI/botones
-        catController = placed.GetComponent<CatController>();
-
-        if (stopDetectionAfterPlace) StopPlaneDetection();
-
-        if (verbose)
-        {
-            Vector3 planePos = plane.transform.position;
-            Bounds wb = GetWorldBounds(placed);
-            Debug.Log($"[PlaneManager] PlaneY:{planePos.y:F2} | center:{centerWorld} | " +
-                      $"bounds.minY:{wb.min.y:F3} | placed:{placed.transform.position} | normal:{planeNormal}");
-        }
-        return true;
-    }
-
-    void SnapFeetToPlane(ARPlane plane, Vector3 planeNormal)
-    {
-        // Debe existir un collider en el plano (MeshCollider en el prefab 'AR Default Plane')
-        var col = plane.GetComponent<Collider>();
-        if (col == null) return;
-
-        // Lanza un rayo desde arriba del modelo hacia el plano
-        Vector3 rayStart = placed.transform.position + planeNormal * 1.0f;
-        Ray ray = new Ray(rayStart, -planeNormal);
-
-        if (col.Raycast(ray, out RaycastHit hit, 5f))
-        {
-            // Calcula el offset desde el pivote del modelo hasta la base real (bounds.min)
-            Bounds wb = GetWorldBounds(placed);
-            float baseOffsetFromPivot = placed.transform.position.y - wb.min.y; // cu·nto hay desde pivote hasta ìpiesî en Y mundial
-
-            // Nueva posiciÛn = punto del plano + offset hasta la base + leve lift
-            Vector3 newPos = placed.transform.position;
-            newPos = hit.point + planeNormal * (baseOffsetFromPivot + lift);
-            placed.transform.position = newPos;
-        }
-    }
-
-    static Bounds GetWorldBounds(GameObject go)
-    {
-        // Combina bounds de todos los SkinnedMeshRenderer/Renderer en espacio de mundo
-        var smrs = go.GetComponentsInChildren<SkinnedMeshRenderer>();
-        var rends = go.GetComponentsInChildren<Renderer>();
-
-        bool hasAny = false;
-        Bounds b = new Bounds(go.transform.position, Vector3.zero);
-
-        foreach (var s in smrs)
-        {
-            if (!hasAny) { b = s.bounds; hasAny = true; }
-            else b.Encapsulate(s.bounds);
-        }
-        foreach (var r in rends)
-        {
-            // evita contar colliders visuales del plano si accidentalmente est·n parentados
-            if (r is SkinnedMeshRenderer) continue;
-            if (!hasAny) { b = r.bounds; hasAny = true; }
-            else b.Encapsulate(r.bounds);
-        }
-
-        if (!hasAny) b = new Bounds(go.transform.position, Vector3.one * 0.1f);
-        return b;
-    }
-
-    public void StopPlaneDetection()
-    {
-        if (!arPlaneManager) return;
+        // Desactivar detecci√≥n de planos (no se necesita)
         arPlaneManager.requestedDetectionMode = PlaneDetectionMode.None;
-        foreach (var p in arPlaneManager.trackables) p.gameObject.SetActive(false);
+
+        // Instanciar objetos frente a la c√°mara
+        PlaceContentInFrontOfCamera();
     }
 
+    void PlaceContentInFrontOfCamera()
+    {
+        if (catPrefab == null)
+        {
+            Debug.LogWarning("[PlaneManagerPines] Asigna el prefab del gato.");
+            return;
+        }
+
+        Transform cam = Camera.main.transform;
+        Vector3 forward = cam.forward;
+        Vector3 basePos = cam.position + forward * distanceFromCamera;
+        basePos.y = cam.position.y - 0.1f; // un poco m√°s abajo para el suelo
+
+        // üê± Instancia el gato
+        catInstance = Instantiate(catPrefab, basePos, Quaternion.LookRotation(-forward));
+        if (verbose)
+            Debug.Log("[PlaneManagerPines] Gato instanciado frente a la c√°mara.");
+
+        // üìç Instancia los mapas alrededor del gato
+        for (int i = 0; i < mapPrefabs.Count; i++)
+        {
+            if (mapPrefabs[i] == null) continue;
+
+            Vector3 offset = (i < mapOffsets.Count) ? mapOffsets[i] : Vector3.zero;
+            Vector3 mapPos = catInstance.transform.position + catInstance.transform.TransformDirection(offset);
+
+            GameObject map = Instantiate(mapPrefabs[i], mapPos, Quaternion.identity);
+
+            // Que mire hacia el gato
+            Vector3 lookDir = catInstance.transform.position - map.transform.position;
+            lookDir.y = 0;
+            map.transform.rotation = Quaternion.LookRotation(lookDir);
+
+            if (verbose)
+                Debug.Log($"[PlaneManagerPines] Mapa {i + 1} colocado en offset {offset}");
+        }
+    }
 }
