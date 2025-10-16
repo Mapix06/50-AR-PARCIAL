@@ -8,9 +8,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/2010s.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/70s.unity
     guid: 81e9ebe703a8bce46b599d5b33aaf779
+  - enabled: 1
+    path: Assets/Scenes/Principal.unity
+    guid: cb2e541ae27cc164f9396006ca1fed8a
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 31ff898320faf6047a42f62f4c9f469e, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
