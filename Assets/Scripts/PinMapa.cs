@@ -8,9 +8,6 @@ public class PinMapa : MonoBehaviour
     [Header("Objetos a ocultar")]
     [SerializeField] private GameObject[] objetosParaOcultar;
 
-    [Header("Audio del pin")]
-    [SerializeField] private AudioClip audioPin;
-
     [Header("Preguntas interactivas")]
     [Tooltip("Primera pregunta que el usuario puede hacer a Zylo")]
     [SerializeField] private PreguntaRespuesta preguntaInteractiva1;

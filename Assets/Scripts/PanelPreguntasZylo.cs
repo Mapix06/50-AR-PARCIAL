@@ -26,51 +26,39 @@ public class PanelPreguntasZylo : MonoBehaviour
     [SerializeField] private string animacionHablar = "isTalking";
     [SerializeField] private float tiempoPensando = 2f;
 
-    [Header("Preguntas del pin actual")]
-    [SerializeField] private PreguntaRespuesta pregunta1;
-    [SerializeField] private PreguntaRespuesta pregunta2;
-
+    private PreguntaRespuesta pregunta1;
+    private PreguntaRespuesta pregunta2;
     private bool esperandoRespuesta = false;
 
     void Start()
     {
-        if (panelPreguntas != null)
-            panelPreguntas.SetActive(false);
+        panelPreguntas?.SetActive(true);
+        panelRespuesta?.SetActive(true);
 
-        if (panelRespuesta != null)
-            panelRespuesta.SetActive(false);
-
-        if (botonPregunta1 != null)
-            botonPregunta1.onClick.AddListener(() => HacerPregunta(pregunta1));
-
-        if (botonPregunta2 != null)
-            botonPregunta2.onClick.AddListener(() => HacerPregunta(pregunta2));
-
-        if (botonCerrarRespuesta != null)
-            botonCerrarRespuesta.onClick.AddListener(CerrarRespuesta);
+        botonPregunta1?.onClick.AddListener(() => HacerPregunta(pregunta1));
+        botonPregunta2?.onClick.AddListener(() => HacerPregunta(pregunta2));
+        botonCerrarRespuesta?.onClick.AddListener(CerrarRespuesta);
     }
 
+    /// <summary>
+    /// Recibe las preguntas desde el pin y las muestra en el panel
+    /// </summary>
     public void MostrarPanelPreguntas(PreguntaRespuesta p1, PreguntaRespuesta p2)
     {
-        if (panelPreguntas == null) return;
-
         pregunta1 = p1;
         pregunta2 = p2;
 
-        if (textoPregunta1 != null)
-            textoPregunta1.text = p1.textoPregunta;
-
-        if (textoPregunta2 != null)
-            textoPregunta2.text = p2.textoPregunta;
+        textoPregunta1.text = p1.textoPregunta;
+        textoPregunta2.text = p2.textoPregunta;
 
         panelPreguntas.SetActive(true);
+
         Debug.Log("[PanelPreguntasZylo] Panel de preguntas mostrado");
     }
 
     public void OcultarPanelPreguntas()
     {
-        if (panelPreguntas != null)
-            panelPreguntas.SetActive(false);
+        panelPreguntas?.SetActive(false);
     }
 
     private void HacerPregunta(PreguntaRespuesta pregunta)
@@ -87,17 +75,12 @@ public class PanelPreguntasZylo : MonoBehaviour
         esperandoRespuesta = true;
 
         // Zylo piensa
-        if (zyloAnimator != null)
-            zyloAnimator.SetBool(animacionPensar, true);
-
+        zyloAnimator?.SetBool(animacionPensar, true);
         yield return new WaitForSeconds(tiempoPensando);
-
-        if (zyloAnimator != null)
-            zyloAnimator.SetBool(animacionPensar, false);
+        zyloAnimator?.SetBool(animacionPensar, false);
 
         // Zylo habla
-        if (zyloAnimator != null)
-            zyloAnimator.SetBool(animacionHablar, true);
+        zyloAnimator?.SetBool(animacionHablar, true);
 
         if (zyloAudioSource != null && pregunta.audioRespuesta != null)
         {
@@ -107,51 +90,41 @@ public class PanelPreguntasZylo : MonoBehaviour
         }
         else
         {
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(3f); // fallback si no hay audio
         }
 
-        if (zyloAnimator != null)
-            zyloAnimator.SetBool(animacionHablar, false);
+        zyloAnimator?.SetBool(animacionHablar, false);
 
-        MostrarRespuesta(pregunta.textoRespuesta);
+        MostrarRespuesta(pregunta.textoPregunta, pregunta.textoRespuesta);
         esperandoRespuesta = false;
     }
 
-    private void MostrarRespuesta(string respuesta)
+    /// <summary>
+    /// Muestra la conversación completa en el panel inferior
+    /// </summary>
+    private void MostrarRespuesta(string preguntaUsuario, string respuestaZylo)
     {
-        if (panelRespuesta == null) return;
-
-        if (textoRespuesta != null)
-            textoRespuesta.text = respuesta;
-
+        textoRespuesta.text = $"<b>Usuario:</b> {preguntaUsuario}\n\n<b>Zylo:</b> {respuestaZylo}";
         panelRespuesta.SetActive(true);
         Debug.Log("[PanelPreguntasZylo] Respuesta mostrada en pantalla");
     }
 
     private void CerrarRespuesta()
     {
-        if (panelRespuesta != null)
-            panelRespuesta.SetActive(false);
-
-        if (pregunta1 != null && pregunta2 != null)
-            MostrarPanelPreguntas(pregunta1, pregunta2);
+        panelRespuesta?.SetActive(false);
+        MostrarPanelPreguntas(pregunta1, pregunta2);
     }
 
     public void CerrarTodo()
     {
-        OcultarPanelPreguntas();
-
-        if (panelRespuesta != null)
-            panelRespuesta.SetActive(false);
-
         StopAllCoroutines();
         esperandoRespuesta = false;
 
-        if (zyloAnimator != null)
-        {
-            zyloAnimator.SetBool(animacionPensar, false);
-            zyloAnimator.SetBool(animacionHablar, false);
-        }
+        panelPreguntas?.SetActive(false);
+        panelRespuesta?.SetActive(false);
+
+        zyloAnimator?.SetBool(animacionPensar, false);
+        zyloAnimator?.SetBool(animacionHablar, false);
 
         Debug.Log("[PanelPreguntasZylo] Sistema cerrado");
     }

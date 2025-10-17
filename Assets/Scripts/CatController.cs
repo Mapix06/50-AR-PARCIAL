@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
+using System.Collections;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(AudioSource))]
@@ -13,6 +15,10 @@ public class CatController : MonoBehaviour
 
     [Header("Audio de bienvenida (solo en el gato)")]
     [SerializeField] private AudioClip audioBienvenida;
+    [TextArea(2, 4)] public string textoBienvenida; // ✅ Texto manual para subtítulo
+
+    [Header("Subtítulos")]
+    [SerializeField] private TextMeshProUGUI textoSubtitulo;
 
     private Animator animator;
     private AudioSource audioSource;
@@ -22,30 +28,39 @@ public class CatController : MonoBehaviour
     private bool reachedTarget = false;
     private PinMapa pinPendiente = null;
 
-    // 🔊 Control global del audio actual del pin
     private static AudioSource audioEnReproduccion = null;
 
-    void Awake()
+    void Start()
     {
-        animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
-        cam = Camera.main;
+        // Buscar el subtítulo en la escena
+        textoSubtitulo = GameObject.Find("TextoSubtituloZylo")?.GetComponent<TextMeshProUGUI>();
+
+        if (textoSubtitulo == null)
+            Debug.LogWarning("No se encontró el componente de subtítulo en la escena");
 
         animator?.SetBool("isWalking", false);
         animator?.SetBool("isTalking", false);
 
-        // Configurar AudioSource del gato
-        audioSource.playOnAwake = false;
-        audioSource.spatialBlend = 0.2f;
-        audioSource.volume = 1f;
-
-        // Audio inicial opcional
         if (audioBienvenida != null)
         {
             StartCoroutine(RotateToCamera());
-            StartCoroutine(ReproducirDialogoBienvenida(audioBienvenida));
+            StartCoroutine(ReproducirDialogoBienvenida(audioBienvenida, textoBienvenida));
         }
     }
+
+
+    void Awake()
+    {
+        // Solo inicializa componentes internos
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+        cam = Camera.main;
+
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 0.2f;
+        audioSource.volume = 1f;
+    }
+
 
     void Update()
     {
@@ -123,24 +138,23 @@ public class CatController : MonoBehaviour
             {
                 pinPendiente.OnPinClicked();
 
-                // Reproducir audio del pin (solo uno activo)
                 AudioSource pinAudio = pinPendiente.GetComponent<AudioSource>();
                 if (pinAudio != null && pinAudio.clip != null)
                 {
-                    // 🔇 Detiene el audio anterior si estaba sonando
                     if (audioEnReproduccion != null && audioEnReproduccion.isPlaying)
-                    {
                         audioEnReproduccion.Stop();
-                    }
 
-                    // 🔊 Inicia el nuevo audio
                     audioEnReproduccion = pinAudio;
                     audioEnReproduccion.Play();
+
+                    // ✅ Mostrar subtítulo manual si está disponible
+                    if (textoSubtitulo != null)
+                        textoSubtitulo.text = pinPendiente.name; // ← Aquí puedes asignar texto personalizado por pin
+
                     StartCoroutine(EsperarYNotificarFinAudio(audioEnReproduccion, pinPendiente));
                 }
                 else
                 {
-                    // Si no hay audio en el pin → notificar directamente
                     NotificarFinDePin(pinPendiente);
                 }
             }
@@ -149,7 +163,7 @@ public class CatController : MonoBehaviour
         }
     }
 
-    private System.Collections.IEnumerator RotateToCamera()
+    private IEnumerator RotateToCamera()
     {
         if (cam == null) yield break;
 
@@ -170,7 +184,7 @@ public class CatController : MonoBehaviour
         transform.rotation = targetRot;
     }
 
-    private System.Collections.IEnumerator ReproducirDialogoBienvenida(AudioClip clip)
+    private IEnumerator ReproducirDialogoBienvenida(AudioClip clip, string texto)
     {
         if (clip == null) yield break;
 
@@ -178,35 +192,42 @@ public class CatController : MonoBehaviour
         audioSource.clip = clip;
         audioSource.Play();
 
+        if (textoSubtitulo != null)
+            textoSubtitulo.text = texto;
+
         yield return new WaitForSeconds(clip.length);
 
         animator?.SetBool("isTalking", false);
+
+        if (textoSubtitulo != null)
+            textoSubtitulo.text = "";
     }
 
-    private System.Collections.IEnumerator EsperarYNotificarFinAudio(AudioSource fuente, PinMapa pin)
+    private IEnumerator EsperarYNotificarFinAudio(AudioSource fuente, PinMapa pin)
     {
-        // Espera hasta que ese audio termine
         yield return new WaitWhile(() => fuente != null && fuente.isPlaying);
 
         if (audioEnReproduccion == fuente)
             audioEnReproduccion = null;
 
-        // Cuando termina el audio, procesar el pin
+        if (textoSubtitulo != null)
+            textoSubtitulo.text = "";
+
         NotificarFinDePin(pin);
     }
 
-    /// <summary>
-    /// Procesa el pin después de que termine el audio
-    /// </summary>
     private void NotificarFinDePin(PinMapa pin)
     {
         if (pin == null) return;
 
-        // 1️⃣ Mostrar las preguntas interactivas
         pin.MostrarPreguntasInteractivas();
 
-        // 2️⃣ Notificar al PlaneManager (para cambio de mapa)
         var manager = FindObjectOfType<PlaneManagerPines>();
         manager?.NotificarPinCompletado(pin);
+    }
+
+    public void AsignarTextoSubtitulo(TextMeshProUGUI texto)
+    {
+        textoSubtitulo = texto;
     }
 }

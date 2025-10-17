@@ -16,7 +16,7 @@ public class LecturaPMultiples : MonoBehaviour
     public TextMeshProUGUI textoOp4;
     public int indicadorPreguntaM;
     string respuesta;
-    public GameObject panelRespuestaMultipleCorrecta, panelRespuestaMultipleIncorrecta, panelTerminalM;
+    public GameObject panelRespuestaMultipleCorrecta, panelRespuestaMultipleIncorrecta;
 
     void Start()
     {

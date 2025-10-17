@@ -110,6 +110,8 @@ MonoBehaviour:
   stoppingDistance: 0.2
   raycastMaxDistance: 100
   audioBienvenida: {fileID: 8300000, guid: e08f254f1f29c6643bfa2e3fc16f30d0, type: 3}
+  textoBienvenida: "Holaa, soy Zylo, el dia de hoy ser\xE9 tu guia, y nos "
+  textoSubtitulo: {fileID: 0}
 --- !u!82 &7183017882390530016
 AudioSource:
   m_ObjectHideFlags: 0
@@ -121,7 +123,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: e08f254f1f29c6643bfa2e3fc16f30d0, type: 3}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

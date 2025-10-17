@@ -17,13 +17,16 @@ public class ControllerAllS : MonoBehaviour
     public int totalPreguntasAMostrar = 8; // 🔹 Total de preguntas del quiz
     private int preguntasMostradas = 0; // 🔹 Contador de preguntas mostradas
 
+    [Header("Panel de activación")]
+    [SerializeField] private GameObject panelPrincipal;
+
     void Start()
     {
         listaControllersOriginal = new List<GameObject>(listaControllers);
         preguntasMostradas = 0;
 
         InicializarPaneles();
-        StartCoroutine(EsperarCargaDePreguntas());
+        StartCoroutine(EsperarActivacionPanelPrincipal());
     }
 
     private void InicializarPaneles()
@@ -259,5 +262,17 @@ public class ControllerAllS : MonoBehaviour
         yield return null;
 
         SelectQuestionFaciles();
+    }
+
+    private IEnumerator EsperarActivacionPanelPrincipal()
+    {
+        // Espera hasta que el panelPrincipal esté activo
+        while (panelPrincipal != null && !panelPrincipal.activeInHierarchy)
+        {
+            yield return null; // espera un frame
+        }
+
+        // Cuando el panelPrincipal esté activo, continúa con la carga
+        StartCoroutine(EsperarCargaDePreguntas());
     }
 }

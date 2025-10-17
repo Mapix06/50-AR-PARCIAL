@@ -4302,11 +4302,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 636dc21708ee09f4081c9d6d7d14249b, type: 3}
---- !u!1 &1248062904914909076 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 636dc21708ee09f4081c9d6d7d14249b, type: 3}
-  m_PrefabInstance: {fileID: 2131165008288459461}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1880765448278756654 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 636dc21708ee09f4081c9d6d7d14249b, type: 3}
@@ -4550,6 +4545,32 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
+      propertyPath: preguntaInteractiva1.textoPregunta
+      value: "\xBFC\xF3mo naci\xF3 la UAO?\r\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
+      propertyPath: preguntaInteractiva2.textoPregunta
+      value: "\xBFQui\xE9n lider\xF3 sus primeros pasos?"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
+      propertyPath: preguntaInteractiva1.audioRespuesta
+      value: 
+      objectReference: {fileID: 8300000, guid: 3f913b58b094c224bb6de46e27fda7d5, type: 3}
+    - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
+      propertyPath: preguntaInteractiva1.textoRespuesta
+      value: " Naci\xF3 en 1969, cuando profesores y estudiantes crearon una nueva
+        instituci\xF3n tras el cierre de la Universidad Tecnol\xF3gica del Valle."
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
+      propertyPath: preguntaInteractiva2.audioRespuesta
+      value: 
+      objectReference: {fileID: 8300000, guid: 6bc31103675dd694aa23060359e0b262, type: 3}
+    - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
+      propertyPath: preguntaInteractiva2.textoRespuesta
+      value: "May Ackerman, quien gui\xF3 el inicio de \u201Cla universidad de la
+        segunda oportunidad"
+      objectReference: {fileID: 0}
     - target: {fileID: 8948850001108320288, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
       propertyPath: m_Resource
       value: 
@@ -4557,32 +4578,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4630529582317015143, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3845796894266621552}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
---- !u!1 &7307238303130235372 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4630529582317015143, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
-  m_PrefabInstance: {fileID: 2678081134956716427}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3845796894266621552
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7307238303130235372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50afdd60068ccf142a800cdf2c537f3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PinMapa
-  objetosAR:
-  - {fileID: 1248062904914909076}
-  - {fileID: 7385897559798780823}
-  - {fileID: 2429868001899443066}
 --- !u!4 &7936281706368396118 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5406890981998054109, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
@@ -4792,11 +4789,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b2f588e1e8920c4e9ed63786bed08f9, type: 3}
---- !u!1 &2429868001899443066 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7b2f588e1e8920c4e9ed63786bed08f9, type: 3}
-  m_PrefabInstance: {fileID: 3276872043315908139}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3094941332343204288 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7b2f588e1e8920c4e9ed63786bed08f9, type: 3}
@@ -5432,11 +5424,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fea01f432f7d7b44b15da61b2d2256c, type: 3}
---- !u!1 &7385897559798780823 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6fea01f432f7d7b44b15da61b2d2256c, type: 3}
-  m_PrefabInstance: {fileID: 7691747267731402438}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7868960758695676205 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6fea01f432f7d7b44b15da61b2d2256c, type: 3}

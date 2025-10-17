@@ -13,7 +13,7 @@ public class LecturaPFV : MonoBehaviour
     bool respuestaFV;
     bool respuesta;
     public int indicadorPreguntaFV;
-    public GameObject panelRespuestaFVCorrecta, panelRespuestaFVIncorrecta, panelTerminarFV;
+    public GameObject panelRespuestaFVCorrecta, panelRespuestaFVIncorrecta;
 
     void Start()
     {
