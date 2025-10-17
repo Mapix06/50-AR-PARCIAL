@@ -1,21 +1,53 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
+[DisallowMultipleComponent]
 public class PinMapa : MonoBehaviour
 {
-    public Transform targetPoint; // punto donde el gato debe caminar
-    public GameObject[] objetosAR; // objetos a activar al tocar el pin
+    [Header("Objetos a mostrar/ocultar al tocar el pin")]
+    [SerializeField] private GameObject[] objetosAR;
 
-    public void OnPinClicked()
+    public bool FueActivado { get; private set; } = false;
+
+    void Awake()
     {
-        Debug.Log($"[PinMapa] Activado: {gameObject.name}");
-
-        // Activar objetos relacionados (pueden ser hijos del pin o del plano AR)
+        if (objetosAR == null) return;
         foreach (var obj in objetosAR)
         {
-            if (obj != null)
-                obj.SetActive(true);
+            if (obj) obj.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// Toca el pin: alterna visibilidad de sus objetos.
+    /// Marca como activado la primera vez para el conteo del mapa.
+    /// </summary>
+    public void OnPinClicked()
+    {
+        bool hayActivo = false;
+        foreach (var obj in objetosAR)
+        {
+            if (obj && obj.activeSelf) { hayActivo = true; break; }
         }
 
-        // (Opcional) reproducir efectos, animaciones o sonidos
-    }
+        if (hayActivo) OcultarObjetos();
+        else MostrarObjetos();
+
+        if (!FueActivado)
+        {
+            FueActivado = true;
+            Debug.Log($"[PinMapa] Activado por primera vez: {name}");
+        }
+    }
+
+    public void MostrarObjetos()
+    {
+        if (objetosAR == null) return;
+        foreach (var obj in objetosAR) if (obj) obj.SetActive(true);
+    }
+
+    public void OcultarObjetos()
+    {
+        if (objetosAR == null) return;
+        foreach (var obj in objetosAR) if (obj) obj.SetActive(false);
+    }
 }

@@ -11,16 +11,19 @@ public class CatController : MonoBehaviour
     [SerializeField] private float stoppingDistance = 0.2f;
     [SerializeField] private float raycastMaxDistance = 100f;
 
-    [Header("Audio de bienvenida")]
+    [Header("Audio de bienvenida (solo en el gato)")]
     [SerializeField] private AudioClip audioBienvenida;
 
     private Animator animator;
-    private AudioSource audioSource;
+    private AudioSource audioSource; // Para audio de bienvenida
     private Camera cam;
+
     private Vector3? targetPos = null;
     private bool reachedTarget = false;
-    private bool estaHablando = false;
-    private AudioClip audioPendiente = null;
+    private PinMapa pinPendiente = null;
+
+    // 🔊 Control global del audio actual del pin
+    private static AudioSource audioEnReproduccion = null;
 
     void Awake()
     {
@@ -28,18 +31,19 @@ public class CatController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         cam = Camera.main;
 
-        if (animator != null)
-        {
-            animator.Rebind();
-            animator.SetBool("isWalking", false);
-            animator.SetBool("isTalking", false);
-        }
+        animator?.SetBool("isWalking", false);
+        animator?.SetBool("isTalking", false);
 
-        // 🎬 Reproduce audio de bienvenida al iniciar
+        // Configurar AudioSource del gato
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 0.2f;
+        audioSource.volume = 1f;
+
+        // Audio inicial opcional
         if (audioBienvenida != null)
         {
             StartCoroutine(RotateToCamera());
-            StartCoroutine(ReproducirDialogo(audioBienvenida));
+            StartCoroutine(ReproducirDialogoBienvenida(audioBienvenida));
         }
     }
 
@@ -69,85 +73,80 @@ public class CatController : MonoBehaviour
         if (cam == null) return;
 
         Ray ray = cam.ScreenPointToRay(screenPos);
-
         if (Physics.Raycast(ray, out RaycastHit hit, raycastMaxDistance))
         {
-            GameObject clickedObject = hit.collider.gameObject;
-            PinMapa pin = clickedObject.GetComponent<PinMapa>();
-
+            PinMapa pin = hit.collider.GetComponent<PinMapa>();
             if (pin != null)
             {
-                Vector3 destination = pin.targetPoint != null ? pin.targetPoint.position : pin.transform.position;
+                Vector3 destination = pin.transform.position;
                 destination.y = transform.position.y;
                 targetPos = destination;
                 reachedTarget = false;
+                pinPendiente = pin;
 
-                // 🎧 Extrae el AudioClip del pin
-                AudioSource pinAudio = pin.GetComponent<AudioSource>();
-                if (pinAudio != null && pinAudio.clip != null)
-                {
-                    audioPendiente = pinAudio.clip;
-                }
-                else
-                {
-                    audioPendiente = null;
-                    Debug.LogWarning($"[CatController] El pin {pin.name} no tiene AudioSource con clip.");
-                }
-
-                pin.OnPinClicked();
-
-                Debug.Log($"[CatController] Pin tocado: {clickedObject.name} => destino: {destination}");
-            }
-            else
-            {
-                Vector3 p = hit.point;
-                p.y = transform.position.y;
-                targetPos = p;
-                reachedTarget = false;
-                audioPendiente = null;
-
-                Debug.Log($"[CatController] Movimiento libre hacia: {p} (objeto: {clickedObject.name})");
+                Debug.Log($"[CatController] Pin tocado: {pin.name} → destino {destination}");
             }
         }
     }
 
     private void HandleMovement()
     {
-        if (targetPos.HasValue)
-        {
-            Vector3 target = targetPos.Value;
-            Vector3 dir = target - transform.position;
-            dir.y = 0f;
-            float dist = dir.magnitude;
-
-            if (dist > stoppingDistance)
-            {
-                Vector3 move = dir.normalized * moveSpeed * Time.deltaTime;
-                transform.position += move;
-
-                Quaternion targRot = Quaternion.LookRotation(dir.normalized);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targRot, rotateSpeed * Time.deltaTime);
-
-                animator?.SetBool("isWalking", true);
-                return;
-            }
-            else if (!reachedTarget)
-            {
-                reachedTarget = true;
-                animator?.SetBool("isWalking", false);
-                StartCoroutine(RotateToCamera());
-
-                if (audioPendiente != null)
-                {
-                    StartCoroutine(ReproducirDialogo(audioPendiente));
-                }
-
-                targetPos = null;
-            }
-        }
-        else
+        if (!targetPos.HasValue)
         {
             animator?.SetBool("isWalking", false);
+            return;
+        }
+
+        Vector3 target = targetPos.Value;
+        Vector3 dir = target - transform.position;
+        dir.y = 0f;
+        float dist = dir.magnitude;
+
+        if (dist > stoppingDistance)
+        {
+            transform.position += dir.normalized * moveSpeed * Time.deltaTime;
+
+            Quaternion targRot = Quaternion.LookRotation(dir.normalized);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targRot, rotateSpeed * Time.deltaTime);
+
+            animator?.SetBool("isWalking", true);
+            return;
+        }
+
+        if (!reachedTarget)
+        {
+            reachedTarget = true;
+            animator?.SetBool("isWalking", false);
+            StartCoroutine(RotateToCamera());
+
+            if (pinPendiente != null)
+            {
+                pinPendiente.OnPinClicked();
+
+                // Reproducir audio del pin (solo uno activo)
+                AudioSource pinAudio = pinPendiente.GetComponent<AudioSource>();
+                if (pinAudio != null && pinAudio.clip != null)
+                {
+                    // 🔇 Detiene el audio anterior si estaba sonando
+                    if (audioEnReproduccion != null && audioEnReproduccion.isPlaying)
+                    {
+                        audioEnReproduccion.Stop();
+                    }
+
+                    // 🔊 Inicia el nuevo audio
+                    audioEnReproduccion = pinAudio;
+                    audioEnReproduccion.Play();
+                    StartCoroutine(EsperarYNotificarFinAudio(audioEnReproduccion, pinPendiente));
+                }
+                else
+                {
+                    // Si no hay audio en el pin → notificar directamente
+                    var manager = FindObjectOfType<PlaneManagerPines>();
+                    manager?.NotificarPinCompletado(pinPendiente);
+                }
+            }
+
+            targetPos = null;
         }
     }
 
@@ -172,33 +171,29 @@ public class CatController : MonoBehaviour
         transform.rotation = targetRot;
     }
 
-    private System.Collections.IEnumerator ReproducirDialogo(AudioClip clip)
+    private System.Collections.IEnumerator ReproducirDialogoBienvenida(AudioClip clip)
     {
         if (clip == null) yield break;
 
-        estaHablando = true;
         animator?.SetBool("isTalking", true);
-
         audioSource.clip = clip;
         audioSource.Play();
-
-        Debug.Log($"[CatController] Reproduciendo diálogo: {clip.name}");
 
         yield return new WaitForSeconds(clip.length);
 
         animator?.SetBool("isTalking", false);
-        estaHablando = false;
-
-        Debug.Log("[CatController] Diálogo finalizado.");
     }
 
-    private void OnDrawGizmos()
+    private System.Collections.IEnumerator EsperarYNotificarFinAudio(AudioSource fuente, PinMapa pin)
     {
-        if (targetPos.HasValue)
-        {
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere(targetPos.Value, 0.08f);
-            Gizmos.DrawLine(transform.position, targetPos.Value);
-        }
+        // Espera hasta que ese audio termine
+        yield return new WaitWhile(() => fuente != null && fuente.isPlaying);
+
+        if (audioEnReproduccion == fuente)
+            audioEnReproduccion = null;
+
+        // Notifica al plane manager
+        var manager = FindObjectOfType<PlaneManagerPines>();
+        manager?.NotificarPinCompletado(pin);
     }
 }
