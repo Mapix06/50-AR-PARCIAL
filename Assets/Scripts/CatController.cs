@@ -15,7 +15,7 @@ public class CatController : MonoBehaviour
     [SerializeField] private AudioClip audioBienvenida;
 
     private Animator animator;
-    private AudioSource audioSource; // Para audio de bienvenida
+    private AudioSource audioSource;
     private Camera cam;
 
     private Vector3? targetPos = null;
@@ -141,8 +141,7 @@ public class CatController : MonoBehaviour
                 else
                 {
                     // Si no hay audio en el pin → notificar directamente
-                    var manager = FindObjectOfType<PlaneManagerPines>();
-                    manager?.NotificarPinCompletado(pinPendiente);
+                    NotificarFinDePin(pinPendiente);
                 }
             }
 
@@ -192,7 +191,21 @@ public class CatController : MonoBehaviour
         if (audioEnReproduccion == fuente)
             audioEnReproduccion = null;
 
-        // Notifica al plane manager
+        // Cuando termina el audio, procesar el pin
+        NotificarFinDePin(pin);
+    }
+
+    /// <summary>
+    /// Procesa el pin después de que termine el audio
+    /// </summary>
+    private void NotificarFinDePin(PinMapa pin)
+    {
+        if (pin == null) return;
+
+        // 1️⃣ Mostrar las preguntas interactivas
+        pin.MostrarPreguntasInteractivas();
+
+        // 2️⃣ Notificar al PlaneManager (para cambio de mapa)
         var manager = FindObjectOfType<PlaneManagerPines>();
         manager?.NotificarPinCompletado(pin);
     }
