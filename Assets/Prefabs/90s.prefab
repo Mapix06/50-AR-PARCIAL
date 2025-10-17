@@ -38960,6 +38960,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4594742442862663367, guid: 52b11f8595e8038428304a72cd352802, type: 3}
+      propertyPath: idPin
+      value: 1990_1992
+      objectReference: {fileID: 0}
+    - target: {fileID: 4594742442862663367, guid: 52b11f8595e8038428304a72cd352802, type: 3}
       propertyPath: objetosAR.Array.size
       value: 6
       objectReference: {fileID: 0}
@@ -39179,6 +39183,10 @@ PrefabInstance:
     - target: {fileID: 4137920357022850267, guid: 52b11f8595e8038428304a72cd352802, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4594742442862663367, guid: 52b11f8595e8038428304a72cd352802, type: 3}
+      propertyPath: idPin
+      value: 1998_2000
       objectReference: {fileID: 0}
     - target: {fileID: 4594742442862663367, guid: 52b11f8595e8038428304a72cd352802, type: 3}
       propertyPath: objetosAR.Array.size
@@ -39411,6 +39419,10 @@ PrefabInstance:
     - target: {fileID: 4137920357022850267, guid: 52b11f8595e8038428304a72cd352802, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4594742442862663367, guid: 52b11f8595e8038428304a72cd352802, type: 3}
+      propertyPath: idPin
+      value: 1992_1994
       objectReference: {fileID: 0}
     - target: {fileID: 4594742442862663367, guid: 52b11f8595e8038428304a72cd352802, type: 3}
       propertyPath: objetosAR.Array.size
@@ -40147,6 +40159,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4594742442862663367, guid: 52b11f8595e8038428304a72cd352802, type: 3}
+      propertyPath: idPin
+      value: 1996_1998
+      objectReference: {fileID: 0}
+    - target: {fileID: 4594742442862663367, guid: 52b11f8595e8038428304a72cd352802, type: 3}
       propertyPath: objetosAR.Array.size
       value: 6
       objectReference: {fileID: 0}
@@ -40703,6 +40719,10 @@ PrefabInstance:
     - target: {fileID: 4137920357022850267, guid: 52b11f8595e8038428304a72cd352802, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4594742442862663367, guid: 52b11f8595e8038428304a72cd352802, type: 3}
+      propertyPath: idPin
+      value: 1994_1996
       objectReference: {fileID: 0}
     - target: {fileID: 4594742442862663367, guid: 52b11f8595e8038428304a72cd352802, type: 3}
       propertyPath: objetosAR.Array.size

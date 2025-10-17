@@ -4877,6 +4877,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4366676474189253481, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2227365212638569481}
+    - targetCorrespondingSourceObject: {fileID: 4366676474189253481, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8028494221257203651}
   m_SourcePrefab: {fileID: 100100000, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
 --- !u!1 &2339051502378526944 stripped
 GameObject:
@@ -4904,6 +4907,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.005838599, y: 0.0016577296, z: 0.0098668}
   m_Center: {x: 0.00001856475, y: 0.0000030611113, z: -0.00088943826}
+--- !u!114 &8028494221257203651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2339051502378526944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50afdd60068ccf142a800cdf2c537f3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PinMapa
+  objetosAR: []
+  idPin: 2018_2020
 --- !u!4 &3115974576680333914 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4022380438556987859, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
@@ -4980,6 +4997,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4366676474189253481, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3179771556693096582}
+    - targetCorrespondingSourceObject: {fileID: 4366676474189253481, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 374804244546550033}
   m_SourcePrefab: {fileID: 100100000, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
 --- !u!1 &534567602783110967 stripped
 GameObject:
@@ -5007,6 +5027,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.005838599, y: 0.0016577296, z: 0.0098668}
   m_Center: {x: 0.00001856475, y: 0.0000030611113, z: -0.00088943826}
+--- !u!114 &374804244546550033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534567602783110967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50afdd60068ccf142a800cdf2c537f3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PinMapa
+  objetosAR: []
+  idPin: 2010_2012
 --- !u!4 &873974079959440781 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4022380438556987859, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
@@ -5428,6 +5462,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4366676474189253481, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1963814904234659616}
+    - targetCorrespondingSourceObject: {fileID: 4366676474189253481, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5886915723114331481}
   m_SourcePrefab: {fileID: 100100000, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
 --- !u!4 &5888697976755921471 stripped
 Transform:
@@ -5460,6 +5497,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.005838599, y: 0.0016577296, z: 0.0098668}
   m_Center: {x: 0.00001856475, y: 0.0000030611113, z: -0.00088943826}
+--- !u!114 &5886915723114331481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6553594186437326981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50afdd60068ccf142a800cdf2c537f3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PinMapa
+  objetosAR: []
+  idPin: 2021_2023
 --- !u!1001 &7408888942224614684
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5531,6 +5582,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4366676474189253481, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9045342383140739896}
+    - targetCorrespondingSourceObject: {fileID: 4366676474189253481, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5113148669387776111}
   m_SourcePrefab: {fileID: 100100000, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
 --- !u!4 &5837778439875425487 stripped
 Transform:
@@ -5563,6 +5617,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.005838599, y: 0.0016577296, z: 0.0098668}
   m_Center: {x: 0.00001856475, y: 0.0000030611113, z: -0.00088943826}
+--- !u!114 &5113148669387776111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6505489395293171317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50afdd60068ccf142a800cdf2c537f3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PinMapa
+  objetosAR: []
+  idPin: 2014_2016
 --- !u!1001 &7714259928940540467
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5783,6 +5851,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4366676474189253481, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4201225742633655775}
+    - targetCorrespondingSourceObject: {fileID: 4366676474189253481, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 308567585839179531}
   m_SourcePrefab: {fileID: 100100000, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
 --- !u!4 &4956331585266457738 stripped
 Transform:
@@ -5815,6 +5886,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.005838599, y: 0.0016577296, z: 0.0098668}
   m_Center: {x: 0.00001856475, y: 0.0000030611113, z: -0.00088943826}
+--- !u!114 &308567585839179531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5729632048263153200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50afdd60068ccf142a800cdf2c537f3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PinMapa
+  objetosAR: []
+  idPin: 2016_2018
 --- !u!1001 &8564598028775388544
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5886,6 +5971,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4366676474189253481, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4433504666551739568}
+    - targetCorrespondingSourceObject: {fileID: 4366676474189253481, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5153162130757372124}
   m_SourcePrefab: {fileID: 100100000, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
 --- !u!4 &4686502515485811795 stripped
 Transform:
@@ -5918,3 +6006,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.005838599, y: 0.0016577296, z: 0.0098668}
   m_Center: {x: 0.00001856475, y: 0.0000030611113, z: -0.00088943826}
+--- !u!114 &5153162130757372124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5350871853192838889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50afdd60068ccf142a800cdf2c537f3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PinMapa
+  objetosAR: []
+  idPin: 2012_2014

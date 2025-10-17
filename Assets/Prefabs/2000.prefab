@@ -11696,6 +11696,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 877c744fd7d280f41ad2d3b9f8757809, type: 3}
     - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
+      propertyPath: idPin
+      value: 2006_2008
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
       propertyPath: objetosAR.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -11822,6 +11826,10 @@ PrefabInstance:
       propertyPath: m_Resource
       value: 
       objectReference: {fileID: 8300000, guid: 1fae6814b3937a74b8681f398e5f74d3, type: 3}
+    - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
+      propertyPath: idPin
+      value: 2000_2002
+      objectReference: {fileID: 0}
     - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
       propertyPath: objetosAR.Array.size
       value: 2
@@ -12889,6 +12897,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: d0a7c5430e0921c4baf86e58791b8e3d, type: 3}
     - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
+      propertyPath: idPin
+      value: 2008_2010
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
       propertyPath: objetosAR.Array.size
       value: 7
       objectReference: {fileID: 0}
@@ -13023,6 +13035,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6152919792811575323}
     m_Modifications:
+    - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
+      propertyPath: idPin
+      value: 2004_2006
+      objectReference: {fileID: 0}
     - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
       propertyPath: objetosAR.Array.size
       value: 5
@@ -13514,6 +13530,10 @@ PrefabInstance:
       propertyPath: m_Resource
       value: 
       objectReference: {fileID: 8300000, guid: 64a34f7ecb6f4c84c8d575a4b551be86, type: 3}
+    - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
+      propertyPath: idPin
+      value: 2002_2004
+      objectReference: {fileID: 0}
     - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
       propertyPath: objetosAR.Array.size
       value: 5
