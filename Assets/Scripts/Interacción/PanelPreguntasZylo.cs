@@ -11,7 +11,6 @@ public class PanelPreguntasZylo : MonoBehaviour
     [Header("Referencias UI - Botones")]
     [SerializeField] private Button botonPregunta1;
     [SerializeField] private Button botonPregunta2;
-    [SerializeField] private Button botonCerrarRespuesta;
 
     [Header("Referencia a Zylo")]
     [SerializeField] private Animator zyloAnimator;
@@ -41,8 +40,6 @@ public class PanelPreguntasZylo : MonoBehaviour
         if (botonPregunta2 != null)
             botonPregunta2.onClick.AddListener(Pregunta2DesdeInspector);
 
-        if (botonCerrarRespuesta != null)
-            botonCerrarRespuesta.onClick.AddListener(CerrarRespuesta);
     }
 
     public void MostrarPanelPreguntas(PinMapa pin)

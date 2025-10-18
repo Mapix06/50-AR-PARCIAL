@@ -8,6 +8,7 @@ public class PlaneManagerPines : MonoBehaviour
 {
     [Header("AR")]
     [SerializeField] private ARPlaneManager arPlaneManager;
+    [SerializeField] private ARRaycastManager arRaycastManager;
 
     [Header("Prefabs principales")]
     [SerializeField] private GameObject catPrefab;
@@ -31,31 +32,94 @@ public class PlaneManagerPines : MonoBehaviour
     [SerializeField] private bool verbose = true;
 
     private GameObject catInstance;
-    private CatController catController;
     private readonly List<GameObject> mapInstances = new List<GameObject>();
     private int currentMapIndex = 0;
     private bool checkingPins = false;
     private bool esperandoAudio = false;
+    private bool contentPlaced = false;
+
+    private List<ARRaycastHit> hits = new List<ARRaycastHit>();
 
     void Awake()
     {
         if (!arPlaneManager)
             arPlaneManager = GetComponent<ARPlaneManager>();
+
+        if (!arRaycastManager)
+            arRaycastManager = FindObjectOfType<ARRaycastManager>();
     }
 
     void Start()
     {
-        arPlaneManager.requestedDetectionMode = PlaneDetectionMode.None;
-        PlaceContentInFrontOfCamera();
+        // ✅ HABILITAMOS la detección de planos
+        arPlaneManager.requestedDetectionMode = PlaneDetectionMode.Horizontal;
+
+        if (verbose)
+            Debug.Log("[PlaneManagerPines] Buscando plano horizontal frente al usuario...");
     }
 
     void Update()
     {
-        if (checkingPins && !esperandoAudio)
-            CheckPinsCompletion();
+        // Si ya colocamos el contenido, solo verificamos pines
+        if (contentPlaced)
+        {
+            if (checkingPins && !esperandoAudio)
+                CheckPinsCompletion();
+            return;
+        }
+
+        // Buscamos plano automáticamente frente al usuario
+        TryPlaceContentInFrontOfUser();
     }
 
-    private void PlaceContentInFrontOfCamera()
+    private void TryPlaceContentInFrontOfUser()
+    {
+        if (arRaycastManager == null)
+        {
+            Debug.LogError("[PlaneManagerPines] ARRaycastManager no encontrado.");
+            return;
+        }
+
+        Transform cam = Camera.main?.transform;
+        if (cam == null)
+        {
+            Debug.LogError("[PlaneManagerPines] No se encontró la cámara principal.");
+            return;
+        }
+
+        // Hacer raycast desde el centro de la pantalla hacia adelante
+        Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
+
+        if (arRaycastManager.Raycast(screenCenter, hits, TrackableType.PlaneWithinPolygon))
+        {
+            ARRaycastHit hit = hits[0];
+
+            // Calcular posición frente al usuario a la distancia especificada
+            Vector3 forward = cam.forward;
+            forward.y = 0; // mantener en horizontal
+            forward.Normalize();
+
+            Vector3 targetPosition = cam.position + forward * distanceFromCamera;
+
+            // Usar la altura Y del plano detectado
+            targetPosition.y = hit.pose.position.y;
+
+            PlaceContentAtPosition(targetPosition);
+
+            // Deshabilitamos la detección de planos después de colocar
+            arPlaneManager.requestedDetectionMode = PlaneDetectionMode.None;
+
+            // Opcional: ocultar planos visuales
+            foreach (var plane in arPlaneManager.trackables)
+            {
+                plane.gameObject.SetActive(false);
+            }
+
+            contentPlaced = true;
+        }
+    }
+
+    private void PlaceContentAtPosition(Vector3 position)
     {
         if (catPrefab == null)
         {
@@ -70,15 +134,17 @@ public class PlaneManagerPines : MonoBehaviour
             return;
         }
 
-        Vector3 forward = cam.forward;
-        Vector3 basePos = cam.position + forward * distanceFromCamera;
-        basePos.y = cam.position.y - 0.1f;
+        // 🐱 Gato frente al usuario, sobre el plano
+        Vector3 directionToCat = cam.position - position;
+        directionToCat.y = 0;
+        Quaternion catRotation = Quaternion.LookRotation(directionToCat);
 
-        // 🐱 Gato frente a cámara
-        catInstance = Instantiate(catPrefab, basePos, Quaternion.LookRotation(-forward));
-        catController = catInstance.GetComponent<CatController>();
+        catInstance = Instantiate(catPrefab, position, catRotation);
 
-        // 📍 Instancia mapas (ocultos)
+        if (verbose)
+            Debug.Log($"[PlaneManagerPines] Gato colocado en: {position}");
+
+        // 📍 Instancia mapas (ocultos) relativos al gato
         for (int i = 0; i < mapPrefabs.Count; i++)
         {
             if (mapPrefabs[i] == null) continue;
@@ -122,22 +188,19 @@ public class PlaneManagerPines : MonoBehaviour
 
         if (todosActivados)
         {
-            esperandoAudio = true; // ahora esperamos a que el gato nos avise
+            esperandoAudio = true;
             if (verbose)
                 Debug.Log($"[PlaneManagerPines] Todos los pines del mapa {currentMapIndex + 1} activados. Esperando fin de audio…");
         }
     }
 
-    /// <summary>
-    /// Llamado por CatController cuando terminó el audio del último pin tocado.
-    /// </summary>
     public void SolicitarCambioDeMapa()
     {
         if (!esperandoAudio) return;
         esperandoAudio = false;
 
-        OcultarObjetosDelMapaActual(); // solo ocultar objetos de pines
-        AvanzarAlSiguienteMapa();      // activar próximo mapa
+        OcultarObjetosDelMapaActual();
+        AvanzarAlSiguienteMapa();
     }
 
     private void OcultarObjetosDelMapaActual()
@@ -166,7 +229,6 @@ public class PlaneManagerPines : MonoBehaviour
         }
     }
 
-    // ✅ Llamado por CatController cuando un pin termina su audio
     public void NotificarPinCompletado(PinMapa pin)
     {
         if (pin == null) return;
@@ -174,18 +236,6 @@ public class PlaneManagerPines : MonoBehaviour
         if (verbose)
             Debug.Log($"[PlaneManagerPines] Pin completado: {pin.name}");
 
-        if (catController != null)
-        {
-            Debug.Log($"[PlaneManagerPines] Pidiendo a Zylo hablar sobre {pin.idPin}");
-            
-        }
-        else
-        {
-            Debug.LogWarning("[PlaneManagerPines] No se encontró el CatController.");
-        }
-
-
-        // Verificar si todos los pines del mapa actual ya se activaron y terminaron
         if (currentMapIndex < mapInstances.Count)
         {
             GameObject currentMap = mapInstances[currentMapIndex];
@@ -201,7 +251,6 @@ public class PlaneManagerPines : MonoBehaviour
                 }
             }
 
-            // Si ya todos fueron activados → avanzar al siguiente mapa
             if (todosActivados)
             {
                 if (verbose)
@@ -211,5 +260,4 @@ public class PlaneManagerPines : MonoBehaviour
             }
         }
     }
-
 }
