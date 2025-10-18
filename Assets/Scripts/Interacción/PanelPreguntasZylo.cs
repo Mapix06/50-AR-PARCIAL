@@ -122,26 +122,23 @@ public class PanelPreguntasZylo : MonoBehaviour
 
         Debug.Log($"🎯 [PanelPreguntasZylo] Usuario seleccionó pregunta {numeroPregunta}");
 
-        // Obtener el audio correspondiente
         AudioClip audioResp = numeroPregunta == 1 ? audioRespuesta1Actual : audioRespuesta2Actual;
 
-
-        // Ocultar panel de preguntas
         if (panelPreguntas != null)
             panelPreguntas.SetActive(false);
 
-        // Iniciar secuencia de respuesta
-        StartCoroutine(SecuenciaRespuesta(numeroPregunta, audioResp));
+        // ✅ Iniciar secuencia completa
+        StartCoroutine(SecuenciaRespuestaCompleta(numeroPregunta, audioResp));
     }
 
     /// <summary>
     /// Corrutina que maneja la animación de pensar, hablar y mostrar respuesta
     /// </summary>
-    private IEnumerator SecuenciaRespuesta(int numeroPregunta, AudioClip audio)
+    private IEnumerator SecuenciaRespuestaCompleta(int numeroPregunta, AudioClip audio)
     {
         esperandoRespuesta = true;
 
-        // 1. Zylo piensa
+        // 1. Animación de pensar
         if (zyloAnimator != null)
             zyloAnimator.SetBool(animacionPensar, true);
 
@@ -150,23 +147,20 @@ public class PanelPreguntasZylo : MonoBehaviour
         if (zyloAnimator != null)
             zyloAnimator.SetBool(animacionPensar, false);
 
-        // 2. Zylo habla
+        // 2. Obtener texto de respuesta
+        DatosRespuesta datosResp = LectorRespuestas.instance.ObtenerDatosPorID(idPinActual);
+        string textoRespuesta = numeroPregunta == 1 ? datosResp?.respuesta1 : datosResp?.respuesta2;
+
+        // 3. Animación de hablar
         if (zyloAnimator != null)
             zyloAnimator.SetBool(animacionHablar, true);
 
-        // Obtener el texto de la respuesta desde el lector (para subtítulos)
-        DatosRespuesta datosResp = LectorRespuestas.instance.ObtenerDatosPorID(idPinActual);
-        string textoRespuesta = "";
-
-        if (datosResp != null)
-            textoRespuesta = numeroPregunta == 1 ? datosResp.respuesta1 : datosResp.respuesta2;
-
+        // 4. Reproducir audio y mostrar subtítulos
         if (zyloAudioSource != null && audio != null)
         {
             zyloAudioSource.clip = audio;
             zyloAudioSource.Play();
 
-            // Mostrar subtítulos si existe el sistema
             if (SubtitulosZylo.Instance != null && !string.IsNullOrEmpty(textoRespuesta))
                 SubtitulosZylo.Instance.MostrarSubtitulosConAudio(textoRespuesta, audio);
 
@@ -174,27 +168,24 @@ public class PanelPreguntasZylo : MonoBehaviour
         }
         else
         {
-            // Sin audio, solo mostrar texto en subtítulos
             if (SubtitulosZylo.Instance != null && !string.IsNullOrEmpty(textoRespuesta))
                 SubtitulosZylo.Instance.MostrarTexto(textoRespuesta);
 
             yield return new WaitForSeconds(3f);
         }
 
-        // 3. Detener habla
+        // 5. Detener animación de hablar
         if (zyloAnimator != null)
             zyloAnimator.SetBool(animacionHablar, false);
 
-        // 4. El LECTOR DE RESPUESTAS actualiza su propio texto en el panel de respuesta
+        // 6. Mostrar respuesta en panel
         LectorRespuestas.instance.MostrarRespuesta(idPinActual, numeroPregunta);
 
-        // 5. Mostrar panel de respuesta
         if (panelRespuesta != null)
             panelRespuesta.SetActive(true);
 
         esperandoRespuesta = false;
     }
-
     /// <summary>
     /// Detiene la animación de hablar (usado con Invoke)
     /// </summary>

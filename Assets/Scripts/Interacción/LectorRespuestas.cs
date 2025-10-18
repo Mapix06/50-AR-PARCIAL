@@ -33,7 +33,7 @@ public class LectorRespuestas : MonoBehaviour
     /// <summary>
     /// Carga las respuestas desde el archivo TXT usando StreamReader
     /// </summary>
-    void CargarRespuestasDesdeTXT()
+    public void CargarRespuestasDesdeTXT()
     {
         if (!File.Exists(rutaArchivo))
         {
