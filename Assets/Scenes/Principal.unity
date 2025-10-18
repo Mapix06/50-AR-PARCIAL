@@ -2298,6 +2298,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 585992640}
   m_CullTransparentMesh: 1
+--- !u!1 &588892373
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 588892375}
+  - component: {fileID: 588892376}
+  m_Layer: 0
+  m_Name: LecturaPregunta
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &588892375
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588892373}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.00002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &588892376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588892373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e12c4589643d01a4692b660bfa57fa0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LectorPreguntas
+  textoPregunta1: {fileID: 1506532058}
+  textoPregunta2: {fileID: 1767125047}
 --- !u!1 &594445637
 GameObject:
   m_ObjectHideFlags: 0
@@ -2878,52 +2924,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 930350199}
   m_CullTransparentMesh: 1
---- !u!1 &964948087
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 964948089}
-  - component: {fileID: 964948088}
-  m_Layer: 0
-  m_Name: InicializadordeTextoZylo
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &964948088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 964948087}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f5f92cade9068f44bba8de8941aedb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ZyloSceneConnector
-  zyloController: {fileID: 0}
-  textoSubtituloZylo: {fileID: 371870721}
---- !u!4 &964948089
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 964948087}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 68.81012, y: 0, z: 2009.6267}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &975718695
 GameObject:
   m_ObjectHideFlags: 0
@@ -3423,6 +3423,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1091211831
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1091211833}
+  - component: {fileID: 1091211832}
+  m_Layer: 0
+  m_Name: LecturaRespuestas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1091211832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1091211831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87434fb420c913c4194d283967359409, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LectorRespuestas
+  textoRespuesta: {fileID: 371870721}
+--- !u!4 &1091211833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1091211831}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.00002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1116227272
 GameObject:
   m_ObjectHideFlags: 0
@@ -3828,6 +3873,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1176590311}
   m_CullTransparentMesh: 1
+--- !u!1 &1231430952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1231430954}
+  - component: {fileID: 1231430953}
+  m_Layer: 0
+  m_Name: ControllerSubtitles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1231430953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231430952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a8f72fb68f741f48afa98c63c05936a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubtitulosZylo
+  textoSubtitulos: {fileID: 371870721}
+  tiempoExtra: 1
+--- !u!4 &1231430954
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231430952}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.00002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1280061168
 GameObject:
   m_ObjectHideFlags: 0
@@ -5612,7 +5703,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 369.51874, y: 137.51874}
+  m_AnchoredPosition: {x: 464, y: 871}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1874178220
@@ -6563,18 +6654,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PanelPreguntasZylo
   panelPreguntas: {fileID: 2124919241}
+  panelRespuesta: {fileID: 1958934606}
   botonPregunta1: {fileID: 975718697}
   botonPregunta2: {fileID: 594445639}
-  textoPregunta1: {fileID: 1506532058}
-  textoPregunta2: {fileID: 1767125047}
-  panelRespuesta: {fileID: 1958934606}
-  textoRespuesta: {fileID: 371870721}
   botonCerrarRespuesta: {fileID: 59018969}
   zyloAnimator: {fileID: 9169351880795623401, guid: 2d1ea6a572ca47f4ea9e75bd5d825550, type: 3}
   zyloAudioSource: {fileID: 7183017882390530016, guid: 2d1ea6a572ca47f4ea9e75bd5d825550, type: 3}
   animacionPensar: isThinking
   animacionHablar: isTalking
   tiempoPensando: 2
+  carpetaAudios: Resources/Dialogos
 --- !u!1 &2144760983
 GameObject:
   m_ObjectHideFlags: 0
@@ -6667,4 +6756,6 @@ SceneRoots:
   - {fileID: 1627375516}
   - {fileID: 1756073721}
   - {fileID: 493276839}
-  - {fileID: 964948089}
+  - {fileID: 1231430954}
+  - {fileID: 588892375}
+  - {fileID: 1091211833}

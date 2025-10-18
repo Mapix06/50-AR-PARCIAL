@@ -4419,6 +4419,10 @@ PrefabInstance:
       value: 1980_1982
       objectReference: {fileID: 0}
     - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
+      propertyPath: audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 97d4e83e91b575649b42894c09066cf7, type: 3}
+    - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
       propertyPath: objetosAR.Array.size
       value: 8
       objectReference: {fileID: 0}
@@ -5165,6 +5169,10 @@ PrefabInstance:
       value: 1982_1984
       objectReference: {fileID: 0}
     - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
+      propertyPath: audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a4c1167cdbc45f4478a5ae23fabab208, type: 3}
+    - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
       propertyPath: objetosAR.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -5754,6 +5762,10 @@ PrefabInstance:
       value: 1988_1990
       objectReference: {fileID: 0}
     - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
+      propertyPath: audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 25840e4625be8014e859bf551b387d05, type: 3}
+    - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
       propertyPath: objetosAR.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -5914,6 +5926,10 @@ PrefabInstance:
       propertyPath: idPin
       value: 1986_1988
       objectReference: {fileID: 0}
+    - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
+      propertyPath: audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: edbe23a427065ef4d84531875430c562, type: 3}
     - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
       propertyPath: objetosAR.Array.size
       value: 2
@@ -6591,6 +6607,10 @@ PrefabInstance:
       propertyPath: idPin
       value: 1984_1986
       objectReference: {fileID: 0}
+    - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
+      propertyPath: audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 7f1dc9626cb8078499c53ca4b2e94c87, type: 3}
     - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
       propertyPath: objetosAR.Array.size
       value: 5

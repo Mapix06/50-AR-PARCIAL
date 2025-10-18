@@ -31,6 +31,7 @@ public class PlaneManagerPines : MonoBehaviour
     [SerializeField] private bool verbose = true;
 
     private GameObject catInstance;
+    private CatController catController;
     private readonly List<GameObject> mapInstances = new List<GameObject>();
     private int currentMapIndex = 0;
     private bool checkingPins = false;
@@ -75,6 +76,7 @@ public class PlaneManagerPines : MonoBehaviour
 
         // 🐱 Gato frente a cámara
         catInstance = Instantiate(catPrefab, basePos, Quaternion.LookRotation(-forward));
+        catController = catInstance.GetComponent<CatController>();
 
         // 📍 Instancia mapas (ocultos)
         for (int i = 0; i < mapPrefabs.Count; i++)
@@ -171,6 +173,17 @@ public class PlaneManagerPines : MonoBehaviour
 
         if (verbose)
             Debug.Log($"[PlaneManagerPines] Pin completado: {pin.name}");
+
+        if (catController != null)
+        {
+            Debug.Log($"[PlaneManagerPines] Pidiendo a Zylo hablar sobre {pin.idPin}");
+            
+        }
+        else
+        {
+            Debug.LogWarning("[PlaneManagerPines] No se encontró el CatController.");
+        }
+
 
         // Verificar si todos los pines del mapa actual ya se activaron y terminaron
         if (currentMapIndex < mapInstances.Count)

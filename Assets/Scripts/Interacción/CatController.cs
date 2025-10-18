@@ -99,9 +99,11 @@ public class CatController : MonoBehaviour
             animator?.SetBool("isWalking", false);
             StartCoroutine(RotateToCamera());
 
+            // ✅ Cuando llega al pin, este se encarga del audio
             if (pinPendiente != null)
             {
-                pinPendiente.OnPinClicked();
+                pinPendiente.OnZyloLlego(this);
+                pinPendiente = null;
             }
 
             targetPos = null;
@@ -133,7 +135,13 @@ public class CatController : MonoBehaviour
             SubtitulosZylo.Instance.MostrarTexto(textoBienvenida);
 
         yield return new WaitForSeconds(audioBienvenida.length);
-
         animator?.SetBool("isTalking", false);
+    }
+
+    // 🔸 Nuevo: solo para activar/desactivar animación de hablar
+    public void SetTalking(bool estado)
+    {
+        if (animator != null)
+            animator.SetBool("isTalking", estado);
     }
 }

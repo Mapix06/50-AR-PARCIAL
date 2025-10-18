@@ -4921,6 +4921,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PinMapa
   objetosAR: []
   idPin: 2018_2020
+  audioClip: {fileID: 8300000, guid: 0f2a76678f2395b4191e87bbab440c28, type: 3}
+  textoDelPin: 
 --- !u!4 &3115974576680333914 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4022380438556987859, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
@@ -5041,6 +5043,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PinMapa
   objetosAR: []
   idPin: 2010_2012
+  audioClip: {fileID: 8300000, guid: dc6f48caf64bf654c8145c058153058d, type: 3}
+  textoDelPin: 
 --- !u!4 &873974079959440781 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4022380438556987859, guid: cb35da59a0eb01f4299f83e73551386d, type: 3}
@@ -5511,6 +5515,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PinMapa
   objetosAR: []
   idPin: 2021_2023
+  audioClip: {fileID: 8300000, guid: 5eb0466f5e09dd64b9df9d4bb5491cb6, type: 3}
+  textoDelPin: 
 --- !u!1001 &7408888942224614684
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5631,6 +5637,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PinMapa
   objetosAR: []
   idPin: 2014_2016
+  audioClip: {fileID: 8300000, guid: 2306f2c1c4c6b1b47891a6d5fc477a8f, type: 3}
+  textoDelPin: 
 --- !u!1001 &7714259928940540467
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5900,6 +5908,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PinMapa
   objetosAR: []
   idPin: 2016_2018
+  audioClip: {fileID: 8300000, guid: e0095e13c811e0743a404d97a89cfdba, type: 3}
+  textoDelPin: 
 --- !u!1001 &8564598028775388544
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6020,3 +6030,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PinMapa
   objetosAR: []
   idPin: 2012_2014
+  audioClip: {fileID: 8300000, guid: 6488d57e8425e6e4bb66dbe3f0a11804, type: 3}
+  textoDelPin: 
