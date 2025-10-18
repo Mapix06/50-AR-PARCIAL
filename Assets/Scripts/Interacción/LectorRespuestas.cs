@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
@@ -35,9 +35,11 @@ public class LectorRespuestas : MonoBehaviour
     /// </summary>
     public void CargarRespuestasDesdeTXT()
     {
+        Debug.Log($"ðŸŸ¡ Ruta construida: {rutaArchivo}");
+
         if (!File.Exists(rutaArchivo))
         {
-            Debug.LogError($" [LectorRespuestas] No se encontró el archivo en: {rutaArchivo}");
+            Debug.LogError($" [LectorRespuestas] No se encontrÃ³ el archivo en: {rutaArchivo}");
             return;
         }
 
@@ -57,7 +59,7 @@ public class LectorRespuestas : MonoBehaviour
 
                     if (partes.Length < 3)
                     {
-                        Debug.LogWarning($" [LectorRespuestas] Línea con formato incorrecto: {linea}");
+                        Debug.LogWarning($" [LectorRespuestas] LÃ­nea con formato incorrecto: {linea}");
                         continue;
                     }
 
@@ -88,14 +90,14 @@ public class LectorRespuestas : MonoBehaviour
         DatosRespuesta resultado = respuestas.Find(r => r.idPin == id);
 
         if (resultado == null)
-            Debug.LogWarning($" [LectorRespuestas] No se encontró respuesta con ID: {id}");
+            Debug.LogWarning($" [LectorRespuestas] No se encontrÃ³ respuesta con ID: {id}");
 
         return resultado;
     }
 
     /// <summary>
-    /// Muestra la respuesta correspondiente al ID y al botón elegido (1 o 2).
-    /// Este método actualiza directamente el texto de respuesta en la UI.
+    /// Muestra la respuesta correspondiente al ID y al botÃ³n elegido (1 o 2).
+    /// Este mÃ©todo actualiza directamente el texto de respuesta en la UI.
     /// </summary>
     public void MostrarRespuesta(string idPin, int numeroPregunta)
     {
@@ -112,7 +114,7 @@ public class LectorRespuestas : MonoBehaviour
         if (textoRespuesta != null)
             textoRespuesta.text = respuestaSeleccionada;
         else
-            Debug.LogError(" [LectorRespuestas] textoRespuesta no está asignado en el Inspector");
+            Debug.LogError(" [LectorRespuestas] textoRespuesta no estÃ¡ asignado en el Inspector");
 
         Debug.Log($" [LectorRespuestas] Respuesta mostrada para ID '{idPin}' (pregunta {numeroPregunta}): {respuestaSeleccionada}");
     }
