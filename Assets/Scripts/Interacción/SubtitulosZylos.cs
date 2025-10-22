@@ -12,7 +12,7 @@ public class SubtitulosZylo : MonoBehaviour
 
     [Header("Control de Overflow")]
     [SerializeField] private bool activarSegmentacionAutomatica = true;
-    [SerializeField] private float tiempoPorSegmento = 3.5f;
+    [SerializeField] private float tiempoPorSegmento = 9f;
 
     void Awake()
     {

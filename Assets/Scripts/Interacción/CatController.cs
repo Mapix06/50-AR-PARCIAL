@@ -115,7 +115,12 @@ public class CatController : MonoBehaviour
         if (cam == null) yield break;
 
         Quaternion start = transform.rotation;
-        Quaternion target = Quaternion.LookRotation(cam.transform.position - transform.position);
+
+        // 🔧 Forzar dirección plana (sin inclinación vertical)
+        Vector3 flatCamPos = new Vector3(cam.transform.position.x, transform.position.y, cam.transform.position.z);
+        Vector3 lookDir = flatCamPos - transform.position;
+
+        Quaternion target = Quaternion.LookRotation(lookDir);
         float t = 0f;
         while (t < 1f)
         {
@@ -124,6 +129,7 @@ public class CatController : MonoBehaviour
             yield return null;
         }
     }
+
 
     private IEnumerator ReproducirBienvenida()
     {

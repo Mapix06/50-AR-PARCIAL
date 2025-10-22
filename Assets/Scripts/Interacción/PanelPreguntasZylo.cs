@@ -96,7 +96,14 @@ public class PanelPreguntasZylo : MonoBehaviour
         esperandoRespuesta = true;
 
         if (zyloAnimator != null && zyloAnimator.runtimeAnimatorController != null)
+        {
+            Debug.Log(" Activando animación de pensar");
             zyloAnimator.SetBool(animacionPensar, true);
+        }
+        else
+        {
+            Debug.LogWarning(" El Animator no tiene controlador asignado (isThinking)");
+        }
 
         yield return new WaitForSeconds(tiempoPensando);
 

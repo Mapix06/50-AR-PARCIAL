@@ -16,6 +16,12 @@ public class NewBehaviourScript : MonoBehaviour
     public TextMeshProUGUI mensajeFinal;
     public Button botonReintentar;
 
+    [Header("Panel del reloj")]
+    public GameObject panelReloj;
+
+    [Header("Panel principal")]
+    public GameObject panelPrincipal;
+
     [Header("Panel principal de preguntas")]
     public GameObject panelPreguntas;
 
@@ -23,6 +29,7 @@ public class NewBehaviourScript : MonoBehaviour
     public float tiempoLimite = 15f;
     public int respuestasCorrectas = 0;
     public int totalPreguntas = 8;
+
 
     private float startTime;
     private float timerTime;
@@ -127,7 +134,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     public void ReiniciarJuego()
     {
-        Debug.Log("🔄 === INICIANDO REINICIO DEL JUEGO ===");
+        Debug.Log("=== INICIANDO REINICIO DEL JUEGO ===");
 
         // Reiniciar reloj
         startTime = Time.time;
@@ -150,7 +157,7 @@ public class NewBehaviourScript : MonoBehaviour
         if (panelPreguntas != null)
         {
             panelPreguntas.SetActive(true);
-            Debug.Log("✅ Panel de preguntas activado");
+            Debug.Log(" Panel de preguntas activado");
         }
 
         // 🔹 PASO 3: Reiniciar el sistema de preguntas (esto mostrará la primera pregunta)
@@ -168,7 +175,7 @@ public class NewBehaviourScript : MonoBehaviour
     public void IncrementarRespuestaCorrecta()
     {
         respuestasCorrectas++;
-        Debug.Log($"✅ Respuesta correcta! Total: {respuestasCorrectas}/{totalPreguntas}");
+        Debug.Log($" Respuesta correcta! Total: {respuestasCorrectas}/{totalPreguntas}");
     }
     public void DetenerTiempo()
     {
@@ -177,7 +184,7 @@ public class NewBehaviourScript : MonoBehaviour
         isRunning = false;
         quizTerminado = true;
 
-        Debug.Log("⏱ Tiempo detenido: el usuario terminó todas las preguntas.");
+        Debug.Log(" Tiempo detenido: el usuario terminó todas las preguntas.");
 
         if (panelPreguntas != null)
             panelPreguntas.SetActive(false);
@@ -192,4 +199,26 @@ public class NewBehaviourScript : MonoBehaviour
 
         EvaluarDesempeño();
     }
+
+    public void SalirDelQuiz()
+    {
+        quizTerminado = true;
+        isRunning = false;
+
+        if (panelPreguntas != null)
+            panelPreguntas.SetActive(false);
+
+        if (panelFinal != null)
+            panelFinal.SetActive(false);
+
+        if (panelReloj != null)
+            panelReloj.SetActive(false);
+
+        if (panelPrincipal != null)
+            panelPrincipal.SetActive(false);
+
+        Debug.Log(" El usuario salió del quiz manualmente.");
+    }
+
+
 }

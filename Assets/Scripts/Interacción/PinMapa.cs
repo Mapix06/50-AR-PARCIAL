@@ -80,7 +80,7 @@ public class PinMapa : MonoBehaviour
         Debug.Log($"[PinMapa] Audio finalizado del pin: {idPin}");
 
         // Mostrar panel de preguntas si existe en la escena
-        PanelPreguntasZylo panelPreguntas = FindObjectOfType<PanelPreguntasZylo>(true);
+        PanelPreguntasZylo panelPreguntas = Object.FindFirstObjectByType<PanelPreguntasZylo>();
         if (panelPreguntas != null)
         {
             Debug.Log($"[PinMapa] Abriendo PanelPreguntasZylo para el pin {idPin}");
