@@ -1331,7 +1331,6 @@ Transform:
   - {fileID: 6265637824587598305}
   - {fileID: 466518912739429768}
   - {fileID: 3687466991390293110}
-  - {fileID: 7326174836177938348}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1968984668485398311
@@ -3338,6 +3337,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8468265846627763775}
+  - {fileID: 8471649133373318289}
   - {fileID: 7657472067937959963}
   - {fileID: 4713581350495072135}
   m_Father: {fileID: 6265637824587598305}
@@ -4241,6 +4241,7 @@ Transform:
   - {fileID: 5888697976755921471}
   - {fileID: 3476351615325752584}
   - {fileID: 6910495237424171641}
+  - {fileID: 7326174836177938348}
   m_Father: {fileID: 8883530291271558596}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &8448123292911843794
@@ -4456,7 +4457,6 @@ Transform:
   - {fileID: 570286447428404670}
   - {fileID: 3782034793910613978}
   - {fileID: 1010262201849861477}
-  - {fileID: 8471649133373318289}
   m_Father: {fileID: 3687466991390293110}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &6251154585409731862
@@ -5573,7 +5573,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50afdd60068ccf142a800cdf2c537f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PinMapa
-  objetosAR: []
+  objetosAR:
+  - {fileID: 2486235208970406621}
+  - {fileID: 484121281591870120}
+  - {fileID: 8059192710485432294}
   idPin: 2018_2020
   audioClip: {fileID: 8300000, guid: 0f2a76678f2395b4191e87bbab440c28, type: 3}
   textoDelPin: "Sumamos el Premio Planeta Azul, una nueva pol\xEDtica curricular
@@ -5946,6 +5949,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bda52ee274f8d4849a2326ec02a6c387, type: 3}
+--- !u!1 &2486235208970406621 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: bda52ee274f8d4849a2326ec02a6c387, type: 3}
+  m_PrefabInstance: {fileID: 3333095205775423372}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3011554735119421543 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bda52ee274f8d4849a2326ec02a6c387, type: 3}
@@ -6854,7 +6862,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 8883530291271558596}
+    m_TransformParent: {fileID: 3687466991390293110}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 4e179aebfeabc234caf79821331b1f00, type: 3}
       propertyPath: m_LocalScale.x
@@ -6870,19 +6878,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4e179aebfeabc234caf79821331b1f00, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 112.04
+      value: 10.459999
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4e179aebfeabc234caf79821331b1f00, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.25
+      value: 2.09656
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4e179aebfeabc234caf79821331b1f00, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 63.63
+      value: 3.2700005
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4e179aebfeabc234caf79821331b1f00, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4e179aebfeabc234caf79821331b1f00, type: 3}
       propertyPath: m_LocalRotation.x
@@ -6890,7 +6898,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4e179aebfeabc234caf79821331b1f00, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4e179aebfeabc234caf79821331b1f00, type: 3}
       propertyPath: m_LocalRotation.z
@@ -7397,7 +7405,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PinMapa
   objetosAR:
+  - {fileID: 382520860578385887}
   - {fileID: 4555298904518028640}
+  - {fileID: 7989418304378436886}
   idPin: 2021_2023
   audioClip: {fileID: 8300000, guid: 5eb0466f5e09dd64b9df9d4bb5491cb6, type: 3}
   textoDelPin: "Obtenemos patente de la SIC, fortalecemos la investigaci\xF3n y nos
@@ -8306,6 +8316,11 @@ PrefabInstance:
       addedObject: {fileID: 1377573670145882303}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb61f81c39f371548aa4b79fa5580a0a, type: 3}
+--- !u!1 &6993842740129389217 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: cb61f81c39f371548aa4b79fa5580a0a, type: 3}
+  m_PrefabInstance: {fileID: 7912392691300067312}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7657472067937959963 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cb61f81c39f371548aa4b79fa5580a0a, type: 3}
@@ -8317,15 +8332,15 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 3476351615325752584}
+    m_TransformParent: {fileID: 3834727868839408491}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 15733ff794d9e8e43840d2ba1127548e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.6221675
+      value: 0.62216765
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15733ff794d9e8e43840d2ba1127548e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.7667127
+      value: 1.7667128
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15733ff794d9e8e43840d2ba1127548e, type: 3}
       propertyPath: m_LocalScale.z
@@ -8333,15 +8348,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15733ff794d9e8e43840d2ba1127548e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.8646998
+      value: -0.07631444
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15733ff794d9e8e43840d2ba1127548e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.8799533
+      value: 1.1137688
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15733ff794d9e8e43840d2ba1127548e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15.773313
+      value: 13.623668
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15733ff794d9e8e43840d2ba1127548e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8353,7 +8368,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15733ff794d9e8e43840d2ba1127548e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15733ff794d9e8e43840d2ba1127548e, type: 3}
       propertyPath: m_LocalRotation.z
@@ -8637,7 +8652,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50afdd60068ccf142a800cdf2c537f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PinMapa
-  objetosAR: []
+  objetosAR:
+  - {fileID: 9140768666332577323}
+  - {fileID: 6993842740129389217}
+  - {fileID: 5341781458985579837}
   idPin: 2016_2018
   audioClip: {fileID: 8300000, guid: e0095e13c811e0743a404d97a89cfdba, type: 3}
   textoDelPin: "Renovamos la Acreditaci\xF3n Institucional, naci\xF3 la Escuela de

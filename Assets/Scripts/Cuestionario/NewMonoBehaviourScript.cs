@@ -36,10 +36,12 @@ public class NewBehaviourScript : MonoBehaviour
     {
         if (instance == null)
             instance = this;
+
     }
 
     void Start()
     {
+
         if (panelFinal != null)
             panelFinal.SetActive(false);
 
