@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
+using UnityEngine.Networking;
 
 public class LectorRespuestas : MonoBehaviour
 {
@@ -27,59 +29,87 @@ public class LectorRespuestas : MonoBehaviour
         // Definir ruta del archivo
         rutaArchivo = Path.Combine(Application.streamingAssetsPath, "Recursos", "TXT_Interaccion", "respuestas.txt");
 
-        CargarRespuestasDesdeTXT();
+        StartCoroutine(CargarRespuestasDesdeTXT());
     }
 
     /// <summary>
-    /// Carga las respuestas desde el archivo TXT usando StreamReader
+    /// Carga las respuestas desde el archivo TXT - Compatible con Android
     /// </summary>
-    public void CargarRespuestasDesdeTXT()
+    IEnumerator CargarRespuestasDesdeTXT()
     {
-        Debug.Log($"🟡 Ruta construida: {rutaArchivo}");
+        string contenido = "";
 
-        if (!File.Exists(rutaArchivo))
+        // En Android, debemos usar UnityWebRequest
+        if (Application.platform == RuntimePlatform.Android)
         {
-            Debug.LogError($" [LectorRespuestas] No se encontró el archivo en: {rutaArchivo}");
-            return;
-        }
+            UnityWebRequest www = UnityWebRequest.Get(rutaArchivo);
+            yield return www.SendWebRequest();
 
-        respuestas.Clear();
-
-        try
-        {
-            using (StreamReader sr = new StreamReader(rutaArchivo))
+            if (www.result != UnityWebRequest.Result.Success)
             {
-                string linea;
-                while ((linea = sr.ReadLine()) != null)
-                {
-                    if (string.IsNullOrWhiteSpace(linea)) continue;
-
-                    // Formato esperado: idPin-respuesta1-respuesta2
-                    string[] partes = linea.Split('-');
-
-                    if (partes.Length < 3)
-                    {
-                        Debug.LogWarning($" [LectorRespuestas] Línea con formato incorrecto: {linea}");
-                        continue;
-                    }
-
-                    DatosRespuesta dr = new DatosRespuesta
-                    {
-                        idPin = partes[0].Trim(),
-                        respuesta1 = partes[1].Trim(),
-                        respuesta2 = partes[2].Trim()
-                    };
-
-                    respuestas.Add(dr);
-                }
+                Debug.LogError($"[LectorRespuestas] Error en Android: {www.error}");
+                yield break;
             }
 
-            Debug.Log($" [LectorRespuestas] Cargadas {respuestas.Count} respuestas desde TXT.");
+            contenido = www.downloadHandler.text;
         }
-        catch (System.Exception e)
+        else
         {
-            Debug.LogError($" [LectorRespuestas] Error al leer archivo: {e.Message}");
+            // En otras plataformas (Editor, PC, Mac), usamos StreamReader
+            if (!File.Exists(rutaArchivo))
+            {
+                Debug.LogError($"[LectorRespuestas] No se encontró el archivo en: {rutaArchivo}");
+                yield break;
+            }
+
+            try
+            {
+                contenido = File.ReadAllText(rutaArchivo);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"[LectorRespuestas] Error al leer archivo: {e.Message}");
+                yield break;
+            }
         }
+
+        // Procesar el contenido del archivo
+        ProcesarContenido(contenido);
+    }
+
+    /// <summary>
+    /// Procesa el contenido del archivo de texto
+    /// </summary>
+    void ProcesarContenido(string contenido)
+    {
+        respuestas.Clear();
+
+        string[] lineas = contenido.Split('\n');
+
+        foreach (string linea in lineas)
+        {
+            if (string.IsNullOrWhiteSpace(linea)) continue;
+
+            // Formato esperado: idPin-respuesta1-respuesta2
+            string[] partes = linea.Split('-');
+
+            if (partes.Length < 3)
+            {
+                Debug.LogWarning($" [LectorRespuestas] Línea con formato incorrecto: {linea}");
+                continue;
+            }
+
+            DatosRespuesta dr = new DatosRespuesta
+            {
+                idPin = partes[0].Trim(),
+                respuesta1 = partes[1].Trim(),
+                respuesta2 = partes[2].Trim()
+            };
+
+            respuestas.Add(dr);
+        }
+
+        Debug.Log($" [LectorRespuestas] Cargadas {respuestas.Count} respuestas desde TXT.");
     }
 
     /// <summary>
@@ -96,8 +126,7 @@ public class LectorRespuestas : MonoBehaviour
     }
 
     /// <summary>
-    /// Muestra la respuesta correspondiente al ID y al botón elegido (1 o 2).
-    /// Este método actualiza directamente el texto de respuesta en la UI.
+    /// Muestra la respuesta correspondiente al ID y al botón elegido (1 o 2)
     /// </summary>
     public void MostrarRespuesta(string idPin, int numeroPregunta)
     {
@@ -105,7 +134,7 @@ public class LectorRespuestas : MonoBehaviour
 
         if (datos == null)
         {
-            Debug.LogWarning($" [LectorRespuestas] No se pueden mostrar respuestas para ID: {idPin}");
+            Debug.LogWarning($"[LectorRespuestas] No se pueden mostrar respuestas para ID: {idPin}");
             return;
         }
 
@@ -114,8 +143,8 @@ public class LectorRespuestas : MonoBehaviour
         if (textoRespuesta != null)
             textoRespuesta.text = respuestaSeleccionada;
         else
-            Debug.LogError(" [LectorRespuestas] textoRespuesta no está asignado en el Inspector");
+            Debug.LogError("[LectorRespuestas] textoRespuesta no está asignado en el Inspector");
 
-        Debug.Log($" [LectorRespuestas] Respuesta mostrada para ID '{idPin}' (pregunta {numeroPregunta}): {respuestaSeleccionada}");
+        Debug.Log($"[LectorRespuestas] Respuesta mostrada para ID '{idPin}' (pregunta {numeroPregunta}): {respuestaSeleccionada}");
     }
 }
