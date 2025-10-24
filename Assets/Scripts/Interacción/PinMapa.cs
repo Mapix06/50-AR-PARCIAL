@@ -7,11 +7,20 @@ public class PinMapa : MonoBehaviour
     [Header("Objetos a mostrar/ocultar al tocar el pin")]
     [SerializeField] private GameObject[] objetosAR;
 
+    [Header("Letrero del pin (se oculta al completar)")]
+    [SerializeField] private GameObject letrero;
+
     public bool FueActivado { get; private set; } = false;
+
     public string idPin; // ej: "2000_2002"
+
+    [Header("Orden de aparición")]
+    [SerializeField] private int ordenPin = 0;
+    public int OrdenPin => ordenPin;
 
     [Header("Audio del pin (introducción)")]
     [SerializeField] private AudioClip audioClip;
+
     [TextArea]
     [SerializeField] private string textoDelPin;
 
@@ -19,21 +28,53 @@ public class PinMapa : MonoBehaviour
     [SerializeField] private AudioClip audioRespuesta1;
     [SerializeField] private AudioClip audioRespuesta2;
 
-    // Propiedades públicas para que PanelPreguntasZylo pueda acceder a ellas
+    [Header("Referencias directas")]
+    [SerializeField] private PanelPreguntasZylo panelPreguntasZylo;
+
+    // Propiedades públicas
     public AudioClip AudioRespuesta1 => audioRespuesta1;
     public AudioClip AudioRespuesta2 => audioRespuesta2;
+    public AudioClip AudioDelPin => audioClip;
+    public string TextoDelPin => textoDelPin;
 
     private AudioSource audioSource;
 
     void Awake()
     {
-        if (objetosAR == null) return;
-        foreach (var obj in objetosAR)
-            if (obj) obj.SetActive(false);
+        // Ocultar objetos AR al inicio
+        if (objetosAR != null)
+        {
+            foreach (var obj in objetosAR)
+                if (obj) obj.SetActive(false);
+        }
+
+        // Ocultar letrero al inicio
+        if (letrero != null)
+        {
+            letrero.SetActive(false);
+        }
 
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
         audioSource.spatialBlend = 0f;
+    }
+
+    // Mostrar letrero cuando el pin se activa en la escena
+    void OnEnable()
+    {
+        if (letrero != null)
+        {
+            letrero.SetActive(true);
+        }
+    }
+
+    void OnDisable()
+    {
+        // Cuando el pin se desactiva, ocultar el letrero
+        if (letrero != null)
+        {
+            letrero.SetActive(false);
+        }
     }
 
     // Llamado cuando Zylo llega al pin
@@ -43,58 +84,53 @@ public class PinMapa : MonoBehaviour
         {
             FueActivado = true;
             MostrarObjetos();
-            StartCoroutine(ReproducirDialogo(gato));
+            IniciarDialogoConPanel(gato);
+
+            // 🆕 Notificar inmediatamente al hacer click
+            var manager = Object.FindFirstObjectByType<PlaneManagerPines>();
+            if (manager != null)
+            {
+                Debug.Log($"[PinMapa] Pin {idPin} clickeado, notificando al manager");
+                manager.NotificarPinCompletado(this);
+            }
         }
         else
         {
             // Si ya fue activado, alterna mostrar/ocultar objetos
-            bool activos = objetosAR.Length > 0 && objetosAR[0].activeSelf;
-            if (activos) OcultarObjetos(); else MostrarObjetos();
+            bool activos = objetosAR != null && objetosAR.Length > 0 && objetosAR[0].activeSelf;
+            if (activos)
+                OcultarObjetos();
+            else
+                MostrarObjetos();
         }
-
-        // Notificar al manager
-        var manager = FindObjectOfType<PlaneManagerPines>();
-        manager?.NotificarPinCompletado(this);
     }
 
-    private IEnumerator ReproducirDialogo(CatController gato)
+    private void IniciarDialogoConPanel(CatController gato)
     {
-        if (audioClip == null)
+        Debug.Log($"[PinMapa] Pin {idPin} activado, buscando panel de preguntas...");
+
+        PanelPreguntasZylo panelPreguntas = panelPreguntasZylo;
+
+        if (panelPreguntas == null)
         {
-            Debug.LogWarning($"[PinMapa] No se asignó audio para el pin {idPin}");
-            yield break;
+            panelPreguntas = Object.FindFirstObjectByType<PanelPreguntasZylo>(FindObjectsInactive.Include);
         }
 
-        Debug.Log($"[PinMapa] ▶ Reproduciendo audio del pin: {idPin}");
-        gato?.SetTalking(true);
-
-        audioSource.clip = audioClip;
-        audioSource.Play();
-
-        if (SubtitulosZylo.Instance != null)
-            SubtitulosZylo.Instance.MostrarTexto(textoDelPin);
-
-        yield return new WaitForSeconds(audioClip.length);
-
-        gato?.SetTalking(false);
-        Debug.Log($"[PinMapa] Audio finalizado del pin: {idPin}");
-
-        // Mostrar panel de preguntas si existe en la escena
-        PanelPreguntasZylo panelPreguntas = Object.FindFirstObjectByType<PanelPreguntasZylo>();
         if (panelPreguntas != null)
         {
-            Debug.Log($"[PinMapa] Abriendo PanelPreguntasZylo para el pin {idPin}");
-            panelPreguntas.MostrarPanelPreguntas(this);
+            Debug.Log($"[PinMapa] ✅ Panel encontrado, iniciando diálogo para pin {idPin}");
+            panelPreguntas.MostrarPanelPreguntas(this, gato);
         }
         else
         {
-            Debug.LogWarning("[PinMapa] No se encontró PanelPreguntasZylo en la escena.");
+            Debug.LogError("[PinMapa] ❌ No se encontró PanelPreguntasZylo en la escena.");
         }
     }
 
     public void MostrarObjetos()
     {
         if (objetosAR == null) return;
+
         foreach (var obj in objetosAR)
             if (obj) obj.SetActive(true);
     }
@@ -102,6 +138,7 @@ public class PinMapa : MonoBehaviour
     public void OcultarObjetos()
     {
         if (objetosAR == null) return;
+
         foreach (var obj in objetosAR)
             if (obj) obj.SetActive(false);
     }

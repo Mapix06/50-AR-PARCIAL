@@ -34,8 +34,7 @@ public class PlaneManagerPines : MonoBehaviour
     private GameObject catInstance;
     private readonly List<GameObject> mapInstances = new List<GameObject>();
     private int currentMapIndex = 0;
-    private bool checkingPins = false;
-    private bool esperandoAudio = false;
+    private int currentPinIndex = 0;
     private bool contentPlaced = false;
 
     private List<ARRaycastHit> hits = new List<ARRaycastHit>();
@@ -46,12 +45,11 @@ public class PlaneManagerPines : MonoBehaviour
             arPlaneManager = GetComponent<ARPlaneManager>();
 
         if (!arRaycastManager)
-            arRaycastManager = FindObjectOfType<ARRaycastManager>();
+            arRaycastManager = Object.FindFirstObjectByType<ARRaycastManager>();
     }
 
     void Start()
     {
-        // ✅ HABILITAMOS la detección de planos
         arPlaneManager.requestedDetectionMode = PlaneDetectionMode.Horizontal;
 
         if (verbose)
@@ -60,15 +58,9 @@ public class PlaneManagerPines : MonoBehaviour
 
     void Update()
     {
-        // Si ya colocamos el contenido, solo verificamos pines
         if (contentPlaced)
-        {
-            if (checkingPins && !esperandoAudio)
-                CheckPinsCompletion();
             return;
-        }
 
-        // Buscamos plano automáticamente frente al usuario
         TryPlaceContentInFrontOfUser();
     }
 
@@ -87,29 +79,23 @@ public class PlaneManagerPines : MonoBehaviour
             return;
         }
 
-        // Hacer raycast desde el centro de la pantalla hacia adelante
         Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
 
         if (arRaycastManager.Raycast(screenCenter, hits, TrackableType.PlaneWithinPolygon))
         {
             ARRaycastHit hit = hits[0];
 
-            // Calcular posición frente al usuario a la distancia especificada
             Vector3 forward = cam.forward;
-            forward.y = 0; // mantener en horizontal
+            forward.y = 0;
             forward.Normalize();
 
             Vector3 targetPosition = cam.position + forward * distanceFromCamera;
-
-            // Usar la altura Y del plano detectado
             targetPosition.y = hit.pose.position.y;
 
             PlaceContentAtPosition(targetPosition);
 
-            // Deshabilitamos la detección de planos después de colocar
             arPlaneManager.requestedDetectionMode = PlaneDetectionMode.None;
 
-            // Opcional: ocultar planos visuales
             foreach (var plane in arPlaneManager.trackables)
             {
                 plane.gameObject.SetActive(false);
@@ -134,7 +120,7 @@ public class PlaneManagerPines : MonoBehaviour
             return;
         }
 
-        // 🐱 Gato frente al usuario, sobre el plano
+        // Gato frente al usuario
         Vector3 directionToCat = cam.position - position;
         directionToCat.y = 0;
         Quaternion catRotation = Quaternion.LookRotation(directionToCat);
@@ -144,7 +130,7 @@ public class PlaneManagerPines : MonoBehaviour
         if (verbose)
             Debug.Log($"[PlaneManagerPines] Gato colocado en: {position}");
 
-        // 📍 Instancia mapas (ocultos) relativos al gato
+        // Instancia mapas (ocultos) relativos al gato
         for (int i = 0; i < mapPrefabs.Count; i++)
         {
             if (mapPrefabs[i] == null) continue;
@@ -162,70 +148,42 @@ public class PlaneManagerPines : MonoBehaviour
             mapInstances.Add(map);
         }
 
-        // Muestra el primero
+        // Muestra el primer mapa y activa solo el primer pin
         if (mapInstances.Count > 0)
         {
             currentMapIndex = 0;
-            mapInstances[0].SetActive(true);
-            checkingPins = true;
-            if (verbose) Debug.Log("[PlaneManagerPines] Mostrando mapa inicial (1).");
+            currentPinIndex = 0;
+            MostrarMapaYPrimerPin();
         }
     }
 
-    private void CheckPinsCompletion()
+    private void MostrarMapaYPrimerPin()
     {
         if (currentMapIndex >= mapInstances.Count) return;
 
         GameObject currentMap = mapInstances[currentMapIndex];
+        currentMap.SetActive(true);
+
         PinMapa[] pins = currentMap.GetComponentsInChildren<PinMapa>(true);
-        if (pins.Length == 0) return;
 
-        bool todosActivados = true;
-        foreach (var p in pins)
+        if (pins.Length == 0)
         {
-            if (!p.FueActivado) { todosActivados = false; break; }
+            Debug.LogWarning($"[PlaneManagerPines] El mapa {currentMapIndex + 1} no tiene pines.");
+            return;
         }
 
-        if (todosActivados)
-        {
-            esperandoAudio = true;
-            if (verbose)
-                Debug.Log($"[PlaneManagerPines] Todos los pines del mapa {currentMapIndex + 1} activados. Esperando fin de audio…");
-        }
-    }
-
-    public void SolicitarCambioDeMapa()
-    {
-        if (!esperandoAudio) return;
-        esperandoAudio = false;
-
-        OcultarObjetosDelMapaActual();
-        AvanzarAlSiguienteMapa();
-    }
-
-    private void OcultarObjetosDelMapaActual()
-    {
-        if (currentMapIndex >= mapInstances.Count) return;
-
-        GameObject mapaActual = mapInstances[currentMapIndex];
-        PinMapa[] pins = mapaActual.GetComponentsInChildren<PinMapa>(true);
+        // Desactivar todos los pines primero
         foreach (var pin in pins)
-            pin.OcultarObjetos();
-    }
-
-    private void AvanzarAlSiguienteMapa()
-    {
-        currentMapIndex++;
-        if (currentMapIndex < mapInstances.Count)
         {
-            mapInstances[currentMapIndex].SetActive(true);
-            checkingPins = true;
-            if (verbose) Debug.Log($"[PlaneManagerPines] Mostrando mapa {currentMapIndex + 1}");
+            pin.gameObject.SetActive(false);
         }
-        else
+
+        // Activar solo el primer pin
+        if (currentPinIndex < pins.Length)
         {
-            checkingPins = false;
-            Debug.Log("[PlaneManagerPines] Todos los mapas completados.");
+            pins[currentPinIndex].gameObject.SetActive(true);
+            if (verbose)
+                Debug.Log($"[PlaneManagerPines] Mostrando mapa {currentMapIndex + 1}, pin {currentPinIndex + 1}/{pins.Length}");
         }
     }
 
@@ -236,28 +194,80 @@ public class PlaneManagerPines : MonoBehaviour
         if (verbose)
             Debug.Log($"[PlaneManagerPines] Pin completado: {pin.name}");
 
+        if (currentMapIndex >= mapInstances.Count) return;
+
+        GameObject currentMap = mapInstances[currentMapIndex];
+        PinMapa[] pins = currentMap.GetComponentsInChildren<PinMapa>(true);
+
+        // Avanzar al siguiente pin
+        currentPinIndex++;
+
+        if (currentPinIndex < pins.Length)
+        {
+            // Hay más pines en este mapa, activar el siguiente
+            pins[currentPinIndex].gameObject.SetActive(true);
+
+            if (verbose)
+                Debug.Log($"[PlaneManagerPines] Activando siguiente pin: {currentPinIndex + 1}/{pins.Length}");
+        }
+        else
+        {
+            // Se completaron todos los pines de este mapa
+            if (verbose)
+                Debug.Log($"[PlaneManagerPines] Todos los pines del mapa {currentMapIndex + 1} completados.");
+
+            // Ocultar objetos AR del mapa actual
+            OcultarObjetosDelMapaActual();
+
+            // Cerrar panel de preguntas
+            PanelPreguntasZylo panel = Object.FindFirstObjectByType<PanelPreguntasZylo>(FindObjectsInactive.Include);
+            panel?.CerrarTodo();
+
+            // 🆕 OCULTAR el mapa actual antes de avanzar
+            OcultarMapaActual();
+
+            // Avanzar al siguiente mapa
+            AvanzarAlSiguienteMapa();
+        }
+    }
+
+    private void OcultarObjetosDelMapaActual()
+    {
+        if (currentMapIndex >= mapInstances.Count) return;
+
+        GameObject mapaActual = mapInstances[currentMapIndex];
+        PinMapa[] pins = mapaActual.GetComponentsInChildren<PinMapa>(true);
+
+        foreach (var pin in pins)
+            pin.OcultarObjetos();
+    }
+
+    // 🆕 Método para ocultar completamente el mapa actual
+    private void OcultarMapaActual()
+    {
+        if (currentMapIndex >= mapInstances.Count) return;
+
+        GameObject mapaActual = mapInstances[currentMapIndex];
+        mapaActual.SetActive(false);
+
+        if (verbose)
+            Debug.Log($"[PlaneManagerPines] Mapa {currentMapIndex + 1} ocultado.");
+    }
+
+    private void AvanzarAlSiguienteMapa()
+    {
+        currentMapIndex++;
+        currentPinIndex = 0; // Resetear índice de pines para el nuevo mapa
+
         if (currentMapIndex < mapInstances.Count)
         {
-            GameObject currentMap = mapInstances[currentMapIndex];
-            PinMapa[] pins = currentMap.GetComponentsInChildren<PinMapa>(true);
-
-            bool todosActivados = true;
-            foreach (var p in pins)
-            {
-                if (!p.FueActivado)
-                {
-                    todosActivados = false;
-                    break;
-                }
-            }
-
-            if (todosActivados)
-            {
-                if (verbose)
-                    Debug.Log($"[PlaneManagerPines] Todos los pines del mapa {currentMapIndex + 1} completados, pasando al siguiente...");
-
-                SolicitarCambioDeMapa();
-            }
+            MostrarMapaYPrimerPin();
+            if (verbose)
+                Debug.Log($"[PlaneManagerPines] Pasando al mapa {currentMapIndex + 1}");
+        }
+        else
+        {
+            Debug.Log("[PlaneManagerPines] 🎉 ¡Todos los mapas completados!");
         }
     }
 }

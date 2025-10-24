@@ -114,7 +114,7 @@ Transform:
   m_GameObject: {fileID: 300883529174922234}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 121.950584, y: 0.12087989, z: 15.489346}
+  m_LocalPosition: {x: 121.950584, y: 0.12087989, z: 26.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -627,7 +627,7 @@ Transform:
   m_GameObject: {fileID: 827823492153812278}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 113.92535, y: 2.15344, z: 46.002884}
+  m_LocalPosition: {x: 114.92535, y: 2.15344, z: 49.53289}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2560,7 +2560,7 @@ Transform:
   m_GameObject: {fileID: 4196583654920983972}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 118.453606, y: 0.12087989, z: 4.8476753}
+  m_LocalPosition: {x: 119.453606, y: 0.12087989, z: 8.377682}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3023,7 +3023,7 @@ Transform:
   m_GameObject: {fileID: 5224189990701887118}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 128.27011, y: 0.12087989, z: 23.567406}
+  m_LocalPosition: {x: 129.27011, y: 0.12087989, z: 27.097412}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3296,7 +3296,7 @@ Transform:
   m_GameObject: {fileID: 6552733393284976993}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 120.13671, y: 0.12087989, z: 27.186005}
+  m_LocalPosition: {x: 121.13671, y: 0.12087989, z: 30.716011}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4023,7 +4023,7 @@ Transform:
   m_GameObject: {fileID: 8085755295094674168}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 113.92535, y: 2.15344, z: 46.002884}
+  m_LocalPosition: {x: 114.92535, y: 2.15344, z: 49.53289}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4234,7 +4234,7 @@ Transform:
   m_GameObject: {fileID: 8411638146556300653}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 122.5, y: 2.15344, z: 66.9}
+  m_LocalPosition: {x: 123.5, y: 2.15344, z: 70.43001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5584,6 +5584,7 @@ MonoBehaviour:
     con UAO Virtual y proyectos sociales que cuidan a la comunidad.\r\n"
   audioRespuesta1: {fileID: 8300000, guid: db7a0e412d0aab544b80890cadc4551c, type: 3}
   audioRespuesta2: {fileID: 8300000, guid: 3ed1fd8d2f76b4648abd7e97583488ea, type: 3}
+  panelPreguntasZylo: {fileID: 0}
 --- !u!82 &5429756384242661611
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6191,6 +6192,7 @@ MonoBehaviour:
     ambiental.\r\n"
   audioRespuesta1: {fileID: 8300000, guid: e9f90861f4baad64a9bb774c38019308, type: 3}
   audioRespuesta2: {fileID: 8300000, guid: 7a68a4c1c5e9d384db59126204c5da8d, type: 3}
+  panelPreguntasZylo: {fileID: 0}
 --- !u!82 &8720123158048126541
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7417,6 +7419,7 @@ MonoBehaviour:
     ser una universidad de y para la comunidad."
   audioRespuesta1: {fileID: 8300000, guid: 9517cbda6d94e3140b5aa80b4c615eb7, type: 3}
   audioRespuesta2: {fileID: 8300000, guid: 41a1827380fdf8c43a50040afcf8861b, type: 3}
+  panelPreguntasZylo: {fileID: 0}
 --- !u!82 &1061899522667608021
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7846,6 +7849,7 @@ MonoBehaviour:
     doctorado en Ingenier\xEDa.\r\n"
   audioRespuesta1: {fileID: 8300000, guid: ea9200644f6535540ba1b01d52d3e4a6, type: 3}
   audioRespuesta2: {fileID: 8300000, guid: 38ab90b15a2dbdf44a2588bd59a6fd86, type: 3}
+  panelPreguntasZylo: {fileID: 0}
 --- !u!82 &8302257342134936805
 AudioSource:
   m_ObjectHideFlags: 0
@@ -8159,7 +8163,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9f02bf40c33a64846aee4994a51e48a2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 117.4
+      value: 118.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9f02bf40c33a64846aee4994a51e48a2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8167,7 +8171,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9f02bf40c33a64846aee4994a51e48a2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 71.27
+      value: 74.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9f02bf40c33a64846aee4994a51e48a2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8663,6 +8667,7 @@ MonoBehaviour:
     abrimos Humanidades y Artes y consolidamos UAO Virtual.\r\n"
   audioRespuesta1: {fileID: 8300000, guid: 669e5d9979f31df43ac3338542e160b1, type: 3}
   audioRespuesta2: {fileID: 8300000, guid: f8160a8a583791a4dadf19be9c0004bc, type: 3}
+  panelPreguntasZylo: {fileID: 0}
 --- !u!82 &1151308853983980093
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9093,6 +9098,7 @@ MonoBehaviour:
     la Excelencia Acad\xE9mica.\r\n"
   audioRespuesta1: {fileID: 8300000, guid: 7d67841c9336f2c44ad3aff6cc148125, type: 3}
   audioRespuesta2: {fileID: 8300000, guid: 7e8298f8f021f204ca147504ecf4a86e, type: 3}
+  panelPreguntasZylo: {fileID: 0}
 --- !u!82 &6871921812169831914
 AudioSource:
   m_ObjectHideFlags: 0

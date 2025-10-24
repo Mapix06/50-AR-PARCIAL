@@ -3180,12 +3180,12 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6467433548251807677}
+  - {fileID: 8699032781195848746}
   - {fileID: 8107669643995152514}
+  - {fileID: 1778221282115318066}
   - {fileID: 769093768653021108}
   - {fileID: 4198444796417344758}
-  - {fileID: 8699032781195848746}
-  - {fileID: 1778221282115318066}
-  - {fileID: 6467433548251807677}
   - {fileID: 7242327287687550395}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3615,7 +3615,7 @@ Transform:
   m_GameObject: {fileID: 8980173791832995097}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.83, y: 3.65, z: 46.21}
+  m_LocalPosition: {x: 2.8300004, y: 3.65, z: 46.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3773,6 +3773,14 @@ PrefabInstance:
     - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
       propertyPath: idPin
       value: 1975_1977
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
+      propertyPath: letrero
+      value: 
+      objectReference: {fileID: 2002754730126819655}
+    - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
+      propertyPath: ordenPin
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
       propertyPath: audioClip
@@ -4489,6 +4497,14 @@ PrefabInstance:
       value: 1973_1975
       objectReference: {fileID: 0}
     - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
+      propertyPath: letrero
+      value: 
+      objectReference: {fileID: 2452676004969593098}
+    - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
+      propertyPath: ordenPin
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
       propertyPath: audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 8ae2c9f4ddb043241a2241552033a4be, type: 3}
@@ -5115,6 +5131,14 @@ PrefabInstance:
       value: 1969_1971
       objectReference: {fileID: 0}
     - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
+      propertyPath: letrero
+      value: 
+      objectReference: {fileID: 3819948873789896578}
+    - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
+      propertyPath: ordenPin
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
       propertyPath: audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 61230d6053e36874db5637628ec00f1f, type: 3}
@@ -5468,6 +5492,14 @@ PrefabInstance:
     - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
       propertyPath: idPin
       value: 1971_1973
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
+      propertyPath: letrero
+      value: 
+      objectReference: {fileID: 4382281872147620520}
+    - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
+      propertyPath: ordenPin
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
       propertyPath: audioClip
@@ -6031,6 +6063,14 @@ PrefabInstance:
     - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
       propertyPath: idPin
       value: 1977_1979
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
+      propertyPath: letrero
+      value: 
+      objectReference: {fileID: 7621693429766224735}
+    - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
+      propertyPath: ordenPin
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5595221159592902849, guid: 1c4da1def26f25e48985b1f9fe3737a8, type: 3}
       propertyPath: audioClip

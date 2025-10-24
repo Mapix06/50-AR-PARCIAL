@@ -8,9 +8,13 @@ public class PanelPreguntasZylo : MonoBehaviour
     [SerializeField] private GameObject panelPreguntas;
     [SerializeField] private GameObject panelRespuesta;
 
-    [Header("Referencias UI - Botones")]
+    [Header("Referencias UI - Botones de preguntas")]
     [SerializeField] private Button botonPregunta1;
     [SerializeField] private Button botonPregunta2;
+
+    [Header("Botones específicos para ocultar")]
+    [SerializeField] private GameObject buttonDuda1;
+    [SerializeField] private GameObject buttonDuda2;
 
     [Header("Referencia a Zylo")]
     [SerializeField] private Animator zyloAnimator;
@@ -24,25 +28,23 @@ public class PanelPreguntasZylo : MonoBehaviour
     private AudioClip audioRespuesta1Actual;
     private AudioClip audioRespuesta2Actual;
     private PinMapa pinActual;
+    private CatController gatoActual;
     private bool esperandoRespuesta = false;
 
     void Start()
     {
-        if (panelPreguntas != null)
-            panelPreguntas.SetActive(true);
-
-        if (panelRespuesta != null)
-            panelRespuesta.SetActive(true);
+        panelPreguntas?.SetActive(false);
+        // Panel de respuesta debe estar visible pero los botones ocultos
+        OcultarBotonesDuda();
 
         if (botonPregunta1 != null)
             botonPregunta1.onClick.AddListener(Pregunta1DesdeInspector);
 
         if (botonPregunta2 != null)
             botonPregunta2.onClick.AddListener(Pregunta2DesdeInspector);
-
     }
 
-    public void MostrarPanelPreguntas(PinMapa pin)
+    public void MostrarPanelPreguntas(PinMapa pin, CatController gato)
     {
         if (pin == null || LectorPreguntas.instance == null || LectorRespuestas.instance == null)
         {
@@ -50,18 +52,70 @@ public class PanelPreguntasZylo : MonoBehaviour
             return;
         }
 
+        // Si hay un diálogo en curso, cancelarlo
+        if (esperandoRespuesta)
+        {
+            StopAllCoroutines();
+            esperandoRespuesta = false;
+        }
+
+        // Cerrar panel anterior si existe
+        panelPreguntas?.SetActive(false);
+        OcultarBotonesDuda();
+
         idPinActual = pin.idPin;
         pinActual = pin;
+        gatoActual = gato;
 
         audioRespuesta1Actual = pin.AudioRespuesta1;
         audioRespuesta2Actual = pin.AudioRespuesta2;
 
         LectorPreguntas.instance.MostrarPreguntasPorID(pin.idPin);
 
-        Debug.Log($"✅ [PanelPreguntasZylo] Panel abierto para pin: {pin.idPin}");
+        StartCoroutine(SecuenciaDialogoInicial());
+    }
 
-        if (panelPreguntas != null)
-            panelPreguntas.SetActive(true);
+    private IEnumerator SecuenciaDialogoInicial()
+    {
+        esperandoRespuesta = true;
+        DesactivarBotones();
+        OcultarBotonesDuda();
+
+        if (zyloAnimator != null)
+            zyloAnimator.SetBool(animacionHablar, true);
+
+        gatoActual?.SetTalking(true);
+
+        AudioSource fuenteAudio = pinActual.GetComponent<AudioSource>();
+        AudioClip audioDialogo = pinActual.AudioDelPin;
+        string textoDialogo = pinActual.TextoDelPin;
+
+        if (fuenteAudio != null && audioDialogo != null)
+        {
+            fuenteAudio.PlayOneShot(audioDialogo);
+
+            if (SubtitulosZylo.Instance != null && !string.IsNullOrEmpty(textoDialogo))
+                SubtitulosZylo.Instance.MostrarSubtitulosConAudio(textoDialogo, audioDialogo);
+
+            yield return new WaitForSeconds(audioDialogo.length);
+        }
+        else
+        {
+            if (SubtitulosZylo.Instance != null && !string.IsNullOrEmpty(textoDialogo))
+                SubtitulosZylo.Instance.MostrarTexto(textoDialogo);
+
+            yield return new WaitForSeconds(3f);
+        }
+
+        if (zyloAnimator != null)
+            zyloAnimator.SetBool(animacionHablar, false);
+
+        gatoActual?.SetTalking(false);
+
+        panelPreguntas?.SetActive(true);
+        ActivarBotones();
+        MostrarBotonesDuda();
+        esperandoRespuesta = false;
     }
 
     public void Pregunta1DesdeInspector() => EjecutarPregunta(1);
@@ -85,36 +139,30 @@ public class PanelPreguntasZylo : MonoBehaviour
 
         AudioClip audioResp = numeroPregunta == 1 ? audioRespuesta1Actual : audioRespuesta2Actual;
 
-        if (panelPreguntas != null)
-            panelPreguntas.SetActive(true);
-
         StartCoroutine(SecuenciaRespuestaCompleta(numeroPregunta, audioResp));
     }
 
     private IEnumerator SecuenciaRespuestaCompleta(int numeroPregunta, AudioClip audio)
     {
         esperandoRespuesta = true;
+        DesactivarBotones();
+        OcultarBotonesDuda();
 
-        if (zyloAnimator != null && zyloAnimator.runtimeAnimatorController != null)
-        {
-            Debug.Log(" Activando animación de pensar");
+        if (zyloAnimator != null)
             zyloAnimator.SetBool(animacionPensar, true);
-        }
-        else
-        {
-            Debug.LogWarning(" El Animator no tiene controlador asignado (isThinking)");
-        }
 
         yield return new WaitForSeconds(tiempoPensando);
 
-        if (zyloAnimator != null && zyloAnimator.runtimeAnimatorController != null)
+        if (zyloAnimator != null)
             zyloAnimator.SetBool(animacionPensar, false);
 
         DatosRespuesta datosResp = LectorRespuestas.instance.ObtenerDatosPorID(idPinActual);
         string textoRespuesta = numeroPregunta == 1 ? datosResp?.respuesta1 : datosResp?.respuesta2;
 
-        if (zyloAnimator != null && zyloAnimator.runtimeAnimatorController != null)
+        if (zyloAnimator != null)
             zyloAnimator.SetBool(animacionHablar, true);
+
+        gatoActual?.SetTalking(true);
 
         AudioSource fuenteAudio = pinActual.GetComponent<AudioSource>();
         if (fuenteAudio != null && audio != null)
@@ -134,38 +182,27 @@ public class PanelPreguntasZylo : MonoBehaviour
             yield return new WaitForSeconds(3f);
         }
 
-        if (zyloAnimator != null && zyloAnimator.runtimeAnimatorController != null)
+        if (zyloAnimator != null)
             zyloAnimator.SetBool(animacionHablar, false);
+
+        gatoActual?.SetTalking(false);
 
         LectorRespuestas.instance.MostrarRespuesta(idPinActual, numeroPregunta);
 
-        if (panelRespuesta != null)
-            panelRespuesta.SetActive(true);
-
+        ActivarBotones();
+        MostrarBotonesDuda();
         esperandoRespuesta = false;
-    }
-
-    private void CerrarRespuesta()
-    {
-        if (panelRespuesta != null)
-            panelRespuesta.SetActive(false);
-
-        if (panelPreguntas != null)
-            panelPreguntas.SetActive(true);
     }
 
     public void CerrarTodo()
     {
-        if (panelPreguntas != null)
-            panelPreguntas.SetActive(false);
-
-        if (panelRespuesta != null)
-            panelRespuesta.SetActive(false);
+        panelPreguntas?.SetActive(false);
 
         StopAllCoroutines();
         esperandoRespuesta = false;
         idPinActual = "";
         pinActual = null;
+        gatoActual = null;
 
         if (zyloAnimator != null)
         {
@@ -173,6 +210,48 @@ public class PanelPreguntasZylo : MonoBehaviour
             zyloAnimator.SetBool(animacionHablar, false);
         }
 
+        OcultarBotonesDuda();
+
         Debug.Log("🔚 [PanelPreguntasZylo] Paneles cerrados y estado reseteado");
+    }
+
+    private void DesactivarBotones()
+    {
+        if (botonPregunta1 != null) botonPregunta1.interactable = false;
+        if (botonPregunta2 != null) botonPregunta2.interactable = false;
+    }
+
+    private void ActivarBotones()
+    {
+        if (botonPregunta1 != null) botonPregunta1.interactable = true;
+        if (botonPregunta2 != null) botonPregunta2.interactable = true;
+    }
+
+    private void OcultarBotonesDuda()
+    {
+        if (buttonDuda1 != null)
+        {
+            Debug.Log($"🔴 Ocultando: {buttonDuda1.name}");
+            buttonDuda1.SetActive(false);
+        }
+        if (buttonDuda2 != null)
+        {
+            Debug.Log($"🔴 Ocultando: {buttonDuda2.name}");
+            buttonDuda2.SetActive(false);
+        }
+    }
+
+    private void MostrarBotonesDuda()
+    {
+        if (buttonDuda1 != null)
+        {
+            Debug.Log($"🟢 Mostrando: {buttonDuda1.name}");
+            buttonDuda1.SetActive(true);
+        }
+        if (buttonDuda2 != null)
+        {
+            Debug.Log($"🟢 Mostrando: {buttonDuda2.name}");
+            buttonDuda2.SetActive(true);
+        }
     }
 }
