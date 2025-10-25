@@ -270,4 +270,49 @@ public class PlaneManagerPines : MonoBehaviour
             Debug.Log("[PlaneManagerPines] 🎉 ¡Todos los mapas completados!");
         }
     }
+
+    // Permitir que el FAB lea los mapas
+    public List<GameObject> GetMapas() => mapInstances;
+    public int GetCurrentMapIndex() => currentMapIndex;
+
+    // Pines recorridos por mapa (puedes mejorarlo si llevas registro exacto)
+    public List<string> GetPinesRecorridos(int mapIndex)
+    {
+        List<string> lista = new();
+
+        if (mapIndex >= mapInstances.Count) return lista;
+
+        PinMapa[] pins = mapInstances[mapIndex].GetComponentsInChildren<PinMapa>(true);
+        for (int i = 0; i <= currentPinIndex && i < pins.Length; i++)
+        {
+            lista.Add(pins[i].name);
+        }
+
+        return lista;
+    }
+
+    // Ir a un pin específico
+    public void IrAlPin(int mapIndex, string pinName)
+    {
+        if (mapIndex >= mapInstances.Count) return;
+
+        GameObject mapa = mapInstances[mapIndex];
+        mapa.SetActive(true);
+
+        PinMapa[] pins = mapa.GetComponentsInChildren<PinMapa>(true);
+        foreach (var pin in pins)
+        {
+            pin.gameObject.SetActive(pin.name == pinName);
+        }
+
+        currentMapIndex = mapIndex;
+        Debug.Log($"[PlaneManagerPines] Regresando a {pinName} en {ObtenerNombreMapa(mapIndex)}");
+    }
+
+    private string ObtenerNombreMapa(int index)
+    {
+        string[] nombres = { "70s", "80s", "90s", "2000s", "2010s" };
+        return (index >= 0 && index < nombres.Length) ? nombres[index] : $"Mapa {index + 1}";
+    }
+
 }
