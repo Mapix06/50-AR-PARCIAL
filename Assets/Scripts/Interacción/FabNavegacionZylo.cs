@@ -52,6 +52,21 @@ public class FabNavegacionZylo : MonoBehaviour
 
     private void ActualizarOpciones()
     {
+        Debug.Log("📋 Actualizando opciones del FAB...");
+        Debug.Log($"🔍 Mapas detectados: {(planeManager.GetMapas() != null ? planeManager.GetMapas().Count : 0)}");
+
+        if (planeManager.GetMapas() != null && planeManager.GetMapas().Count > 0)
+        {
+            for (int i = 0; i < planeManager.GetMapas().Count; i++)
+            {
+                Debug.Log($"🗺️ Mapa {i} activo: {planeManager.GetMapas()[i].activeSelf}");
+            }
+        }
+        else
+        {
+            Debug.Log("⚠️ No hay mapas cargados aún.");
+        }
+
         // Limpiar botones previos
         foreach (Transform child in panelOpciones.transform)
             Destroy(child.gameObject);
@@ -78,7 +93,8 @@ public class FabNavegacionZylo : MonoBehaviour
         else
         {
             // Mostrar pines recorridos dentro de la época seleccionada
-            List<string> pines = planeManager.GetPinesRecorridos(epocaSeleccionada);
+            List<string> pines = GetPinesRecorridosPorLectura(epocaSeleccionada);
+
             foreach (var pin in pines)
             {
                 CrearBoton($"Pin {pin}", () =>
@@ -112,4 +128,23 @@ public class FabNavegacionZylo : MonoBehaviour
         string[] nombres = { "70s", "80s", "90s", "2000s", "2010s" };
         return (index >= 0 && index < nombres.Length) ? nombres[index] : $"Mapa {index + 1}";
     }
+    private List<string> GetPinesRecorridosPorLectura(int mapIndex)
+    {
+        List<string> lista = new();
+        var mapas = planeManager.GetMapas();
+        if (mapIndex < 0 || mapIndex >= mapas.Count) return lista;
+
+        GameObject mapa = mapas[mapIndex];
+        PinMapa[] pines = mapa.GetComponentsInChildren<PinMapa>(true);
+
+        // leer los pines activos o ya mostrados
+        foreach (var pin in pines)
+        {
+            if (pin.gameObject.activeSelf)
+                lista.Add(pin.name);
+        }
+
+        return lista;
+    }
+
 }
