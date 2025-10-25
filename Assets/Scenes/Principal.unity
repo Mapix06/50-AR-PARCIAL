@@ -261,7 +261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlaneManager
   arPlaneManager: {fileID: 354880344}
   arRaycastManager: {fileID: 354880348}
-  catPrefab: {fileID: 65939336712049630, guid: 2d1ea6a572ca47f4ea9e75bd5d825550, type: 3}
+  catPrefab: {fileID: 959071921434398315, guid: 87fe4a9fd5d1f4247844444fbb985585, type: 3}
   mapPrefabs:
   - {fileID: 7840946712966712966, guid: edc520497362d1045a5421c79e6dc638, type: 3}
   - {fileID: 5177641850945520781, guid: 439c43a3f24681142be26836d487d35a, type: 3}
