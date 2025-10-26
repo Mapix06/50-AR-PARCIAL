@@ -215,7 +215,7 @@ public class PlaneManagerPines : MonoBehaviour
             // Se completaron todos los pines de este mapa
             if (verbose)
                 Debug.Log($"[PlaneManagerPines] Todos los pines del mapa {currentMapIndex + 1} completados.");
-
+            ColeccionablesManager.Instance?.RecolectarPorEpoca(currentMapIndex);
             // Ocultar objetos AR del mapa actual
             OcultarObjetosDelMapaActual();
 
