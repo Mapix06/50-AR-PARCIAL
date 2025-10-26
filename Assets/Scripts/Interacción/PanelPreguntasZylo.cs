@@ -16,12 +16,8 @@ public class PanelPreguntasZylo : MonoBehaviour
     [SerializeField] private GameObject buttonDuda1;
     [SerializeField] private GameObject buttonDuda2;
 
-    [Header("Referencia a Zylo")]
-    [SerializeField] private Animator zyloAnimator;
-
     [Header("Configuración de Animaciones")]
     [SerializeField] private string animacionPensar = "isThinking";
-    [SerializeField] private string animacionHablar = "isTalking";
     [SerializeField] private float tiempoPensando = 2f;
 
     private string idPinActual;
@@ -29,6 +25,7 @@ public class PanelPreguntasZylo : MonoBehaviour
     private AudioClip audioRespuesta2Actual;
     private PinMapa pinActual;
     private CatController gatoActual;
+    private Animator zyloAnimator; // Ahora se obtiene automáticamente del CatController
     private bool esperandoRespuesta = false;
 
     void Start()
@@ -67,6 +64,12 @@ public class PanelPreguntasZylo : MonoBehaviour
         pinActual = pin;
         gatoActual = gato;
 
+        // ✅ Obtener el Animator del CatController
+        if (gatoActual != null)
+        {
+            zyloAnimator = gatoActual.GetComponent<Animator>();
+        }
+
         audioRespuesta1Actual = pin.AudioRespuesta1;
         audioRespuesta2Actual = pin.AudioRespuesta2;
 
@@ -80,9 +83,6 @@ public class PanelPreguntasZylo : MonoBehaviour
         esperandoRespuesta = true;
         DesactivarBotones();
         OcultarBotonesDuda();
-
-        if (zyloAnimator != null)
-            zyloAnimator.SetBool(animacionHablar, true);
 
         gatoActual?.SetTalking(true);
 
@@ -106,9 +106,6 @@ public class PanelPreguntasZylo : MonoBehaviour
 
             yield return new WaitForSeconds(3f);
         }
-
-        if (zyloAnimator != null)
-            zyloAnimator.SetBool(animacionHablar, false);
 
         gatoActual?.SetTalking(false);
 
@@ -148,19 +145,18 @@ public class PanelPreguntasZylo : MonoBehaviour
         DesactivarBotones();
         OcultarBotonesDuda();
 
-        if (zyloAnimator != null)
+        // Activar animación de pensar si existe
+        if (zyloAnimator != null && zyloAnimator.runtimeAnimatorController != null)
             zyloAnimator.SetBool(animacionPensar, true);
 
         yield return new WaitForSeconds(tiempoPensando);
 
-        if (zyloAnimator != null)
+        // Desactivar animación de pensar
+        if (zyloAnimator != null && zyloAnimator.runtimeAnimatorController != null)
             zyloAnimator.SetBool(animacionPensar, false);
 
         DatosRespuesta datosResp = LectorRespuestas.instance.ObtenerDatosPorID(idPinActual);
         string textoRespuesta = numeroPregunta == 1 ? datosResp?.respuesta1 : datosResp?.respuesta2;
-
-        if (zyloAnimator != null)
-            zyloAnimator.SetBool(animacionHablar, true);
 
         gatoActual?.SetTalking(true);
 
@@ -182,9 +178,6 @@ public class PanelPreguntasZylo : MonoBehaviour
             yield return new WaitForSeconds(3f);
         }
 
-        if (zyloAnimator != null)
-            zyloAnimator.SetBool(animacionHablar, false);
-
         gatoActual?.SetTalking(false);
 
         LectorRespuestas.instance.MostrarRespuesta(idPinActual, numeroPregunta);
@@ -203,16 +196,11 @@ public class PanelPreguntasZylo : MonoBehaviour
         idPinActual = "";
         pinActual = null;
         gatoActual = null;
-
-        if (zyloAnimator != null)
-        {
-            zyloAnimator.SetBool(animacionPensar, false);
-            zyloAnimator.SetBool(animacionHablar, false);
-        }
+        zyloAnimator = null;
 
         OcultarBotonesDuda();
 
-        Debug.Log("🔚 [PanelPreguntasZylo] Paneles cerrados y estado reseteado");
+        Debug.Log(" [PanelPreguntasZylo] Paneles cerrados y estado reseteado");
     }
 
     private void DesactivarBotones()

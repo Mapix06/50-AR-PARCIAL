@@ -214,5 +214,4 @@ MonoBehaviour:
   audioBienvenida: {fileID: 8300000, guid: e08f254f1f29c6643bfa2e3fc16f30d0, type: 3}
   textoBienvenida: "Holaa, soy Zylo, el dia de hoy ser\xE9 tu guia, y estaremos inmersos
     en la historia de nuestra universidad Aut\xF3noma de Occidente"
-  greetingDuration: 1
-  talkingSwapInterval: 0.7
+  animatorController: {fileID: 9100000, guid: 8cf7efea61211a440b1dca64c2b95784, type: 2}

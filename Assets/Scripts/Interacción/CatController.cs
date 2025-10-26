@@ -16,6 +16,13 @@ public class CatController : MonoBehaviour
     [TextArea]
     [SerializeField] private string textoBienvenida;
 
+    [Header("Animación (opcional si no está en prefab)")]
+    [SerializeField] private RuntimeAnimatorController animatorController;
+
+    [Header("Animación de bienvenida")]
+    [SerializeField] private string animacionBienvenida = "isWaving"; // 👋 Nombre del parámetro en el Animator
+    [SerializeField] private float duracionAnimacionBienvenida = 2f; // Duración de la animación
+
     private Animator animator;
     private AudioSource audioSource;
     private Camera cam;
@@ -23,6 +30,7 @@ public class CatController : MonoBehaviour
     private Vector3? targetPos = null;
     private bool reachedTarget = false;
     private PinMapa pinPendiente = null;
+    private bool bienvenidaMostrada = false;
 
     public static AudioSource audioEnReproduccion;
 
@@ -31,7 +39,18 @@ public class CatController : MonoBehaviour
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
         cam = Camera.main;
+        // Asignar controller si falta
+        if (animator != null && animator.runtimeAnimatorController == null && animatorController != null)
+        {
+            animator.runtimeAnimatorController = animatorController;
+        }
 
+        // Validar antes de usar
+        if (animator != null && animator.runtimeAnimatorController == null)
+        {
+            Debug.LogWarning($"⚠️ {gameObject.name}: Animator sin controller. Animaciones deshabilitadas.");
+            animator = null;
+        }
         animator?.SetBool("isWalking", false);
         animator?.SetBool("isTalking", false);
 
@@ -116,7 +135,7 @@ public class CatController : MonoBehaviour
 
         Quaternion start = transform.rotation;
 
-        // 🔧 Forzar dirección plana (sin inclinación vertical)
+        // Forzar dirección plana (sin inclinación vertical)
         Vector3 flatCamPos = new Vector3(cam.transform.position.x, transform.position.y, cam.transform.position.z);
         Vector3 lookDir = flatCamPos - transform.position;
 
@@ -133,21 +152,39 @@ public class CatController : MonoBehaviour
 
     private IEnumerator ReproducirBienvenida()
     {
-        animator?.SetBool("isTalking", true);
+        bienvenidaMostrada = true;
+
+        animator?.SetBool("isWaving", true);
+
         audioSource.clip = audioBienvenida;
         audioSource.Play();
 
         if (SubtitulosZylo.Instance != null)
             SubtitulosZylo.Instance.MostrarTexto(textoBienvenida);
 
-        yield return new WaitForSeconds(audioBienvenida.length);
+        // Esperar 2 segundos (duración del saludo)
+        yield return new WaitForSeconds(2f);
+
+        // Dejar de saludar y seguir hablando
+        animator?.SetBool("isWaving", false);
+        animator?.SetBool("isTalking", true);
+
+        // Esperar el resto del audio
+        yield return new WaitForSeconds(audioBienvenida.length - 2f);
+
         animator?.SetBool("isTalking", false);
     }
 
-    // 🔸 Nuevo: solo para activar/desactivar animación de hablar
+    // Nuevo: solo para activar/desactivar animación de hablar
     public void SetTalking(bool estado)
     {
-        if (animator != null)
+        if (animator != null && animator.runtimeAnimatorController != null)
+        {
             animator.SetBool("isTalking", estado);
+        }
+        else
+        {
+            Debug.LogWarning($"⚠️ No se puede activar animación de hablar en {gameObject.name}: Animator no configurado correctamente");
+        }
     }
 }

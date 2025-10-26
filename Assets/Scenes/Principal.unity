@@ -1709,9 +1709,7 @@ MonoBehaviour:
   botonPregunta2: {fileID: 594445639}
   buttonDuda1: {fileID: 975718695}
   buttonDuda2: {fileID: 594445637}
-  zyloAnimator: {fileID: 9169351880795623401, guid: 2d1ea6a572ca47f4ea9e75bd5d825550, type: 3}
   animacionPensar: isThinking
-  animacionHablar: isTalking
   tiempoPensando: 2
 --- !u!4 &1324156924
 Transform:

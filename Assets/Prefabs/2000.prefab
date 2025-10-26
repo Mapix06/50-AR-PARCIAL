@@ -11715,6 +11715,14 @@ PrefabInstance:
       value: 2006_2008
       objectReference: {fileID: 0}
     - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
+      propertyPath: letrero
+      value: 
+      objectReference: {fileID: 1616699085084582914}
+    - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
+      propertyPath: ordenPin
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
       propertyPath: audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 877c744fd7d280f41ad2d3b9f8757809, type: 3}
@@ -12065,6 +12073,14 @@ PrefabInstance:
     - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
       propertyPath: idPin
       value: 2000_2002
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
+      propertyPath: letrero
+      value: 
+      objectReference: {fileID: 4674548883609142624}
+    - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
+      propertyPath: ordenPin
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
       propertyPath: audioClip
@@ -13398,6 +13414,14 @@ PrefabInstance:
       value: 2008_2010
       objectReference: {fileID: 0}
     - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
+      propertyPath: letrero
+      value: 
+      objectReference: {fileID: 3978697007378656885}
+    - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
+      propertyPath: ordenPin
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
       propertyPath: audioClip
       value: 
       objectReference: {fileID: 8300000, guid: d0a7c5430e0921c4baf86e58791b8e3d, type: 3}
@@ -13759,6 +13783,14 @@ PrefabInstance:
     - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
       propertyPath: idPin
       value: 2004_2006
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
+      propertyPath: letrero
+      value: 
+      objectReference: {fileID: 5197148121202710349}
+    - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
+      propertyPath: ordenPin
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
       propertyPath: audioClip
@@ -14491,6 +14523,14 @@ PrefabInstance:
     - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
       propertyPath: idPin
       value: 2002_2004
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
+      propertyPath: letrero
+      value: 
+      objectReference: {fileID: 4305689602786591987}
+    - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
+      propertyPath: ordenPin
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3566086739995024335, guid: 1d5718c8d0e89554c8b4b300b92189be, type: 3}
       propertyPath: audioClip
