@@ -705,8 +705,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 243, y: -284.72217}
-  m_SizeDelta: {x: 565.7734, y: 170.8414}
+  m_AnchoredPosition: {x: 252.23804, y: -284.72217}
+  m_SizeDelta: {x: 588.7972, y: 170.8414}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &594445639
 MonoBehaviour:
@@ -1051,8 +1051,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -236, y: -285}
-  m_SizeDelta: {x: 530.7837, y: 166.3152}
+  m_AnchoredPosition: {x: -254.1499, y: -285}
+  m_SizeDelta: {x: 575.6973, y: 166.3152}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &975718697
 MonoBehaviour:
@@ -2619,51 +2619,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1767125045}
   m_CullTransparentMesh: 1
---- !u!1 &1825164999
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1825165001}
-  - component: {fileID: 1825165000}
-  m_Layer: 0
-  m_Name: Diagnostico visual
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1825165000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1825164999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e711fd51cd2267740ae1a7ce87a7fcf0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DiagnosticoVisual
-  debugText: {fileID: 1754965579}
---- !u!4 &1825165001
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1825164999}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 902.4515, y: 0, z: 28562.682}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1874178218
 GameObject:
   m_ObjectHideFlags: 0
@@ -2716,8 +2671,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Mute
   muteButton: {fileID: 1874178221}
-  iconMute: {fileID: 21300000, guid: f700e698c6b15a5418fa3b68c1d91d5c, type: 3}
-  iconUnmute: {fileID: 21300000, guid: 67ddde49f90f27e4aa12dad845c58f5d, type: 3}
+  iconMute: {fileID: 21300000, guid: 189948e70e044a044b36a4138ddd9120, type: 3}
+  iconUnmute: {fileID: 21300000, guid: 27736b35249eb6241a51aa6d1ad04458, type: 3}
 --- !u!114 &1874178221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2775,14 +2730,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.5137255, b: 0.42352942, a: 1}
+  m_Color: {r: 1, g: 0.96866065, b: 0.7216981, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 67ddde49f90f27e4aa12dad845c58f5d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 27736b35249eb6241a51aa6d1ad04458, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3087,7 +3042,6 @@ SceneRoots:
   - {fileID: 588892375}
   - {fileID: 1091211833}
   - {fileID: 725798067}
-  - {fileID: 1825165001}
   - {fileID: 1324156924}
   - {fileID: 470549394}
   - {fileID: 1194568225}
