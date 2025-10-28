@@ -39,6 +39,10 @@ public class PlaneManagerPines : MonoBehaviour
 
     private List<ARRaycastHit> hits = new List<ARRaycastHit>();
 
+    [Header("Botón FAB Épocas")]
+    [SerializeField] private GameObject fabButton;
+
+
     void Awake()
     {
         if (!arPlaneManager)
@@ -267,7 +271,26 @@ public class PlaneManagerPines : MonoBehaviour
         }
         else
         {
-            Debug.Log("[PlaneManagerPines] 🎉 ¡Todos los mapas completados!");
+            Debug.Log("[PlaneManagerPines] ¡Todos los mapas completados!");
+            //  Activa el FABButton cuando se llegue al último mapa
+            if (fabButton != null)
+            {
+                var fab = fabButton.GetComponent<FABDropdownDown>();
+                if (fab != null)
+                {
+                    fab.DesbloquearFAB();
+                }
+                else
+                {
+                    fabButton.SetActive(true);
+                    Debug.Log("[PlaneManagerPines] FAB activado directamente (sin script).");
+                }
+
+            }
+            else
+            {
+                Debug.LogWarning("[PlaneManagerPines] No se asignó el FABButton en el inspector.");
+            }
         }
     }
 
@@ -313,6 +336,23 @@ public class PlaneManagerPines : MonoBehaviour
     {
         string[] nombres = { "70s", "80s", "90s", "2000s", "2010s" };
         return (index >= 0 && index < nombres.Length) ? nombres[index] : $"Mapa {index + 1}";
+    }
+
+    private void ActivarFABSiUltimoMapa()
+    {
+        // Si estamos en el último mapa y todos sus pines se completaron
+        if (currentMapIndex >= mapInstances.Count)
+        {
+            if (fabButton != null)
+            {
+                fabButton.SetActive(true);
+                Debug.Log("[PlaneManagerPines]  FAB activado: todas las épocas completadas.");
+            }
+            else
+            {
+                Debug.LogWarning("[PlaneManagerPines]  No se asignó el FABButton en el inspector.");
+            }
+        }
     }
 
 }
