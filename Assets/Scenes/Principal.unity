@@ -841,8 +841,9 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
-  distanceFromCamera: 0.46
+  distanceFromCamera: 2.77
   verbose: 1
+  tiempoEsperaAntesDeObjeto: 1.5
   fabButton: {fileID: 1984219888}
 --- !u!114 &354880344
 MonoBehaviour:
@@ -2397,6 +2398,8 @@ MonoBehaviour:
   posicionLateral: {x: 0.3, y: -0.2, z: 0.5}
   espaciado: 0.15
   sonidoRecolectar: {fileID: 8300000, guid: ef1cc317bbe3b1f43989786cc3e500b6, type: 3}
+  seguirCamara: 1
+  suavizadoSeguimiento: 5
 --- !u!4 &1194568225
 Transform:
   m_ObjectHideFlags: 0
