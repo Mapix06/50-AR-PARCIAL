@@ -12,7 +12,6 @@ public class PlaneManagerPines : MonoBehaviour
 
     [Header("Prefabs principales")]
     [SerializeField] private GameObject catPrefab;
-
     [Tooltip("Prefabs de mapas (máx. 5)")]
     [SerializeField] private List<GameObject> mapPrefabs = new List<GameObject>();
 
@@ -30,18 +29,17 @@ public class PlaneManagerPines : MonoBehaviour
     [Header("Opciones")]
     [SerializeField, Range(0f, 5f)] private float distanceFromCamera = 2f;
     [SerializeField] private bool verbose = true;
-
+    private bool todosPinesCompletados = false;
+    public bool TodosPinesCompletados => todosPinesCompletados;
     private GameObject catInstance;
     private readonly List<GameObject> mapInstances = new List<GameObject>();
     private int currentMapIndex = 0;
     private int currentPinIndex = 0;
     private bool contentPlaced = false;
-
     private List<ARRaycastHit> hits = new List<ARRaycastHit>();
 
     [Header("Botón FAB Épocas")]
     [SerializeField] private GameObject fabButton;
-
 
     void Awake()
     {
@@ -62,9 +60,7 @@ public class PlaneManagerPines : MonoBehaviour
 
     void Update()
     {
-        if (contentPlaced)
-            return;
-
+        if (contentPlaced) return;
         TryPlaceContentInFrontOfUser();
     }
 
@@ -88,7 +84,6 @@ public class PlaneManagerPines : MonoBehaviour
         if (arRaycastManager.Raycast(screenCenter, hits, TrackableType.PlaneWithinPolygon))
         {
             ARRaycastHit hit = hits[0];
-
             Vector3 forward = cam.forward;
             forward.y = 0;
             forward.Normalize();
@@ -99,11 +94,8 @@ public class PlaneManagerPines : MonoBehaviour
             PlaceContentAtPosition(targetPosition);
 
             arPlaneManager.requestedDetectionMode = PlaneDetectionMode.None;
-
             foreach (var plane in arPlaneManager.trackables)
-            {
                 plane.gameObject.SetActive(false);
-            }
 
             contentPlaced = true;
         }
@@ -143,12 +135,11 @@ public class PlaneManagerPines : MonoBehaviour
             Vector3 mapPos = catInstance.transform.position + catInstance.transform.TransformDirection(offset);
 
             GameObject map = Instantiate(mapPrefabs[i], mapPos, Quaternion.identity);
-
             Vector3 lookDir = catInstance.transform.position - map.transform.position;
             lookDir.y = 0;
             map.transform.rotation = Quaternion.LookRotation(lookDir);
-
             map.SetActive(false);
+
             mapInstances.Add(map);
         }
 
@@ -169,7 +160,6 @@ public class PlaneManagerPines : MonoBehaviour
         currentMap.SetActive(true);
 
         PinMapa[] pins = currentMap.GetComponentsInChildren<PinMapa>(true);
-
         if (pins.Length == 0)
         {
             Debug.LogWarning($"[PlaneManagerPines] El mapa {currentMapIndex + 1} no tiene pines.");
@@ -178,14 +168,13 @@ public class PlaneManagerPines : MonoBehaviour
 
         // Desactivar todos los pines primero
         foreach (var pin in pins)
-        {
             pin.gameObject.SetActive(false);
-        }
 
         // Activar solo el primer pin
         if (currentPinIndex < pins.Length)
         {
             pins[currentPinIndex].gameObject.SetActive(true);
+
             if (verbose)
                 Debug.Log($"[PlaneManagerPines] Mostrando mapa {currentMapIndex + 1}, pin {currentPinIndex + 1}/{pins.Length}");
         }
@@ -216,25 +205,22 @@ public class PlaneManagerPines : MonoBehaviour
         }
         else
         {
-            // Se completaron todos los pines de este mapa
+            todosPinesCompletados = true; // ✅ Marca que ya se pueden cambiar de mapa
+
             if (verbose)
-                Debug.Log($"[PlaneManagerPines] Todos los pines del mapa {currentMapIndex + 1} completados.");
-            ColeccionablesManager.Instance?.RecolectarPorEpoca(currentMapIndex);
-            // Ocultar objetos AR del mapa actual
+                Debug.Log($"[PlaneManagerPines] Todos los pines del mapa {currentMapIndex + 1} completados. Esperando interacción...");
+
             OcultarObjetosDelMapaActual();
 
-            // Cerrar panel de preguntas
             PanelPreguntasZylo panel = Object.FindFirstObjectByType<PanelPreguntasZylo>(FindObjectsInactive.Include);
             panel?.CerrarTodo();
-
-            // 🆕 OCULTAR el mapa actual antes de avanzar
-            OcultarMapaActual();
-
-            // Avanzar al siguiente mapa
-            AvanzarAlSiguienteMapa();
         }
-    }
 
+    }
+    public bool PuedeAvanzar()
+    {
+        return todosPinesCompletados;
+    }
     private void OcultarObjetosDelMapaActual()
     {
         if (currentMapIndex >= mapInstances.Count) return;
@@ -266,13 +252,15 @@ public class PlaneManagerPines : MonoBehaviour
         if (currentMapIndex < mapInstances.Count)
         {
             MostrarMapaYPrimerPin();
+
             if (verbose)
                 Debug.Log($"[PlaneManagerPines] Pasando al mapa {currentMapIndex + 1}");
         }
         else
         {
             Debug.Log("[PlaneManagerPines] ¡Todos los mapas completados!");
-            //  Activa el FABButton cuando se llegue al último mapa
+
+            // Activa el FABButton cuando se llegue al último mapa
             if (fabButton != null)
             {
                 var fab = fabButton.GetComponent<FABDropdownDown>();
@@ -285,7 +273,6 @@ public class PlaneManagerPines : MonoBehaviour
                     fabButton.SetActive(true);
                     Debug.Log("[PlaneManagerPines] FAB activado directamente (sin script).");
                 }
-
             }
             else
             {
@@ -298,11 +285,10 @@ public class PlaneManagerPines : MonoBehaviour
     public List<GameObject> GetMapas() => mapInstances;
     public int GetCurrentMapIndex() => currentMapIndex;
 
-    // Pines recorridos por mapa (puedes mejorarlo si llevas registro exacto)
+    // Pines recorridos por mapa
     public List<string> GetPinesRecorridos(int mapIndex)
     {
         List<string> lista = new();
-
         if (mapIndex >= mapInstances.Count) return lista;
 
         PinMapa[] pins = mapInstances[mapIndex].GetComponentsInChildren<PinMapa>(true);
@@ -310,7 +296,6 @@ public class PlaneManagerPines : MonoBehaviour
         {
             lista.Add(pins[i].name);
         }
-
         return lista;
     }
 
@@ -346,13 +331,12 @@ public class PlaneManagerPines : MonoBehaviour
             if (fabButton != null)
             {
                 fabButton.SetActive(true);
-                Debug.Log("[PlaneManagerPines]  FAB activado: todas las épocas completadas.");
+                Debug.Log("[PlaneManagerPines] FAB activado: todas las épocas completadas.");
             }
             else
             {
-                Debug.LogWarning("[PlaneManagerPines]  No se asignó el FABButton en el inspector.");
+                Debug.LogWarning("[PlaneManagerPines] No se asignó el FABButton en el inspector.");
             }
         }
     }
-
 }
