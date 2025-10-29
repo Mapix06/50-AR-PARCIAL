@@ -841,7 +841,7 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
-  distanceFromCamera: 1
+  distanceFromCamera: 0.46
   verbose: 1
   fabButton: {fileID: 1984219888}
 --- !u!114 &354880344
@@ -1625,15 +1625,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 470549392}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3801f5247b2fc4540bcda50b34ab6672, type: 3}
+  m_Script: {fileID: 11500000, guid: 3cd2079538f2a23489c6b7f08a5496f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FabNavegacionZylo
+  botonesEpocas: []
+  separacion: 110
+  duracionAnim: 0.25
   planeManager: {fileID: 354880343}
-  fabButton: {fileID: 1984219890}
-  panelOpciones: {fileID: 0}
-  botonPrefab: {fileID: 5124567471538783793, guid: 60b3e12c2042a1145968e3242cf08ec5, type: 3}
-  mostrandoEpocas: 1
-  epocaSeleccionada: -1
 --- !u!4 &470549394
 Transform:
   m_ObjectHideFlags: 0
@@ -2259,7 +2257,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &1194568223
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2370,27 +2368,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColeccionablesManager
   coleccionables:
-  - indiceEpoca: 1
+  - indiceEpoca: 0
     nombreEpoca: 70s
     prefabObjeto: {fileID: 919132149155446097, guid: c0c8e07f3bfec7242a143e2df92a8dda, type: 3}
     recolectado: 0
     instanciaActual: {fileID: 0}
-  - indiceEpoca: 2
+  - indiceEpoca: 1
     nombreEpoca: 80s
     prefabObjeto: {fileID: 919132149155446097, guid: 40fdc0d0f4ab398419c7413bb9bb5fdb, type: 3}
     recolectado: 0
     instanciaActual: {fileID: 0}
-  - indiceEpoca: 3
+  - indiceEpoca: 2
     nombreEpoca: 90s
     prefabObjeto: {fileID: 919132149155446097, guid: 1216dcf717ba8c24689d6e835355d7a1, type: 3}
     recolectado: 0
     instanciaActual: {fileID: 0}
-  - indiceEpoca: 4
+  - indiceEpoca: 3
     nombreEpoca: 2000s
     prefabObjeto: {fileID: 919132149155446097, guid: 46d9a3bb103b66c45b9aebb19b67ad49, type: 3}
     recolectado: 0
     instanciaActual: {fileID: 0}
-  - indiceEpoca: 5
+  - indiceEpoca: 4
     nombreEpoca: 2010
     prefabObjeto: {fileID: 919132149155446097, guid: 9f02bf40c33a64846aee4994a51e48a2, type: 3}
     recolectado: 0
