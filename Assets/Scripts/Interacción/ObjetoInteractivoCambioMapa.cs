@@ -1,63 +1,216 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
+using UnityEngine.XR.ARFoundation;
 
+/// <summary>
+/// Objeto interactivo que permite avanzar al siguiente mapa
+/// Funciona en computadores (mouse) y celulares (toques táctiles AR)
+/// </summary>
 public class ObjetoInteractivoCambioMapa : MonoBehaviour
 {
-    private PlaneManagerPines manager;
+    [Header("Referencias")]
+    [SerializeField] private PlaneManagerPines planeManager;
+    [SerializeField] private Camera camaraAR;
+
+    [Header("Efectos Visuales")]
+    [SerializeField] private bool rotarConstantemente = true;
+    [SerializeField] private float velocidadRotacion = 50f;
+    [SerializeField] private bool animarEscala = true;
+    [SerializeField] private float velocidadPulso = 2f;
+    [SerializeField] private float escalaPulsoMin = 0.9f;
+    [SerializeField] private float escalaPulsoMax = 1.1f;
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip sonidoClick;
+    private AudioSource audioSource;
+
+    [Header("Detección de Toques")]
+    [SerializeField] private LayerMask capasDetectables;
+    [SerializeField] private float distanciaMaximaRaycast = 50f;
+
+    private Vector3 escalaOriginal;
+    private Collider miCollider;
 
     void Start()
     {
-        manager = FindFirstObjectByType<PlaneManagerPines>();
-        if (manager == null)
+        // Buscar PlaneManager si no está asignado
+        if (planeManager == null)
         {
-            Debug.LogWarning("[ObjetoInteractivoCambioMapa] No se encontró PlaneManagerPines en la escena.");
+            planeManager = Object.FindFirstObjectByType<PlaneManagerPines>();
+            if (planeManager == null)
+            {
+                Debug.LogError("[ObjetoInteractivoCambioMapa] No se encontró PlaneManagerPines en la escena.");
+            }
         }
+
+        // Buscar cámara AR
+        if (camaraAR == null)
+        {
+            camaraAR = Camera.main;
+            if (camaraAR == null)
+            {
+                Debug.LogError("[ObjetoInteractivoCambioMapa] No se encontró la cámara principal.");
+            }
+        }
+
+        // Configurar audio
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null && sonidoClick != null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.playOnAwake = false;
+            audioSource.spatialBlend = 0f;
+        }
+
+        // Asegurar que tenga un Collider
+        miCollider = GetComponent<Collider>();
+        if (miCollider == null)
+        {
+            // Buscar en hijos
+            miCollider = GetComponentInChildren<Collider>();
+
+            if (miCollider == null)
+            {
+                Debug.LogWarning("[ObjetoInteractivoCambioMapa] No hay Collider. Añadiendo SphereCollider automáticamente.");
+                miCollider = gameObject.AddComponent<SphereCollider>();
+                SphereCollider sphere = miCollider as SphereCollider;
+                if (sphere != null)
+                {
+                    sphere.radius = 0.5f; // Ajusta según tu objeto
+                }
+            }
+        }
+
+        escalaOriginal = transform.localScale;
+
+        Debug.Log("[ObjetoInteractivoCambioMapa] Inicializado y listo para detectar interacciones.");
     }
 
     void Update()
     {
-        // 📱 Entrada móvil
-        if (Application.isMobilePlatform && Input.touchCount > 0)
+        // Efectos visuales
+        if (rotarConstantemente)
         {
-            Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
-                RevisarInteraccion(touch.position);
+            transform.Rotate(Vector3.up, velocidadRotacion * Time.deltaTime);
         }
 
-        // 🖱️ Entrada PC
-        if (Input.GetMouseButtonDown(0))
+        if (animarEscala)
         {
-            RevisarInteraccion(Input.mousePosition);
+            float pulso = Mathf.Lerp(escalaPulsoMin, escalaPulsoMax,
+                (Mathf.Sin(Time.time * velocidadPulso) + 1f) / 2f);
+            transform.localScale = escalaOriginal * pulso;
+        }
+
+        // Detección de interacciones - SOLO UNA VEZ POR FRAME
+        DetectarInteracciones();
+    }
+
+    private void DetectarInteracciones()
+    {
+        bool toqueDetectado = false;
+        Vector2 posicionToque = Vector2.zero;
+
+        // Para CELULAR: Detectar toques táctiles
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                toqueDetectado = true;
+                posicionToque = touch.position;
+            }
+        }
+        // Para COMPUTADOR: Detectar click del mouse (solo si no hay toques)
+        else if (Input.GetMouseButtonDown(0))
+        {
+            toqueDetectado = true;
+            posicionToque = Input.mousePosition;
+        }
+
+        // Procesar el toque/click si se detectó
+        if (toqueDetectado)
+        {
+            DetectarClickEnPosicion(posicionToque);
         }
     }
 
-    private void RevisarInteraccion(Vector3 posicionPantalla)
+    private void DetectarClickEnPosicion(Vector2 posicionPantalla)
     {
-        Ray ray = Camera.main.ScreenPointToRay(posicionPantalla);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (camaraAR == null)
         {
-            if (hit.collider != null && hit.collider.gameObject == gameObject)
+            Debug.LogWarning("[ObjetoInteractivoCambioMapa] No hay cámara asignada.");
+            return;
+        }
+
+        // Crear raycast desde la cámara hacia la posición tocada/clickeada
+        Ray ray = camaraAR.ScreenPointToRay(posicionPantalla);
+        RaycastHit hit;
+
+        // Usar capa específica si está configurada, sino usar todas
+        bool impacto = false;
+        if (capasDetectables != 0)
+        {
+            impacto = Physics.Raycast(ray, out hit, distanciaMaximaRaycast, capasDetectables);
+        }
+        else
+        {
+            impacto = Physics.Raycast(ray, out hit, distanciaMaximaRaycast);
+        }
+
+        if (impacto)
+        {
+            // Verificar si el objeto tocado es este objeto
+            if (hit.collider == miCollider || hit.collider.transform == transform)
             {
-                IntentarAvanzar();
+                Debug.Log($"[ObjetoInteractivoCambioMapa] ¡Objeto tocado en posición {posicionPantalla}!");
+                ProcesarClick();
             }
         }
     }
 
-    private void IntentarAvanzar()
+    // Método alternativo usando OnMouseDown (solo funciona en computador)
+    void OnMouseDown()
     {
-        if (manager == null)
+#if UNITY_EDITOR || UNITY_STANDALONE
+        Debug.Log("[ObjetoInteractivoCambioMapa] Click detectado vía OnMouseDown (modo Editor/PC)");
+        ProcesarClick();
+#endif
+    }
+
+    private void ProcesarClick()
+    {
+        if (planeManager == null)
         {
-            Debug.LogWarning("[ObjetoInteractivoCambioMapa] No hay referencia a PlaneManagerPines.");
+            Debug.LogError("[ObjetoInteractivoCambioMapa] PlaneManager no encontrado.");
             return;
         }
 
-        if (manager.PuedeAvanzar())
+        if (!planeManager.PuedeAvanzar())
         {
-            Debug.Log("[ObjetoInteractivoCambioMapa] ✅ Jugador tocó el objeto. Avanzando al siguiente mapa...");
-            manager.AvanzarAlSiguienteMapa();
+            Debug.LogWarning("[ObjetoInteractivoCambioMapa] Aún no se puede avanzar. Esperando completar pines...");
+            return;
         }
-        else
+
+        Debug.Log("[ObjetoInteractivoCambioMapa] ✅ ¡Click confirmado! Avanzando al siguiente mapa...");
+
+        // Reproducir sonido
+        if (audioSource != null && sonidoClick != null)
         {
-            Debug.Log("[ObjetoInteractivoCambioMapa] 🚫 No puedes avanzar todavía. Faltan pines.");
+            audioSource.PlayOneShot(sonidoClick);
         }
+
+        // Desactivar inmediatamente para evitar múltiples clicks
+        gameObject.SetActive(false);
+
+        // Llamar al PlaneManager para avanzar
+        planeManager.OnObjetoAvanzarClickeado();
+    }
+
+    void OnDrawGizmos()
+    {
+        // Dibujar un indicador visual en el editor para ver el rango de detección
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, 0.3f);
     }
 }

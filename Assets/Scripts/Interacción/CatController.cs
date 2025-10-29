@@ -187,4 +187,41 @@ public class CatController : MonoBehaviour
             Debug.LogWarning($"⚠️ No se puede activar animación de hablar en {gameObject.name}: Animator no configurado correctamente");
         }
     }
+    public void TeletransportarA(Vector3 nuevaPosicion)
+    {
+        // Cancelar cualquier movimiento en curso
+        StopAllCoroutines();
+
+        // Actualizar posición
+        transform.position = nuevaPosicion;
+
+        // Opcional: rotar hacia la cámara
+        Transform cam = Camera.main?.transform;
+        if (cam != null)
+        {
+            Vector3 lookDir = cam.position - transform.position;
+            lookDir.y = 0;
+            if (lookDir != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(lookDir);
+            }
+        }
+
+        Debug.Log($"[CatController] Gato teletransportado a {nuevaPosicion}");
+    }
+    public void DetenerMovimiento()
+    {
+        // Detener todas las coroutinas de movimiento
+        StopAllCoroutines();
+
+        // Si tienes un Animator
+        Animator animator = GetComponent<Animator>();
+        if (animator != null)
+        {
+            animator.SetBool("isMoving", false);
+            animator.SetBool("isWalking", false);
+            animator.SetBool("isWaving", false);
+            // Añade aquí los parámetros de animación que uses
+        }
+    }
 }

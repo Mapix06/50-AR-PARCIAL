@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 3293422313722987543}
   - component: {fileID: 6509743914596660507}
   - component: {fileID: 2516933316172164358}
+  - component: {fileID: 95690364868531311}
+  - component: {fileID: 8107941559507189112}
   m_Layer: 0
   m_Name: defaultMaterial.004
   m_TagString: Untagged
@@ -103,6 +105,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RotarEnY
   velocidadRotacion: 50
+--- !u!114 &95690364868531311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14857382139037282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8005b0d2c0cc4e14eb0330e967da02fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoInteractivoCambioMapa
+  planeManager: {fileID: 0}
+  camaraAR: {fileID: 0}
+  rotarConstantemente: 1
+  velocidadRotacion: 50
+  animarEscala: 1
+  velocidadPulso: 2
+  escalaPulsoMin: 0.9
+  escalaPulsoMax: 1.1
+  sonidoClick: {fileID: 0}
+  capasDetectables:
+    serializedVersion: 2
+    m_Bits: 0
+  distanciaMaximaRaycast: 50
+--- !u!65 &8107941559507189112
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14857382139037282}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0057601407, y: 0.0058259796, z: 0.0006213408}
+  m_Center: {x: 0.0000010185177, y: 0.0000015135156, z: 0.0000031784148}
 --- !u!1 &143206491444243891
 GameObject:
   m_ObjectHideFlags: 0
