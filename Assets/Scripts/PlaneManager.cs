@@ -5,7 +5,7 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
 [RequireComponent(typeof(ARPlaneManager))]
-public class PlaneManagerPines : MonoBehaviour
+public class PlaneManager : MonoBehaviour
 {
     [Header("AR")]
     [SerializeField] private ARPlaneManager arPlaneManager;
@@ -169,6 +169,7 @@ public class PlaneManagerPines : MonoBehaviour
 
     public void NotificarPinCompletado(PinMapa pin)
     {
+
         if (pin == null) return;
 
         if (verbose)
@@ -178,6 +179,9 @@ public class PlaneManagerPines : MonoBehaviour
 
         GameObject currentMap = mapInstances[currentMapIndex];
         PinMapa[] pins = currentMap.GetComponentsInChildren<PinMapa>(true);
+
+        Debug.Log($"[PlaneManager] currentPinIndex: {currentPinIndex}, pins.Length: {pins.Length}");
+
 
         // ⭐ ORDENAR PINES POR OrdenPin
         System.Array.Sort(pins, (a, b) => a.OrdenPin.CompareTo(b.OrdenPin));
@@ -199,6 +203,8 @@ public class PlaneManagerPines : MonoBehaviour
 
             // SECUENCIA CORRECTA:
             StartCoroutine(SecuenciaCompletarMapa(pins));
+            Debug.Log("[PlaneManager] ✅ Entrando a SecuenciaCompletarMapa");
+
         }
     }
 

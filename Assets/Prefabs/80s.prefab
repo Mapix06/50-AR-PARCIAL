@@ -4419,6 +4419,10 @@ PrefabInstance:
       value: 1980_1982
       objectReference: {fileID: 0}
     - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
+      propertyPath: letrero
+      value: 
+      objectReference: {fileID: 4238727245542604427}
+    - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
       propertyPath: audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 97d4e83e91b575649b42894c09066cf7, type: 3}
@@ -5294,6 +5298,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8005b0d2c0cc4e14eb0330e967da02fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoInteractivoCambioMapa
+  planeManager: {fileID: 0}
+  camaraAR: {fileID: 0}
+  rotarConstantemente: 1
+  velocidadRotacion: 50
+  animarEscala: 1
+  velocidadPulso: 2
+  escalaPulsoMin: 0.9
+  escalaPulsoMax: 1.1
+  sonidoClick: {fileID: 0}
+  capasDetectables:
+    serializedVersion: 2
+    m_Bits: 0
+  distanciaMaximaRaycast: 50
 --- !u!65 &3732862753704465134
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5513,6 +5530,14 @@ PrefabInstance:
     - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
       propertyPath: idPin
       value: 1982_1984
+      objectReference: {fileID: 0}
+    - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
+      propertyPath: letrero
+      value: 
+      objectReference: {fileID: 5888448459040051240}
+    - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
+      propertyPath: ordenPin
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
       propertyPath: audioClip
@@ -6423,6 +6448,14 @@ PrefabInstance:
       value: 1988_1990
       objectReference: {fileID: 0}
     - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
+      propertyPath: letrero
+      value: 
+      objectReference: {fileID: 1978602672882019125}
+    - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
+      propertyPath: ordenPin
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
       propertyPath: audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 25840e4625be8014e859bf551b387d05, type: 3}
@@ -6844,6 +6877,14 @@ PrefabInstance:
     - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
       propertyPath: idPin
       value: 1986_1988
+      objectReference: {fileID: 0}
+    - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
+      propertyPath: letrero
+      value: 
+      objectReference: {fileID: 8824431845468888846}
+    - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
+      propertyPath: ordenPin
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
       propertyPath: audioClip
@@ -7843,6 +7884,14 @@ PrefabInstance:
     - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
       propertyPath: idPin
       value: 1984_1986
+      objectReference: {fileID: 0}
+    - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
+      propertyPath: letrero
+      value: 
+      objectReference: {fileID: 1768168037000961313}
+    - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
+      propertyPath: ordenPin
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6950016962477578930, guid: 1a5cbf26a3efc2e4f899f337282c67fb, type: 3}
       propertyPath: audioClip

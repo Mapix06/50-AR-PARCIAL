@@ -9,7 +9,7 @@ using UnityEngine.XR.ARFoundation;
 public class ObjetoInteractivoCambioMapa : MonoBehaviour
 {
     [Header("Referencias")]
-    [SerializeField] private PlaneManagerPines planeManager;
+    [SerializeField] private PlaneManager planeManager;
     [SerializeField] private Camera camaraAR;
 
     [Header("Efectos Visuales")]
@@ -36,7 +36,7 @@ public class ObjetoInteractivoCambioMapa : MonoBehaviour
         // Buscar PlaneManager si no está asignado
         if (planeManager == null)
         {
-            planeManager = Object.FindFirstObjectByType<PlaneManagerPines>();
+            planeManager = Object.FindFirstObjectByType<PlaneManager>();
             if (planeManager == null)
             {
                 Debug.LogError("[ObjetoInteractivoCambioMapa] No se encontró PlaneManagerPines en la escena.");
@@ -103,6 +103,18 @@ public class ObjetoInteractivoCambioMapa : MonoBehaviour
 
         // Detección de interacciones - SOLO UNA VEZ POR FRAME
         DetectarInteracciones();
+    }
+
+    public void OnUsuarioTocaObjeto()
+    {
+        var manager = Object.FindFirstObjectByType<PlaneManager>();
+        var panel = Object.FindFirstObjectByType<PanelPreguntasZylo>();
+
+        if (manager != null && panel != null)
+        {
+            manager.NotificarPinCompletado(panel.GetPinActual()); // o panel.pinActual si es público
+            panel.CerrarTodo();
+        }
     }
 
     private void DetectarInteracciones()
@@ -178,6 +190,44 @@ public class ObjetoInteractivoCambioMapa : MonoBehaviour
 #endif
     }
 
+
+    void OnDrawGizmos()
+    {
+        // Dibujar un indicador visual en el editor para ver el rango de detección
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, 0.3f);
+    }
+
+    private void NotificarSiEsUltimoPin()
+    {
+        var manager = Object.FindFirstObjectByType<PlaneManager>();
+        var panel = Object.FindFirstObjectByType<PanelPreguntasZylo>();
+
+        if (manager == null || panel == null || panel.GetPinActual() == null)
+        {
+            Debug.LogWarning("[ObjetoInteractivoCambioMapa] No se pudo obtener referencias para notificar pin.");
+            return;
+        }
+
+        PinMapa pinActual = panel.GetPinActual();
+        GameObject mapaActual = manager.GetMapas()[manager.GetCurrentMapIndex()];
+        PinMapa[] pins = mapaActual.GetComponentsInChildren<PinMapa>(true);
+        System.Array.Sort(pins, (a, b) => a.OrdenPin.CompareTo(b.OrdenPin));
+
+        bool esUltimoPin = pinActual == pins[pins.Length - 1];
+
+        if (esUltimoPin)
+        {
+            Debug.Log("[ObjetoInteractivoCambioMapa] ✅ Es el último pin. Notificando al manager...");
+            manager.NotificarPinCompletado(pinActual);
+            panel.CerrarTodo();
+        }
+        else
+        {
+            Debug.Log("[ObjetoInteractivoCambioMapa] Este no es el último pin. No se notifica.");
+        }
+    }
+
     private void ProcesarClick()
     {
         if (planeManager == null)
@@ -185,6 +235,9 @@ public class ObjetoInteractivoCambioMapa : MonoBehaviour
             Debug.LogError("[ObjetoInteractivoCambioMapa] PlaneManager no encontrado.");
             return;
         }
+
+        // ✅ Notificar si es el último pin ANTES de verificar si se puede avanzar
+        NotificarSiEsUltimoPin();
 
         if (!planeManager.PuedeAvanzar())
         {
@@ -207,10 +260,6 @@ public class ObjetoInteractivoCambioMapa : MonoBehaviour
         planeManager.OnObjetoAvanzarClickeado();
     }
 
-    void OnDrawGizmos()
-    {
-        // Dibujar un indicador visual en el editor para ver el rango de detección
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, 0.3f);
-    }
+
+
 }

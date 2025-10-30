@@ -23,7 +23,7 @@ public class PanelPreguntasZylo : MonoBehaviour
     private string idPinActual;
     private AudioClip audioRespuesta1Actual;
     private AudioClip audioRespuesta2Actual;
-    private PinMapa pinActual;
+    public PinMapa pinActual;
     private CatController gatoActual;
     private Animator zyloAnimator; // Ahora se obtiene automáticamente del CatController
     private bool esperandoRespuesta = false;
@@ -113,7 +113,29 @@ public class PanelPreguntasZylo : MonoBehaviour
         ActivarBotones();
         MostrarBotonesDuda();
         esperandoRespuesta = false;
+
+        // ✅ Detectar si es el último pin de la época
+        var manager = Object.FindFirstObjectByType<PlaneManager>();
+        if (manager != null && pinActual != null)
+        {
+            GameObject mapaActual = manager.GetMapas()[manager.GetCurrentMapIndex()];
+            PinMapa[] pins = mapaActual.GetComponentsInChildren<PinMapa>(true);
+            System.Array.Sort(pins, (a, b) => a.OrdenPin.CompareTo(b.OrdenPin));
+
+            bool esUltimoPin = pinActual == pins[pins.Length - 1];
+
+            if (!esUltimoPin)
+            {
+                manager.NotificarPinCompletado(pinActual);
+            }
+            else
+            {
+                Debug.Log("[PanelPreguntasZylo] Último pin detectado. Esperando interacción del usuario para avanzar.");
+            }
+        }
     }
+
+
 
     public void Pregunta1DesdeInspector() => EjecutarPregunta(1);
     public void Pregunta2DesdeInspector() => EjecutarPregunta(2);
@@ -242,4 +264,10 @@ public class PanelPreguntasZylo : MonoBehaviour
             buttonDuda2.SetActive(true);
         }
     }
+
+    public PinMapa GetPinActual()
+    {
+        return pinActual;
+    }
+
 }

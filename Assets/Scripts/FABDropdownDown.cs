@@ -13,7 +13,7 @@ public class FABDropdownDown : MonoBehaviour
     [SerializeField] private float duracionAnim = 0.25f;
 
     [Header("Referencias")]
-    [SerializeField] private PlaneManagerPines planeManager;
+    [SerializeField] private PlaneManager planeManager;
 
     private bool abierto = false;
     private bool desbloqueado = false;

@@ -1331,6 +1331,7 @@ Transform:
   - {fileID: 6265637824587598305}
   - {fileID: 466518912739429768}
   - {fileID: 3687466991390293110}
+  - {fileID: 7457032375697883091}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1968984668485398311
@@ -3063,7 +3064,7 @@ Transform:
   m_GameObject: {fileID: 5421551380431470537}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 3.5264, y: 3.96, z: 10.12}
+  m_LocalPosition: {x: 4.11, y: 3.96, z: 11.39}
   m_LocalScale: {x: 3.6691084, y: 1.2921172, z: 0.31415996}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5231,6 +5232,128 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 920103b987ffd8649b1d0b7210680d0f, type: 3}
   m_PrefabInstance: {fileID: 963866486469262463}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1605484277494616011
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7457032375697883091}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 36daba6024a38bb479428f72a29627fa, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 273.95
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 36daba6024a38bb479428f72a29627fa, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 95.05
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 36daba6024a38bb479428f72a29627fa, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 110.25001
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 36daba6024a38bb479428f72a29627fa, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.007280343
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 36daba6024a38bb479428f72a29627fa, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.06999993
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 36daba6024a38bb479428f72a29627fa, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.08805848
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 36daba6024a38bb479428f72a29627fa, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 36daba6024a38bb479428f72a29627fa, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 36daba6024a38bb479428f72a29627fa, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 36daba6024a38bb479428f72a29627fa, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 36daba6024a38bb479428f72a29627fa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 36daba6024a38bb479428f72a29627fa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 36daba6024a38bb479428f72a29627fa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 36daba6024a38bb479428f72a29627fa, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 7317bb54c8dedf044b5d0385936263ff, type: 2}
+    - target: {fileID: 919132149155446097, guid: 36daba6024a38bb479428f72a29627fa, type: 3}
+      propertyPath: m_Name
+      value: Video Pantalla C
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 36daba6024a38bb479428f72a29627fa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9102328431503899397}
+  m_SourcePrefab: {fileID: 100100000, guid: 36daba6024a38bb479428f72a29627fa, type: 3}
+--- !u!4 &1282798072035272736 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 36daba6024a38bb479428f72a29627fa, type: 3}
+  m_PrefabInstance: {fileID: 1605484277494616011}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1911420289573958298 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 36daba6024a38bb479428f72a29627fa, type: 3}
+  m_PrefabInstance: {fileID: 1605484277494616011}
+  m_PrefabAsset: {fileID: 0}
+--- !u!328 &9102328431503899397
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1911420289573958298}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 0}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 0}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: <noninit>
+  m_RenderMode: 3
+  m_AspectRatio: 2
+  m_DataSource: 0
+  m_TimeUpdateMode: 2
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 2
+  m_TargetAudioSources:
+  - {fileID: 0}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 0
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
 --- !u!1001 &1612411870713060900
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5577,7 +5700,9 @@ MonoBehaviour:
   - {fileID: 2486235208970406621}
   - {fileID: 484121281591870120}
   - {fileID: 8059192710485432294}
+  letrero: {fileID: 484047754213970200}
   idPin: 2018_2020
+  ordenPin: 5
   audioClip: {fileID: 8300000, guid: 0f2a76678f2395b4191e87bbab440c28, type: 3}
   textoDelPin: "Sumamos el Premio Planeta Azul, una nueva pol\xEDtica curricular
     y convenios para el doctorado en Bioingenier\xEDa. En 2020 respondemos a la pandemia
@@ -6185,7 +6310,9 @@ MonoBehaviour:
   - {fileID: 9120241436936869068}
   - {fileID: 5494527431310517092}
   - {fileID: 319485600514070523}
+  letrero: {fileID: 5421551380431470537}
   idPin: 2010_2012
+  ordenPin: 1
   audioClip: {fileID: 8300000, guid: dc6f48caf64bf654c8145c058153058d, type: 3}
   textoDelPin: "Arranca la d\xE9cada con el PAEM, nuevas acreditaciones y la certificaci\xF3n
     ISO 9001. En 2012, la UAO obtuvo ISO 14001 y reconocimiento nacional por su gesti\xF3n
@@ -6858,6 +6985,85 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9e4c5cdbd9244334893ee350afc1cfb2, type: 3}
   m_PrefabInstance: {fileID: 6768303702918429330}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6986782947402733624
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8883530291271558596}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 77f811777a0d30344a429f40c359c48c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.64644
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 77f811777a0d30344a429f40c359c48c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.64644
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 77f811777a0d30344a429f40c359c48c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.64644
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 77f811777a0d30344a429f40c359c48c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 130
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 77f811777a0d30344a429f40c359c48c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.12
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 77f811777a0d30344a429f40c359c48c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 62.25
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 77f811777a0d30344a429f40c359c48c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 77f811777a0d30344a429f40c359c48c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 77f811777a0d30344a429f40c359c48c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 77f811777a0d30344a429f40c359c48c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 77f811777a0d30344a429f40c359c48c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 77f811777a0d30344a429f40c359c48c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 77f811777a0d30344a429f40c359c48c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 77f811777a0d30344a429f40c359c48c, type: 3}
+      propertyPath: m_Name
+      value: Pantalla Curva
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 7869873546869171050, guid: 77f811777a0d30344a429f40c359c48c, type: 3}
+    - {fileID: 65702495048144492, guid: 77f811777a0d30344a429f40c359c48c, type: 3}
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 77f811777a0d30344a429f40c359c48c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1282798072035272736}
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 77f811777a0d30344a429f40c359c48c, type: 3}
+--- !u!4 &7457032375697883091 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 77f811777a0d30344a429f40c359c48c, type: 3}
+  m_PrefabInstance: {fileID: 6986782947402733624}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7071060776332017735
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7410,7 +7616,9 @@ MonoBehaviour:
   - {fileID: 382520860578385887}
   - {fileID: 4555298904518028640}
   - {fileID: 7989418304378436886}
+  letrero: {fileID: 8998316206575917900}
   idPin: 2021_2023
+  ordenPin: 6
   audioClip: {fileID: 8300000, guid: 5eb0466f5e09dd64b9df9d4bb5491cb6, type: 3}
   textoDelPin: "Obtenemos patente de la SIC, fortalecemos la investigaci\xF3n y nos
     integramos a redes internacionales. En 2022 nace FADU, se implementa el PEI,
@@ -7842,7 +8050,9 @@ MonoBehaviour:
   - {fileID: 1918843350353748853}
   - {fileID: 2074489531645617381}
   - {fileID: 8070323433340596762}
+  letrero: {fileID: 655507686129339122}
   idPin: 2014_2016
+  ordenPin: 3
   audioClip: {fileID: 8300000, guid: 2306f2c1c4c6b1b47891a6d5fc477a8f, type: 3}
   textoDelPin: "Impulsamos el Plan de Desarrollo 2030, logramos patente en biocompuestos
     y lanzamos MOOC. En 2016 llegaron nuevos laboratorios, UAO 360\xB0 y el primer
@@ -8151,19 +8361,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 9f02bf40c33a64846aee4994a51e48a2, type: 3}
       propertyPath: m_LocalScale.x
-      value: 29.752855
+      value: 35.274986
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9f02bf40c33a64846aee4994a51e48a2, type: 3}
       propertyPath: m_LocalScale.y
-      value: 29.752857
+      value: 35.27499
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9f02bf40c33a64846aee4994a51e48a2, type: 3}
       propertyPath: m_LocalScale.z
-      value: 29.752857
+      value: 35.27499
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9f02bf40c33a64846aee4994a51e48a2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 118.4
+      value: 119.91
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9f02bf40c33a64846aee4994a51e48a2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8660,7 +8870,9 @@ MonoBehaviour:
   - {fileID: 9140768666332577323}
   - {fileID: 6993842740129389217}
   - {fileID: 5341781458985579837}
+  letrero: {fileID: 484047754213970200}
   idPin: 2016_2018
+  ordenPin: 4
   audioClip: {fileID: 8300000, guid: e0095e13c811e0743a404d97a89cfdba, type: 3}
   textoDelPin: "Renovamos la Acreditaci\xF3n Institucional, naci\xF3 la Escuela de
     Turismo y el Doctorado en Regiones Sostenibles. En 2018 destacamos en GreenMetric,
@@ -9091,7 +9303,9 @@ MonoBehaviour:
   - {fileID: 1156844888558261280}
   - {fileID: 117443954767184174}
   - {fileID: 314805978288137693}
+  letrero: {fileID: 7833922454473663334}
   idPin: 2012_2014
+  ordenPin: 2
   audioClip: {fileID: 8300000, guid: 6488d57e8425e6e4bb66dbe3f0a11804, type: 3}
   textoDelPin: "Desde la C\xE1tedra de Paz y la gesti\xF3n ambiental pasamos a crear
     el CIT y el Esp\xEDn Media Lab. En 2014 nace Campus Sostenible y el Centro para

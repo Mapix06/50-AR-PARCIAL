@@ -86,13 +86,6 @@ public class PinMapa : MonoBehaviour
             MostrarObjetos();
             IniciarDialogoConPanel(gato);
 
-            // 🆕 Notificar inmediatamente al hacer click
-            var manager = Object.FindFirstObjectByType<PlaneManagerPines>();
-            if (manager != null)
-            {
-                Debug.Log($"[PinMapa] Pin {idPin} clickeado, notificando al manager");
-                manager.NotificarPinCompletado(this);
-            }
         }
         else
         {

@@ -55,7 +55,7 @@ public class ControladorPinesYPanel : MonoBehaviour
         Debug.Log($"[ControladorPinesYPanel] ✓ Se marcaron {pinesMarcados} pines como visitados.");
 
         // ⿣ Notificar al manager si existe
-        var manager = FindObjectOfType<PlaneManagerPines>();
+        var manager = FindObjectOfType<PlaneManager>();
         if (manager != null)
         {
             foreach (PinMapa pin in todosLosPines)
