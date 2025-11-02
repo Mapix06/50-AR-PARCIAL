@@ -5115,6 +5115,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e1a374ba8b6dfb84bab7e931a0757d8b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1016918808559783927}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e1a374ba8b6dfb84bab7e931a0757d8b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 469242689622074008}
   m_SourcePrefab: {fileID: 100100000, guid: e1a374ba8b6dfb84bab7e931a0757d8b, type: 3}
 --- !u!4 &2869114237395952971 stripped
 Transform:
@@ -5153,6 +5156,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ModeloLink
   url: https://drive.google.com/file/d/1pGP9uhsSZXC1mZOvl5htBSMx1ES41xC7/view?usp=sharing
+  camaraAR: {fileID: 0}
+  capasDetectables:
+    serializedVersion: 2
+    m_Bits: 0
+  distanciaMaximaRaycast: 30
+  rotarConstantemente: 1
+  velocidadRotacion: 50
+  animarEscala: 1
+  velocidadPulso: 2
+  escalaMin: 0.9
+  escalaMax: 1.1
+--- !u!65 &469242689622074008
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3214150243636494321}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.7214241, y: 2.5074053, z: 0.6645885}
+  m_Center: {x: -0.3607129, y: 0.059576515, z: 0.024197431}
 --- !u!1001 &2402764938444477086
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5423,6 +5458,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 75d7dfc45237a394da1d24265a6f3dd5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8414234571393963780}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 75d7dfc45237a394da1d24265a6f3dd5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4236101718273623179}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 75d7dfc45237a394da1d24265a6f3dd5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 49515185776137614}
   m_SourcePrefab: {fileID: 100100000, guid: 75d7dfc45237a394da1d24265a6f3dd5, type: 3}
 --- !u!4 &2344980942564380569 stripped
 Transform:
@@ -5448,6 +5489,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Flotar3D
   amplitud: 0.2
   frecuencia: 1
+--- !u!65 &4236101718273623179
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3152760612403811619}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.2014117, y: 5.6197124, z: 6.1860113}
+  m_Center: {x: 0.15101014, y: 0.2290098, z: 1.8366492}
+--- !u!114 &49515185776137614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3152760612403811619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dfb7d7dab9d26540af8cdf14a7cbf8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ModeloLink
+  url: https://drive.google.com/file/d/17ulMdmejaiz0-jC1iEpcNz63Vf_6wP3l/view?usp=sharing
+  camaraAR: {fileID: 0}
+  capasDetectables:
+    serializedVersion: 2
+    m_Bits: 0
+  distanciaMaximaRaycast: 30
+  rotarConstantemente: 1
+  velocidadRotacion: 50
+  animarEscala: 1
+  velocidadPulso: 2
+  escalaMin: 0.9
+  escalaMax: 1.1
 --- !u!1001 &2918953394878329273
 PrefabInstance:
   m_ObjectHideFlags: 0
