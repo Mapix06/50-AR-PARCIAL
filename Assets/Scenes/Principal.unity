@@ -3188,8 +3188,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1194568225}
-  - component: {fileID: 1194568224}
   - component: {fileID: 1194568223}
+  - component: {fileID: 1194568226}
   m_Layer: 0
   m_Name: Coleccionables
   m_TagString: Untagged
@@ -3294,50 +3294,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1194568224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1194568222}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad788e2fa534cad42853001f162422f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ColeccionablesManager
-  coleccionables:
-  - indiceEpoca: 0
-    nombreEpoca: 70s
-    prefabObjeto: {fileID: 919132149155446097, guid: c0c8e07f3bfec7242a143e2df92a8dda, type: 3}
-    recolectado: 0
-    instanciaActual: {fileID: 0}
-  - indiceEpoca: 1
-    nombreEpoca: 80s
-    prefabObjeto: {fileID: 919132149155446097, guid: 40fdc0d0f4ab398419c7413bb9bb5fdb, type: 3}
-    recolectado: 0
-    instanciaActual: {fileID: 0}
-  - indiceEpoca: 2
-    nombreEpoca: 90s
-    prefabObjeto: {fileID: 919132149155446097, guid: 1216dcf717ba8c24689d6e835355d7a1, type: 3}
-    recolectado: 0
-    instanciaActual: {fileID: 0}
-  - indiceEpoca: 3
-    nombreEpoca: 2000s
-    prefabObjeto: {fileID: 919132149155446097, guid: 46d9a3bb103b66c45b9aebb19b67ad49, type: 3}
-    recolectado: 0
-    instanciaActual: {fileID: 0}
-  - indiceEpoca: 4
-    nombreEpoca: 2010
-    prefabObjeto: {fileID: 919132149155446097, guid: 9f02bf40c33a64846aee4994a51e48a2, type: 3}
-    recolectado: 0
-    instanciaActual: {fileID: 0}
-  escalaObjetos: 0.05
-  posicionLateral: {x: 0.3, y: -0.2, z: 0.5}
-  espaciado: 0.15
-  sonidoRecolectar: {fileID: 8300000, guid: ef1cc317bbe3b1f43989786cc3e500b6, type: 3}
-  seguirCamara: 1
-  suavizadoSeguimiento: 5
 --- !u!4 &1194568225
 Transform:
   m_ObjectHideFlags: 0
@@ -3353,6 +3309,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1194568226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194568222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60c8f4841ebd31e4cb1e4cf2575be670, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ColeccionablesViewer
+  escalaObjetos: 10
+  posicionRelativa: {x: -0.04, y: 0.3, z: 0.44}
+  rotacionRelativa: {x: 0, y: 180, z: 0}
+  espaciadoEntreObjetos: 0.03
+  suavizadoMovimiento: 5
 --- !u!1 &1217389270
 GameObject:
   m_ObjectHideFlags: 0

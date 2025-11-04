@@ -5349,19 +5349,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8005b0d2c0cc4e14eb0330e967da02fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoInteractivoCambioMapa
-  planeManager: {fileID: 0}
-  camaraAR: {fileID: 0}
-  rotarConstantemente: 1
-  velocidadRotacion: 50
-  animarEscala: 1
-  velocidadPulso: 2
-  escalaPulsoMin: 0.9
-  escalaPulsoMax: 1.1
-  sonidoClick: {fileID: 0}
-  capasDetectables:
-    serializedVersion: 2
-    m_Bits: 0
-  distanciaMaximaRaycast: 50
+  indiceEpoca: 1
+  nombreEpoca: 80s
+  prefabParaMostrar: {fileID: 3285723557697564623}
+  sonidoRecolectar: {fileID: 8300000, guid: ef1cc317bbe3b1f43989786cc3e500b6, type: 3}
 --- !u!65 &3732862753704465134
 BoxCollider:
   m_ObjectHideFlags: 0

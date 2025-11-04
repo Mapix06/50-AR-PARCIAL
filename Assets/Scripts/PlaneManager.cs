@@ -32,7 +32,7 @@ public class PlaneManager : MonoBehaviour
     [SerializeField] private bool verbose = true;
 
     [Header("Configuración de Avance")]
-    [SerializeField] private float tiempoEsperaAntesDeObjeto = 1.5f; // Tiempo después de que aparece el coleccionable
+    [SerializeField] private float tiempoEsperaAntesDeObjeto = 1.5f;
 
     private bool todosPinesCompletados = false;
     public bool TodosPinesCompletados => todosPinesCompletados;
@@ -56,7 +56,7 @@ public class PlaneManager : MonoBehaviour
             arPlaneManager = GetComponent<ARPlaneManager>();
 
         if (!arRaycastManager)
-            arRaycastManager = Object.FindFirstObjectByType<ARRaycastManager>();
+            arRaycastManager = FindFirstObjectByType<ARRaycastManager>();
     }
 
     void Start()
@@ -64,7 +64,7 @@ public class PlaneManager : MonoBehaviour
         arPlaneManager.requestedDetectionMode = PlaneDetectionMode.Horizontal;
 
         if (verbose)
-            Debug.Log("[PlaneManagerPines] Buscando plano horizontal frente al usuario...");
+            Debug.Log("[PlaneManager] Buscando plano horizontal frente al usuario...");
     }
 
     void Update()
@@ -77,14 +77,14 @@ public class PlaneManager : MonoBehaviour
     {
         if (arRaycastManager == null)
         {
-            Debug.LogError("[PlaneManagerPines] ARRaycastManager no encontrado.");
+            Debug.LogError("[PlaneManager] ARRaycastManager no encontrado.");
             return;
         }
 
         Transform cam = Camera.main?.transform;
         if (cam == null)
         {
-            Debug.LogError("[PlaneManagerPines] No se encontró la cámara principal.");
+            Debug.LogError("[PlaneManager] No se encontró la cámara principal.");
             return;
         }
 
@@ -114,18 +114,17 @@ public class PlaneManager : MonoBehaviour
     {
         if (catPrefab == null)
         {
-            Debug.LogWarning("[PlaneManagerPines] Asigna el prefab del gato.");
+            Debug.LogWarning("[PlaneManager] Asigna el prefab del gato.");
             return;
         }
 
         Transform cam = Camera.main?.transform;
         if (cam == null)
         {
-            Debug.LogError("[PlaneManagerPines] No se encontró la cámara principal (MainCamera).");
+            Debug.LogError("[PlaneManager] No se encontró la cámara principal.");
             return;
         }
 
-        // Gato frente al usuario
         Vector3 directionToCat = cam.position - position;
         directionToCat.y = 0;
         Quaternion catRotation = Quaternion.LookRotation(directionToCat);
@@ -134,9 +133,9 @@ public class PlaneManager : MonoBehaviour
         catController = catInstance.GetComponent<CatController>();
 
         if (verbose)
-            Debug.Log($"[PlaneManagerPines] Gato colocado en: {position}");
+            Debug.Log($"[PlaneManager] Gato colocado en: {position}");
 
-        // Instancia mapas (ocultos) relativos al gato
+        // Instanciar mapas relativos al gato
         for (int i = 0; i < mapPrefabs.Count; i++)
         {
             if (mapPrefabs[i] == null) continue;
@@ -153,7 +152,7 @@ public class PlaneManager : MonoBehaviour
             mapInstances.Add(map);
         }
 
-        // Muestra el primer mapa y activa solo el primer pin
+        // Mostrar primer mapa y pin
         if (mapInstances.Count > 0)
         {
             currentMapIndex = 0;
@@ -169,21 +168,17 @@ public class PlaneManager : MonoBehaviour
 
     public void NotificarPinCompletado(PinMapa pin)
     {
-
         if (pin == null) return;
 
         if (verbose)
-            Debug.Log($"[PlaneManagerPines] Pin completado: {pin.name} (orden {pin.OrdenPin})");
+            Debug.Log($"[PlaneManager] Pin completado: {pin.name} (orden {pin.OrdenPin})");
 
         if (currentMapIndex >= mapInstances.Count) return;
 
         GameObject currentMap = mapInstances[currentMapIndex];
         PinMapa[] pins = currentMap.GetComponentsInChildren<PinMapa>(true);
 
-        Debug.Log($"[PlaneManager] currentPinIndex: {currentPinIndex}, pins.Length: {pins.Length}");
-
-
-        // ⭐ ORDENAR PINES POR OrdenPin
+        // Ordenar pines por OrdenPin
         System.Array.Sort(pins, (a, b) => a.OrdenPin.CompareTo(b.OrdenPin));
 
         // Avanzar al siguiente pin si no es el último
@@ -193,100 +188,122 @@ public class PlaneManager : MonoBehaviour
             pins[currentPinIndex].gameObject.SetActive(true);
 
             if (verbose)
-                Debug.Log($"[PlaneManagerPines] Activando siguiente pin: {pins[currentPinIndex].name} (orden {pins[currentPinIndex].OrdenPin}), {currentPinIndex + 1}/{pins.Length}");
+                Debug.Log($"[PlaneManager] Activando siguiente pin: {pins[currentPinIndex].name}, {currentPinIndex + 1}/{pins.Length}");
         }
         else
         {
-            // ✅ Todos los pines de este mapa se completaron
+            // Todos los pines completados
             if (verbose)
-                Debug.Log($"[PlaneManagerPines] 🎉 Todos los pines del mapa {currentMapIndex + 1} completados.");
+                Debug.Log($"[PlaneManager] 🎉 Todos los pines del mapa {currentMapIndex + 1} completados.");
 
-            // SECUENCIA CORRECTA:
             StartCoroutine(SecuenciaCompletarMapa(pins));
-            Debug.Log("[PlaneManager] ✅ Entrando a SecuenciaCompletarMapa");
-
         }
     }
 
     private IEnumerator SecuenciaCompletarMapa(PinMapa[] pins)
     {
+        listoParaAvanzar = true;
+        Debug.Log("[DEBUG] SecuenciaCompletarMapa started. listoParaAvanzar set to true.");
+
         // 1. Marcar todos los pines como completados
         MarcarTodosPinesComoCompletados(pins);
+        Debug.Log("[DEBUG] Pins marked complete.");
         yield return new WaitForSeconds(0.3f);
 
         // 2. Cerrar panel de preguntas
-        PanelPreguntasZylo panel = Object.FindFirstObjectByType<PanelPreguntasZylo>(FindObjectsInactive.Include);
+        PanelPreguntasZylo panel = FindFirstObjectByType<PanelPreguntasZylo>(FindObjectsInactive.Include);
         panel?.CerrarTodo();
+        Debug.Log("[DEBUG] Panel closed.");
         yield return new WaitForSeconds(0.2f);
 
-        // 3. Instanciar el coleccionable (aparece en pantalla)
-        if (ColeccionablesManager.Instance != null)
+        // 3. Instanciar el coleccionable
+        if (ColeccionablesViewer.Instance != null)
         {
-            ColeccionablesManager.Instance.RecolectarPorEpoca(currentMapIndex);
-            Debug.Log($"[PlaneManagerPines] 🎁 Coleccionable de época {currentMapIndex} instanciado.");
+            ColeccionablesViewer.Instance.RecolectarPorEpoca(currentMapIndex);
+            Debug.Log($"[DEBUG] Collectible shown for epoch {currentMapIndex}.");
+        }
+        else
+        {
+            Debug.LogWarning("[DEBUG] ColeccionablesViewer not found.");
         }
 
-        // 4. Esperar un momento para que el usuario vea el coleccionable
+        // 4. Esperar
+        Debug.Log("[DEBUG] Waiting 1.5s before activating object...");
         yield return new WaitForSeconds(tiempoEsperaAntesDeObjeto);
 
-        // 5. Buscar y activar el objeto para avanzar dentro del mapa actual
+        // 5. Buscar y activar el objeto
         GameObject mapaActual = mapInstances[currentMapIndex];
+        Debug.Log($"[DEBUG] Current map: {mapaActual?.name}, active: {mapaActual?.activeSelf}");
+
         ObjetoInteractivoCambioMapa objetoAvanzar = mapaActual.GetComponentInChildren<ObjetoInteractivoCambioMapa>(true);
+        Debug.Log($"[DEBUG] ObjetoInteractivoCambioMapa found: {objetoAvanzar != null}, name: {objetoAvanzar?.name}, current active: {objetoAvanzar?.gameObject.activeSelf}");
 
         if (objetoAvanzar != null)
         {
             objetoAvanzar.gameObject.SetActive(true);
-            Debug.Log("[PlaneManagerPines] 🔘 Objeto para avanzar activado desde el prefab del mapa.");
+            Debug.Log("[DEBUG] ObjetoInteractivoCambioMapa ACTIVATED!");
         }
         else
         {
-            Debug.LogWarning("[PlaneManagerPines] ⚠️ No se encontró ObjetoInteractivoCambioMapa en el mapa actual.");
+            Debug.LogWarning("[DEBUG] ObjetoInteractivoCambioMapa NOT FOUND in map.");
         }
 
-        // 6. Marcar como listo para avanzar
-        listoParaAvanzar = true;
-
-        if (verbose)
-            Debug.Log("[PlaneManagerPines] ✅ Secuencia completada. Usuario puede avanzar.");
+        Debug.Log("[DEBUG] SecuenciaCompletarMapa completed.");
     }
+
 
     private void MarcarTodosPinesComoCompletados(PinMapa[] pins)
     {
         foreach (var pin in pins)
         {
-            // Ocultar letrero del pin
-            var letrero = pin.GetComponentInChildren<Transform>().Find("Letrero");
+            // 🔧 PROBLEMA 2 RESUELTO: Búsqueda segura del letrero
+            Transform letrero = pin.transform.Find("Letrero");
             if (letrero != null)
             {
                 letrero.gameObject.SetActive(false);
             }
 
             if (verbose)
-                Debug.Log($"[PlaneManagerPines] ✓ Pin {pin.name} marcado como completado.");
+                Debug.Log($"[PlaneManager] ✓ Pin {pin.name} marcado como completado.");
         }
     }
 
-    // Este método debe ser llamado desde el objeto interactivo
     public void OnObjetoAvanzarClickeado()
     {
-        if (!listoParaAvanzar) return;
+        Debug.Log($"[PlaneManager] 🎯 OnObjetoAvanzarClickeado() llamado. listoParaAvanzar = {listoParaAvanzar}");
 
-        if (verbose)
-            Debug.Log("[PlaneManagerPines] 👆 Usuario hizo click en objeto para avanzar.");
+        if (!listoParaAvanzar)
+        {
+            Debug.LogWarning("[PlaneManager] ⚠️ No está listo para avanzar. Abortando.");
+            return;
+        }
 
-        // Desactivar objeto de avance del mapa actual
+        Debug.Log("[PlaneManager] 👆 Click en objeto para avanzar CONFIRMADO.");
+
+        // Desactivar objeto de avance
         if (currentMapIndex < mapInstances.Count)
         {
             GameObject mapaActual = mapInstances[currentMapIndex];
+            Debug.Log($"[PlaneManager] 🗺️ Buscando ObjetoInteractivoCambioMapa en mapa {currentMapIndex}");
+
             ObjetoInteractivoCambioMapa objetoAvanzar = mapaActual.GetComponentInChildren<ObjetoInteractivoCambioMapa>(true);
 
             if (objetoAvanzar != null)
             {
+                Debug.Log($"[PlaneManager] 🔘 Desactivando objeto: {objetoAvanzar.name}");
                 objetoAvanzar.gameObject.SetActive(false);
             }
+            else
+            {
+                Debug.LogWarning("[PlaneManager] ⚠️ No se encontró ObjetoInteractivoCambioMapa para desactivar.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"[PlaneManager] ⚠️ currentMapIndex ({currentMapIndex}) fuera de rango.");
         }
 
-        // Avanzar al siguiente mapa
+        Debug.Log("[PlaneManager] 🚀 Llamando a AvanzarAlSiguienteMapa()...");
         AvanzarAlSiguienteMapa();
     }
 
@@ -298,18 +315,15 @@ public class PlaneManager : MonoBehaviour
         mapaActual.SetActive(false);
 
         if (verbose)
-            Debug.Log($"[PlaneManagerPines] 🙈 Mapa {currentMapIndex + 1} ocultado.");
+            Debug.Log($"[PlaneManager] 🙈 Mapa {currentMapIndex + 1} ocultado.");
     }
 
     public void AvanzarAlSiguienteMapa()
     {
         if (verbose)
-            Debug.Log($"[PlaneManagerPines] 🔄 Iniciando cambio de mapa {currentMapIndex + 1} → {currentMapIndex + 2}");
+            Debug.Log($"[PlaneManager] 🔄 Cambio de mapa {currentMapIndex + 1} → {currentMapIndex + 2}");
 
-        // Ocultar el mapa actual antes de avanzar
         OcultarMapaActual();
-
-        // Reset del flag
         listoParaAvanzar = false;
 
         currentMapIndex++;
@@ -317,18 +331,16 @@ public class PlaneManager : MonoBehaviour
 
         if (currentMapIndex < mapInstances.Count)
         {
-            // Detener animaciones del gato antes de cambiar
             if (catController != null)
             {
                 catController.DetenerMovimiento();
             }
 
-            // Pequeña pausa antes de mostrar el nuevo mapa
             StartCoroutine(CambiarANuevoMapa());
         }
         else
         {
-            Debug.Log("[PlaneManagerPines] 🎊 ¡Todos los mapas completados!");
+            Debug.Log("[PlaneManager] 🎊 ¡Todos los mapas completados!");
             todosPinesCompletados = true;
             ActivarFABSiUltimoMapa();
         }
@@ -336,27 +348,26 @@ public class PlaneManager : MonoBehaviour
 
     private IEnumerator CambiarANuevoMapa()
     {
-        // Esperar un frame para que todo se estabilice
         yield return new WaitForEndOfFrame();
 
-        // Mostrar el nuevo mapa y primer pin
         MostrarMapaYPrimerPin();
 
         if (verbose)
-            Debug.Log($"[PlaneManagerPines] ✅ Cambio a mapa {currentMapIndex + 1} completado");
+            Debug.Log($"[PlaneManager] ✅ Cambio a mapa {currentMapIndex + 1} completado");
     }
 
-    // Permitir que el FAB lea los mapas
+    // 🔧 PROBLEMA 3 RESUELTO: Métodos públicos con nombres consistentes
     public List<GameObject> GetMapas() => mapInstances;
     public int GetCurrentMapIndex() => currentMapIndex;
 
-    // Pines recorridos por mapa
     public List<string> GetPinesRecorridos(int mapIndex)
     {
-        List<string> lista = new();
+        List<string> lista = new List<string>();
         if (mapIndex >= mapInstances.Count) return lista;
 
         PinMapa[] pins = mapInstances[mapIndex].GetComponentsInChildren<PinMapa>(true);
+        System.Array.Sort(pins, (a, b) => a.OrdenPin.CompareTo(b.OrdenPin));
+
         for (int i = 0; i <= currentPinIndex && i < pins.Length; i++)
         {
             lista.Add(pins[i].name);
@@ -364,7 +375,6 @@ public class PlaneManager : MonoBehaviour
         return lista;
     }
 
-    // Ir a un pin específico
     public void IrAlPin(int mapIndex, string pinName)
     {
         if (mapIndex >= mapInstances.Count) return;
@@ -379,8 +389,9 @@ public class PlaneManager : MonoBehaviour
         }
 
         currentMapIndex = mapIndex;
-        Debug.Log($"[PlaneManagerPines] Regresando a {pinName} en {ObtenerNombreMapa(mapIndex)}");
+        Debug.Log($"[PlaneManager] Regresando a {pinName} en {ObtenerNombreMapa(mapIndex)}");
     }
+
     private void MostrarMapaYPrimerPin()
     {
         if (currentMapIndex >= mapInstances.Count) return;
@@ -391,26 +402,27 @@ public class PlaneManager : MonoBehaviour
         PinMapa[] pins = currentMap.GetComponentsInChildren<PinMapa>(true);
         if (pins.Length == 0)
         {
-            Debug.LogWarning($"[PlaneManagerPines] El mapa {currentMapIndex + 1} no tiene pines.");
+            Debug.LogWarning($"[PlaneManager] El mapa {currentMapIndex + 1} no tiene pines.");
             return;
         }
 
-        // ⭐ ORDENAR PINES POR OrdenPin antes de activarlos
+        // Ordenar pines por OrdenPin
         System.Array.Sort(pins, (a, b) => a.OrdenPin.CompareTo(b.OrdenPin));
 
-        // Desactivar todos los pines primero
+        // Desactivar todos los pines
         foreach (var pin in pins)
             pin.gameObject.SetActive(false);
 
-        // Activar solo el primer pin según el orden
+        // Activar solo el primer pin
         if (currentPinIndex < pins.Length)
         {
             pins[currentPinIndex].gameObject.SetActive(true);
 
             if (verbose)
-                Debug.Log($"[PlaneManagerPines] Mostrando mapa {currentMapIndex + 1}, pin {pins[currentPinIndex].name} (orden {pins[currentPinIndex].OrdenPin}), {currentPinIndex + 1}/{pins.Length}");
+                Debug.Log($"[PlaneManager] Mostrando mapa {currentMapIndex + 1}, pin {pins[currentPinIndex].name}, {currentPinIndex + 1}/{pins.Length}");
         }
     }
+
     private string ObtenerNombreMapa(int index)
     {
         string[] nombres = { "70s", "80s", "90s", "2000s", "2010s" };
@@ -419,17 +431,17 @@ public class PlaneManager : MonoBehaviour
 
     private void ActivarFABSiUltimoMapa()
     {
-        // Si estamos en el último mapa y todos sus pines se completaron
-        if (currentMapIndex >= mapInstances.Count)
+        // 🔧 PROBLEMA 4 RESUELTO: Verificar correctamente si es el último mapa
+        if (currentMapIndex >= mapInstances.Count && todosPinesCompletados)
         {
             if (fabButton != null)
             {
                 fabButton.SetActive(true);
-                Debug.Log("[PlaneManagerPines] 🎯 FAB activado: todas las épocas completadas.");
+                Debug.Log("[PlaneManager] 🎯 FAB activado: todas las épocas completadas.");
             }
             else
             {
-                Debug.LogWarning("[PlaneManagerPines] No se asignó el FABButton en el inspector.");
+                Debug.LogWarning("[PlaneManager] No se asignó el FABButton en el inspector.");
             }
         }
     }

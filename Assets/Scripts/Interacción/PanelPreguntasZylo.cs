@@ -207,6 +207,19 @@ public class PanelPreguntasZylo : MonoBehaviour
         ActivarBotones();
         MostrarBotonesDuda();
         esperandoRespuesta = false;
+        var manager = Object.FindFirstObjectByType<PlaneManager>();
+        if (manager != null && pinActual != null)
+        {
+            GameObject mapaActual = manager.GetMapas()[manager.GetCurrentMapIndex()];
+            PinMapa[] pins = mapaActual.GetComponentsInChildren<PinMapa>(true);
+            System.Array.Sort(pins, (a, b) => a.OrdenPin.CompareTo(b.OrdenPin));
+            bool esUltimoPin = pinActual == pins[pins.Length - 1];
+            if (esUltimoPin)
+            {
+                Debug.Log("[PanelPreguntasZylo] Último pin completado tras interacción. Notificando a PlaneManager.");
+                manager.NotificarPinCompletado(pinActual);
+            }
+        }
     }
 
     public void CerrarTodo()
