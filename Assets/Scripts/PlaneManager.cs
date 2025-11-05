@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
+using TMPro;
 
 [RequireComponent(typeof(ARPlaneManager))]
 public class PlaneManager : MonoBehaviour
@@ -15,6 +17,13 @@ public class PlaneManager : MonoBehaviour
     [SerializeField] private GameObject catPrefab;
     [Tooltip("Prefabs de mapas (máx. 5)")]
     [SerializeField] private List<GameObject> mapPrefabs = new List<GameObject>();
+
+    [Header("UI de exhibición")]
+    [SerializeField] private GameObject panelExhibicion;
+    [SerializeField] private TextMeshProUGUI textoTituloObjeto;
+    [SerializeField] private Button botonSalirExhibicion;
+
+    private DocsTouch objetoActualEnExhibicion;
 
     [Header("Posiciones fijas relativas al gato")]
     [SerializeField]
@@ -444,5 +453,44 @@ public class PlaneManager : MonoBehaviour
                 Debug.LogWarning("[PlaneManager] No se asignó el FABButton en el inspector.");
             }
         }
+    }
+
+    public void MostrarDatosObjeto(string nombre, DocsTouch objeto)
+    {
+        // Actualiza solo el título
+        if (textoTituloObjeto != null)
+            textoTituloObjeto.text = nombre;
+
+        // El resto se mantiene igual
+        objetoActualEnExhibicion = objeto;
+        panelExhibicion?.SetActive(true);
+        botonSalirExhibicion?.gameObject.SetActive(true);
+
+        var btn = botonSalirExhibicion.GetComponent<Button>();
+        btn.onClick.RemoveAllListeners();
+        btn.onClick.AddListener(() =>
+        {
+            objetoActualEnExhibicion?.SalirDeExhibicion();
+        });
+
+        Debug.Log($"[PlaneManager] Mostrando objeto: {nombre}");
+    }
+
+
+    public void OcultarPanelExhibicion()
+    {
+        if (panelExhibicion != null)
+            panelExhibicion.SetActive(false);
+
+        if (botonSalirExhibicion != null)
+            botonSalirExhibicion.gameObject.SetActive(false);
+
+        if (textoTituloObjeto != null)
+            textoTituloObjeto.text = "";
+
+        objetoActualEnExhibicion = null;
+
+        if (verbose)
+            Debug.Log("[PlaneManager] Panel de exhibición ocultado.");
     }
 }
