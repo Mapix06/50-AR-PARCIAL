@@ -2690,7 +2690,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DocsTouch
   objetoNombre: Docs 70
-  descripcion: "DISCURSO DE POSESI\xD3N DEL DOCTOR LUIS H. P\xC9REZ"
   documentoURL: https://drive.google.com/file/d/1GbuTuBRef24NUCkY0S9T7R7nmyHFoaCf/view
   distanciaFrenteCamara: 1.5
   velocidadMovimiento: 2
