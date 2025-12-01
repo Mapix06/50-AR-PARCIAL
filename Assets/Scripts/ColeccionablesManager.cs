@@ -57,16 +57,20 @@ public class ColeccionablesManager : MonoBehaviour
         Debug.Log("[ColeccionablesManager] 🧹 Progreso reseteado automáticamente en Editor.");
 #endif
 
-        StartCoroutine(CargarProgresoCuandoCamaraLista());
+        // COMENTADO: No cargar ni mostrar coleccionables
+        // StartCoroutine(CargarProgresoCuandoCamaraLista());
     }
 
     void Update()
     {
+        // COMENTADO: No actualizar posiciones de coleccionables
+        /*
         // Mantener coleccionables pegados a la cámara
         if (seguirCamara && camaraTransform != null)
         {
             ActualizarPosicionesColeccionables();
         }
+        */
     }
 
     private void ActualizarPosicionesColeccionables()
@@ -120,10 +124,12 @@ public class ColeccionablesManager : MonoBehaviour
         colec.recolectado = true;
         Debug.Log($"[ColeccionablesManager] Marcando '{colec.nombreEpoca}' como recolectado.");
 
-        InstanciarObjeto(colec);
+        // COMENTADO: No instanciar objetos visualmente
+        // InstanciarObjeto(colec);
+
         GuardarProgreso();
 
-        Debug.Log($"[ColeccionablesManager] ✅ Coleccionable '{colec.nombreEpoca}' desbloqueado e instanciado.");
+        Debug.Log($"[ColeccionablesManager] ✅ Coleccionable '{colec.nombreEpoca}' desbloqueado (sin visualización).");
     }
 
     private void InstanciarObjeto(Coleccionable colec)
@@ -223,6 +229,8 @@ public class ColeccionablesManager : MonoBehaviour
             if (c.recolectado)
                 Debug.Log($"[ColeccionablesManager] Coleccionable '{c.nombreEpoca}' ya fue recolectado, recreando instancia...");
 
+            // COMENTADO: No recrear instancias visuales
+            /*
             if (c.recolectado && c.instanciaActual == null && c.prefabObjeto != null && camaraTransform != null)
             {
                 int previos = coleccionables.FindAll(x => x.indiceEpoca < c.indiceEpoca && x.recolectado).Count;
@@ -238,6 +246,7 @@ public class ColeccionablesManager : MonoBehaviour
 
                 Debug.Log($"[ColeccionablesManager] 🔁 Coleccionable '{c.nombreEpoca}' restaurado en posición {pos}.");
             }
+            */
         }
 
         Debug.Log("[ColeccionablesManager] Progreso cargado completamente.");

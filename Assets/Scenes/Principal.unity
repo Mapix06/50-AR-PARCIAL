@@ -1319,6 +1319,7 @@ MonoBehaviour:
   distanceFromCamera: 2.77
   verbose: 1
   tiempoEsperaAntesDeObjeto: 1.5
+  distanciaEntreMapas: 3
   fabButton: {fileID: 1984219888}
 --- !u!114 &354880344
 MonoBehaviour:
@@ -3170,8 +3171,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 265, y: -51}
-  m_SizeDelta: {x: 390, y: 102}
+  m_AnchoredPosition: {x: 295, y: -51}
+  m_SizeDelta: {x: 450, y: 102}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &975718697
 MonoBehaviour:

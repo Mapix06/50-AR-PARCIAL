@@ -25,13 +25,16 @@ public class PanelPreguntasZylo : MonoBehaviour
     private AudioClip audioRespuesta2Actual;
     public PinMapa pinActual;
     private CatController gatoActual;
-    private Animator zyloAnimator; // Ahora se obtiene automáticamente del CatController
+    private Animator zyloAnimator;
     private bool esperandoRespuesta = false;
+
+    // ✅ NUEVO: Rastrear qué preguntas han sido respondidas
+    private bool pregunta1Respondida = false;
+    private bool pregunta2Respondida = false;
 
     void Start()
     {
         panelPreguntas?.SetActive(false);
-        // Panel de respuesta debe estar visible pero los botones ocultos
         OcultarBotonesDuda();
 
         if (botonPregunta1 != null)
@@ -49,14 +52,12 @@ public class PanelPreguntasZylo : MonoBehaviour
             return;
         }
 
-        // Si hay un diálogo en curso, cancelarlo
         if (esperandoRespuesta)
         {
             StopAllCoroutines();
             esperandoRespuesta = false;
         }
 
-        // Cerrar panel anterior si existe
         panelPreguntas?.SetActive(false);
         OcultarBotonesDuda();
 
@@ -64,7 +65,10 @@ public class PanelPreguntasZylo : MonoBehaviour
         pinActual = pin;
         gatoActual = gato;
 
-        // ✅ Obtener el Animator del CatController
+        // ✅ Resetear estado de preguntas respondidas
+        pregunta1Respondida = false;
+        pregunta2Respondida = false;
+
         if (gatoActual != null)
         {
             zyloAnimator = gatoActual.GetComponent<Animator>();
@@ -114,7 +118,6 @@ public class PanelPreguntasZylo : MonoBehaviour
         MostrarBotonesDuda();
         esperandoRespuesta = false;
 
-        // ✅ Detectar si es el último pin de la época
         var manager = Object.FindFirstObjectByType<PlaneManager>();
         if (manager != null && pinActual != null)
         {
@@ -134,8 +137,6 @@ public class PanelPreguntasZylo : MonoBehaviour
             }
         }
     }
-
-
 
     public void Pregunta1DesdeInspector() => EjecutarPregunta(1);
     public void Pregunta2DesdeInspector() => EjecutarPregunta(2);
@@ -167,13 +168,11 @@ public class PanelPreguntasZylo : MonoBehaviour
         DesactivarBotones();
         OcultarBotonesDuda();
 
-        // Activar animación de pensar si existe
         if (zyloAnimator != null && zyloAnimator.runtimeAnimatorController != null)
             zyloAnimator.SetBool(animacionPensar, true);
 
         yield return new WaitForSeconds(tiempoPensando);
 
-        // Desactivar animación de pensar
         if (zyloAnimator != null && zyloAnimator.runtimeAnimatorController != null)
             zyloAnimator.SetBool(animacionPensar, false);
 
@@ -204,20 +203,31 @@ public class PanelPreguntasZylo : MonoBehaviour
 
         LectorRespuestas.instance.MostrarRespuesta(idPinActual, numeroPregunta);
 
+        // ✅ Marcar pregunta como respondida
+        if (numeroPregunta == 1)
+            pregunta1Respondida = true;
+        else
+            pregunta2Respondida = true;
+
+        // ✅ SIEMPRE reactivar botones primero
         ActivarBotones();
         MostrarBotonesDuda();
         esperandoRespuesta = false;
+
+        // ✅ Verificar si es el último pin y mostrar coleccionable sin cerrar panel
         var manager = Object.FindFirstObjectByType<PlaneManager>();
+
         if (manager != null && pinActual != null)
         {
             GameObject mapaActual = manager.GetMapas()[manager.GetCurrentMapIndex()];
             PinMapa[] pins = mapaActual.GetComponentsInChildren<PinMapa>(true);
             System.Array.Sort(pins, (a, b) => a.OrdenPin.CompareTo(b.OrdenPin));
             bool esUltimoPin = pinActual == pins[pins.Length - 1];
-            if (esUltimoPin)
+
+            if (esUltimoPin && (pregunta1Respondida || pregunta2Respondida))
             {
-                Debug.Log("[PanelPreguntasZylo] Último pin completado tras interacción. Notificando a PlaneManager.");
-                manager.NotificarPinCompletado(pinActual);
+                Debug.Log("[PanelPreguntasZylo] 🎁 Pregunta respondida en último pin. Mostrando coleccionable SIN cerrar panel.");
+                manager.MostrarColeccionableSinAvanzar();
             }
         }
     }
@@ -233,9 +243,13 @@ public class PanelPreguntasZylo : MonoBehaviour
         gatoActual = null;
         zyloAnimator = null;
 
+        // ✅ Resetear estado de preguntas
+        pregunta1Respondida = false;
+        pregunta2Respondida = false;
+
         OcultarBotonesDuda();
 
-        Debug.Log(" [PanelPreguntasZylo] Paneles cerrados y estado reseteado");
+        Debug.Log("🔒 [PanelPreguntasZylo] Paneles cerrados y estado reseteado");
     }
 
     private void DesactivarBotones()
@@ -282,5 +296,4 @@ public class PanelPreguntasZylo : MonoBehaviour
     {
         return pinActual;
     }
-
 }

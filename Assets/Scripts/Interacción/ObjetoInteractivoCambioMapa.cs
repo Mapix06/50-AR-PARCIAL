@@ -10,7 +10,8 @@ public class ObjetoInteractivoCambioMapa : MonoBehaviour
     public int indiceEpoca;
     public string nombreEpoca;
     public GameObject prefabParaMostrar;
-
+    [SerializeField] private float escalaEnCamara = 10f; // 👈 NUEVO
+    [SerializeField] private Vector3 offsetEnCamara = Vector3.zero; // 👈 NUEVO
     [Header("Efectos")]
     public AudioClip sonidoRecolectar;
 
@@ -64,14 +65,18 @@ public class ObjetoInteractivoCambioMapa : MonoBehaviour
         Debug.Log($"🎯 [{nombreEpoca}] Llamando a MostrarColeccionable con índice: {indiceEpoca}");
 
         // Enviar al visor para que lo muestre en la cámara
-        viewer.MostrarColeccionable(
+        ColeccionablesViewer.Instance.MostrarColeccionable(
             indiceEpoca,
             nombreEpoca,
             prefabParaMostrar,
-            sonidoRecolectar
+            sonidoRecolectar,
+            escalaEnCamara,      // 👈 Escala individual
+            offsetEnCamara       // 👈 Offset individual
         );
 
+
         Debug.Log($"✅ [{nombreEpoca}] MostrarColeccionable llamado exitosamente");
+
 
         // 🔧 NUEVO: Notificar al PlaneManager para avanzar al siguiente mapa
         PlaneManager planeManager = FindFirstObjectByType<PlaneManager>();

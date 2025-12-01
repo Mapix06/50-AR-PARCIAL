@@ -106,7 +106,50 @@ public class ColeccionablesViewer : MonoBehaviour
 
         Debug.Log($"[ColeccionablesViewer] ✅ '{nombre}' mostrado en cámara.");
     }
+    /// <summary>
+    /// Muestra un coleccionable en la cámara con escala y offset personalizados
+    /// </summary>
+    public void MostrarColeccionable(int indiceEpoca, string nombre, GameObject prefab, AudioClip sonido,
+                                     float escalaPersonalizada, Vector3 offsetPersonalizado)
+    {
+        Debug.Log($"🔵 [ColeccionablesViewer] Intentando mostrar - Época: {indiceEpoca}, Nombre: {nombre}");
 
+        if (indicesRecolectados.Contains(indiceEpoca))
+        {
+            Debug.LogWarning($"⚠️ [ColeccionablesViewer] '{nombre}' ya fue recolectado en esta sesión.");
+            return;
+        }
+
+        if (camaraTransform == null)
+        {
+            Debug.LogWarning("[ColeccionablesViewer] Cámara no disponible.");
+            return;
+        }
+
+        indicesRecolectados.Add(indiceEpoca);
+
+        GameObject obj = Instantiate(prefab);
+        obj.transform.SetParent(camaraTransform, false);
+
+        // Posición base + offset personalizado
+        Vector3 posicionLocal = posicionRelativa + offsetPersonalizado;
+        posicionLocal.x += objetosMostrados.Count * espaciadoEntreObjetos;
+
+        obj.transform.localPosition = posicionLocal;
+        obj.transform.localScale = Vector3.one * escalaPersonalizada; // 👈 ESCALA PERSONALIZADA
+        obj.transform.localRotation = Quaternion.Euler(rotacionRelativa);
+
+        objetosMostrados.Add(obj);
+
+        if (sonido != null)
+        {
+            audioSource.PlayOneShot(sonido);
+        }
+
+        StartCoroutine(AnimarAparicion(obj));
+
+        Debug.Log($"[ColeccionablesViewer] ✅ '{nombre}' mostrado en cámara (escala: {escalaPersonalizada}).");
+    }
     private void ActualizarPosicionObjetos()
     {
         for (int i = 0; i < objetosMostrados.Count; i++)

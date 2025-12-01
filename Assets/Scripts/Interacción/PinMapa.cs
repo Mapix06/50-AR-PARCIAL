@@ -31,7 +31,6 @@ public class PinMapa : MonoBehaviour
     [Header("Referencias directas")]
     [SerializeField] private PanelPreguntasZylo panelPreguntasZylo;
 
-    // Propiedades públicas
     public AudioClip AudioRespuesta1 => audioRespuesta1;
     public AudioClip AudioRespuesta2 => audioRespuesta2;
     public AudioClip AudioDelPin => audioClip;
